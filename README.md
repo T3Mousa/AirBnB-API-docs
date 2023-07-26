@@ -1,1 +1,3 @@
-# AirBnB-API-docs
+# AirBnB API documentation
+
+## Database Schema Design
