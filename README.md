@@ -287,7 +287,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /spots/:userId
+  * URL: /spots/currentUser
   * Body: none
 
 * Successful Response
@@ -466,7 +466,7 @@ Create and return a new image for a spot specified by id.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: POST
-  * URL: /spots/:spotId/spot-images
+  * URL: /spots/:spotId/spotImages
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -634,7 +634,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:userId/reviews
+  * URL: /reviews/currentUser
   * Body: none
 
 * Successful Response
@@ -690,7 +690,7 @@ Returns all the reviews that belong to a spot specified by id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /spots/:spotId/reviews
+  * URL: /reviews/:spotId
   * Body: none
 
 * Successful Response
@@ -745,7 +745,7 @@ Create and return a new review for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /spots/:spotId/review
+  * URL: /spots/:spotId/reviews
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -823,7 +823,7 @@ Create and return a new image for a review specified by id.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: PUT
-  * URL: /users/:userId/reviews/:reviewId
+  * URL: /reviews/:reviewId/reviewImages
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -982,7 +982,7 @@ Return all the bookings that the current user has made.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:userId/bookings
+  * URL: /bookings/currentUser
   * Body: none
 
 * Successful Response
@@ -1027,7 +1027,7 @@ Return all the bookings for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /spots/:spotId/bookings
+  * URL: /bookings/:spotId
   * Body: none
 
 * Successful Response: If you ARE NOT the owner of the spot.
@@ -1317,7 +1317,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /images/:imageId
+  * URL: /spotImages/:imageId
   * Body: none
 
 * Successful Response
