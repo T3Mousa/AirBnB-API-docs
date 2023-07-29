@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-<img width="988" alt="Screenshot 2023-07-28 at 1 05 13 AM" src="https://github.com/T3Mousa/AirBnB-API-docs/assets/122242426/8ca49e70-aae4-4b21-b933-3446fbeae3f5">
+<img width="1017" alt="Screenshot 2023-07-29 at 1 06 45 PM" src="https://github.com/T3Mousa/AirBnB-API-docs/assets/122242426/1519a0f4-d26c-4fec-864b-07df678905e2">
 
 ## API Documentation
 
