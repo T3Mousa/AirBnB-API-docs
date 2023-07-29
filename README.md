@@ -690,7 +690,7 @@ Returns all the reviews that belong to a spot specified by id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /reviews/:spotId
+  * URL: /spots/:spotId/reviews
   * Body: none
 
 * Successful Response
@@ -1027,7 +1027,7 @@ Return all the bookings for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /bookings/:spotId
+  * URL: /spots/:spotId/bookings
   * Body: none
 
 * Successful Response: If you ARE NOT the owner of the spot.
@@ -1352,7 +1352,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /reviews/reviewImages/:reviewImageId
+  * URL: /reviewImages/:reviewImageId
   * Body: none
 
 * Successful Response
