@@ -1,8 +1,8 @@
-# AirBnB API documentation
+# FlairBnB API documentation
 
 ## Database Schema Design
 
-<img width="1029" alt="AirBnB-database-schema" src="https://github.com/T3Mousa/AirBnB-API-docs/assets/122242426/e6e71f81-d6b2-470e-bcf3-66b08367ece3">
+<img width="1108" alt="FlairBnB-db-schema" src="https://github.com/T3Mousa/FlairBnB/assets/122242426/445f68e7-d4f7-486c-a889-081fdeed40db">
 
 ## API Documentation
 
@@ -1317,7 +1317,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /spot-images/:imageId
+  * URL: /spots/:spotId/images/:imageId
   * Body: none
 
 * Successful Response
@@ -1352,7 +1352,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /review-images/:reviewImageId
+  * URL: reviews/:reviewId/images/:imageId
   * Body: none
 
 * Successful Response
