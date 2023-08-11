@@ -2,7 +2,9 @@
 
 ## Database Schema Design
 
-<img width="1108" alt="FlairBnB-db-schema" src="https://github.com/T3Mousa/FlairBnB/assets/122242426/445f68e7-d4f7-486c-a889-081fdeed40db">
+![db-schema]
+
+[db-schema]: ./images/FlairBnB-db-schema.png
 
 ## API Documentation
 
@@ -67,7 +69,7 @@ Returns the information about the current user that is logged in.
         "lastName": "Smith",
         "email": "john.smith@gmail.com",
         "username": "JohnSmith"
-      } 
+      }
     }
     ```
 
@@ -117,7 +119,7 @@ information.
         "lastName": "Smith",
         "email": "john.smith@gmail.com",
         "username": "JohnSmith"
-      } 
+      }
     }
     ```
 
