@@ -33,8 +33,8 @@ router.get('/', async (req, res) => {
             "price",
             "createdAt",
             "updatedAt",
-            [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-            [sequelize.col('SpotImages.url'), 'previewImage']
+            [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'],
+            [sequelize.col('url'), 'previewImage']
         ],
         group: ['Spot.id'],
     })
@@ -71,8 +71,8 @@ router.get('/current-user', requireAuth, async (req, res) => {
             "price",
             "createdAt",
             "updatedAt",
-            [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-            [sequelize.col('SpotImages.url'), 'previewImage']
+            [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'],
+            [sequelize.col('url'), 'previewImage']
         ],
         group: ['Spot.id'],
     })
@@ -83,29 +83,51 @@ router.get('/current-user', requireAuth, async (req, res) => {
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params
 
-    const options = {
+    const spot = await Spot.findOne({
+        where: { id: spotId },
         include: [
             {
                 model: Review,
                 attributes: [],
                 where: { spotId: spotId },
-                attributes: [
-                    [sequelize.fn('COUNT', sequelize.col('Reviews.stars')), 'numReviews']
-                ]
             },
             {
                 model: SpotImage,
-                attributes: ['id', 'url', 'preview']
+                attributes: ['id', 'url', 'preview'],
+                separate: true
+            },
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
             }
-            // {
-            //     model: User,
-            //     as: 'Owner',
-            //     attributes: ['id', 'firstName', 'lastName']
-            // }
-        ]
+        ],
+        attributes: [
+            "id",
+            ["userId", "ownerId"],
+            "address",
+            "city",
+            "state",
+            "country",
+            "lat",
+            "lng",
+            "name",
+            "description",
+            "price",
+            "createdAt",
+            "updatedAt",
+            [sequelize.fn('COUNT', sequelize.col('stars')), 'numReviews'],
+            [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
+        ],
+    })
+
+    if (spot.id === null) {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+        });
     }
 
-    const spot = await Spot.findByPk(spotId, options)
 
 
     res.json(spot)

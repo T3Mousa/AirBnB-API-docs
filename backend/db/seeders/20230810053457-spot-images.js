@@ -13,7 +13,7 @@ module.exports = {
       {
         spotId: 1,
         url: "/images/spot1_1.png",
-        preview: true
+        preview: false
       },
       {
         spotId: 1,
@@ -23,7 +23,7 @@ module.exports = {
       {
         spotId: 1,
         url: "/images/spot1_3.png",
-        preview: false
+        preview: true
       },
       {
         spotId: 1,
@@ -58,12 +58,12 @@ module.exports = {
       {
         spotId: 4,
         url: "/images/spot4_1.png",
-        preview: true
+        preview: false
       },
       {
         spotId: 4,
         url: "/images/spot4_2.png",
-        preview: false
+        preview: true
       },
     ], {})
   },
