@@ -44,6 +44,7 @@ const validateSpotParams = [
 
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
+
         include: [
             {
                 model: Review,
@@ -52,7 +53,8 @@ router.get('/', async (req, res) => {
             {
                 model: SpotImage,
                 attributes: [],
-                where: { preview: true }
+                where: { preview: true },
+                required: false
             }
         ],
         attributes: [
@@ -90,7 +92,8 @@ router.get('/current-user', requireAuth, async (req, res) => {
             {
                 model: SpotImage,
                 attributes: [],
-                where: { preview: true }
+                where: { preview: true },
+                required: false
             }
         ],
         attributes: [
@@ -126,11 +129,12 @@ router.get('/:spotId', async (req, res) => {
                 model: Review,
                 attributes: [],
                 where: { spotId: spotId },
+                required: false
             },
             {
                 model: SpotImage,
                 attributes: ['id', 'url', 'preview'],
-                separate: true
+                separate: true,
             },
             {
                 model: User,
@@ -157,11 +161,11 @@ router.get('/:spotId', async (req, res) => {
         ],
     })
 
-    if (spot.id === null) {
+    if (!spot.id) {
         res.status(404);
         return res.json({
             "message": "Spot couldn't be found",
-        });
+        })
     }
 
     res.json(spot)
@@ -185,9 +189,45 @@ router.post('/', requireAuth, validateSpotParams, async (req, res) => {
             price: price
         })
         await newSpot.save()
+
         res.status(201).json(newSpot)
     }
 });
+
+router.post('/:spotId/images', requireAuth, async (req, res) => {
+    const userId = req.user.id
+    const { spotId } = req.params
+    const { url, preview } = req.body
+
+    if (userId) {
+
+        const existingSpot = await Spot.findOne({
+            where: { id: spotId }
+        })
+
+        if (existingSpot) {
+            const newSpotImage = SpotImage.build({
+                spotId: spotId,
+                url: url,
+                preview: preview
+            })
+            await newSpotImage.save()
+
+            res.json({
+                'id': newSpotImage.id,
+                'url': newSpotImage.url,
+                'preview': newSpotImage.preview
+            })
+
+        } else {
+            res.status(404);
+            return res.json({
+                "message": "Spot couldn't be found",
+            })
+        }
+    }
+});
+
 
 
 module.exports = router;
