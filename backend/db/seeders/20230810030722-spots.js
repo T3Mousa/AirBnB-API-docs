@@ -56,7 +56,7 @@ module.exports = {
         lng: -85.9870341,
         name: "Mountain Living",
         description: "A stroll away from honky-tonk nights",
-        price: 203
+        price: 175
       }
     ], {});
   },
