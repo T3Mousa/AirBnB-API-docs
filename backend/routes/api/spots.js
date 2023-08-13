@@ -195,17 +195,17 @@ router.post('/', requireAuth, validateSpotParams, async (req, res) => {
 });
 
 router.post('/:spotId/images', requireAuth, async (req, res) => {
-    const userId = req.user.id
+    const currUserId = req.user.id
     const { spotId } = req.params
     const { url, preview } = req.body
 
-    if (userId) {
+    const existingSpot = await Spot.findOne({
+        where: { id: spotId }
+    })
 
-        const existingSpot = await Spot.findOne({
-            where: { id: spotId }
-        })
+    if (existingSpot) {
+        if (currUserId === existingSpot.userId) {
 
-        if (existingSpot) {
             const newSpotImage = SpotImage.build({
                 spotId: spotId,
                 url: url,
@@ -218,13 +218,57 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
                 'url': newSpotImage.url,
                 'preview': newSpotImage.preview
             })
-
         } else {
-            res.status(404);
+            res.status(403)
             return res.json({
-                "message": "Spot couldn't be found",
+                "message": "Forbidden"
             })
         }
+
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+        })
+    }
+});
+
+router.put('/:spotId', requireAuth, validateSpotParams, async (req, res) => {
+    const currUserId = req.user.id
+    const { spotId } = req.params
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+    const existingSpot = await Spot.findByPk(spotId)
+
+    if (existingSpot) {
+        if (currUserId === existingSpot.userId) {
+
+            if (address !== undefined) existingSpot.address = address
+            if (city !== undefined) existingSpot.city = city
+            if (state !== undefined) existingSpot.state = state
+            if (country !== undefined) existingSpot.country = country
+            if (lat !== undefined) existingSpot.lat = lat
+            if (lng !== undefined) existingSpot.lng = lng
+            if (name !== undefined) existingSpot.name = name
+            if (description !== undefined) existingSpot.description = description
+            if (price !== undefined) existingSpot.price = price
+
+            await existingSpot.save()
+
+            res.json(existingSpot)
+
+        } else {
+            res.status(403)
+            return res.json({
+                "message": "Forbidden"
+            })
+        }
+
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+        })
     }
 });
 
