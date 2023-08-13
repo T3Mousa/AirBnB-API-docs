@@ -160,14 +160,12 @@ router.get('/:spotId', async (req, res) => {
             [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
         ],
     })
-
     if (!spot.id) {
         res.status(404);
         return res.json({
             "message": "Spot couldn't be found",
         })
     }
-
     res.json(spot)
 });
 
@@ -189,7 +187,6 @@ router.post('/', requireAuth, validateSpotParams, async (req, res) => {
             price: price
         })
         await newSpot.save()
-
         res.status(201).json(newSpot)
     }
 });
@@ -198,7 +195,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     const currUserId = req.user.id
     const { spotId } = req.params
     const { url, preview } = req.body
-
     const existingSpot = await Spot.findOne({
         where: { id: spotId }
     })
@@ -212,7 +208,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
                 preview: preview
             })
             await newSpotImage.save()
-
             res.json({
                 'id': newSpotImage.id,
                 'url': newSpotImage.url,
@@ -224,7 +219,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
                 "message": "Forbidden"
             })
         }
-
     } else {
         res.status(404);
         return res.json({
@@ -237,7 +231,6 @@ router.put('/:spotId', requireAuth, validateSpotParams, async (req, res) => {
     const currUserId = req.user.id
     const { spotId } = req.params
     const { address, city, state, country, lat, lng, name, description, price } = req.body
-
     const existingSpot = await Spot.findByPk(spotId)
 
     if (existingSpot) {
@@ -254,16 +247,13 @@ router.put('/:spotId', requireAuth, validateSpotParams, async (req, res) => {
             if (price !== undefined) existingSpot.price = price
 
             await existingSpot.save()
-
             res.json(existingSpot)
-
         } else {
             res.status(403)
             return res.json({
                 "message": "Forbidden"
             })
         }
-
     } else {
         res.status(404);
         return res.json({
@@ -272,6 +262,30 @@ router.put('/:spotId', requireAuth, validateSpotParams, async (req, res) => {
     }
 });
 
+router.delete('/:spotId', requireAuth, async (req, res) => {
+    const currUserId = req.user.id
+    const { spotId } = req.params
+    const existingSpot = await Spot.findByPk(spotId)
+
+    if (existingSpot) {
+        if (currUserId === existingSpot.userId) {
+            await existingSpot.destroy()
+            res.json({
+                "message": "Successfully deleted"
+            })
+        } else {
+            res.status(403)
+            return res.json({
+                "message": "Forbidden"
+            })
+        }
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+        })
+    }
+});
 
 
 module.exports = router;
