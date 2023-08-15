@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, Review, SpotImage, User, sequelize } = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
@@ -41,7 +41,7 @@ const validateSpotParams = [
     handleValidationErrors
 ];
 
-
+// get all spots
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
 
@@ -80,6 +80,7 @@ router.get('/', async (req, res) => {
     res.json({ "Spots": spots })
 });
 
+// get all spots owned by current user
 router.get('/current-user', requireAuth, async (req, res) => {
     const userId = req.user.id
     const spots = await Spot.findAll({
@@ -119,6 +120,7 @@ router.get('/current-user', requireAuth, async (req, res) => {
     res.json({ "Spots": spots })
 });
 
+// get details of a spot from an id
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params
 
@@ -169,7 +171,7 @@ router.get('/:spotId', async (req, res) => {
     res.json(spot)
 });
 
-
+// create a new spot
 router.post('/', requireAuth, validateSpotParams, async (req, res) => {
     const userId = req.user.id
     if (userId) {
@@ -191,6 +193,7 @@ router.post('/', requireAuth, validateSpotParams, async (req, res) => {
     }
 });
 
+// add an image to a spot based on spot id
 router.post('/:spotId/images', requireAuth, async (req, res) => {
     const currUserId = req.user.id
     const { spotId } = req.params
@@ -227,6 +230,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     }
 });
 
+// edit a spot
 router.put('/:spotId', requireAuth, validateSpotParams, async (req, res) => {
     const currUserId = req.user.id
     const { spotId } = req.params
@@ -262,6 +266,7 @@ router.put('/:spotId', requireAuth, validateSpotParams, async (req, res) => {
     }
 });
 
+// delete a spot
 router.delete('/:spotId', requireAuth, async (req, res) => {
     const currUserId = req.user.id
     const { spotId } = req.params
@@ -279,6 +284,32 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
                 "message": "Forbidden"
             })
         }
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+        })
+    }
+});
+
+// get all reviews by spot id
+router.get('/:spotId/reviews', async (req, res) => {
+    const { spotId } = req.params
+    const existingSpot = await Spot.findOne({
+        where: { id: spotId }
+    })
+    if (existingSpot) {
+        const spotReviews = await existingSpot.getReviews({
+            include: [{
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url'],
+            }]
+        })
+        res.json({ "Reviews": spotReviews })
     } else {
         res.status(404);
         return res.json({
