@@ -1,8 +1,7 @@
 const express = require('express');
 const { Spot, Review, SpotImage, User, ReviewImage, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation')
+const { validateReviewParams } = require('./validators')
 const { Op } = require("sequelize");
 
 const router = express.Router();
@@ -48,12 +47,19 @@ router.get('/current-user', requireAuth, async (req, res) => {
     let revArray = []
     for (let rev of reviews) {
         const reviewData = rev.toJSON()
-        reviewData.Spot.previewImage = reviewData.Spot.SpotImages[0].previewImage
-        console.log(rev.Spot['SpotImages'][0].previewImage)
+        // console.log(reviewData)
+        if (!reviewData.Spot.SpotImages[0] || reviewData.Spot.SpotImages === []) {
+            reviewData.Spot.previewImage = null
+        } else {
+            reviewData.Spot.previewImage = reviewData.Spot.SpotImages[0]['previewImage']
+        }
+        // console.log(reviewData.Spot['SpotImages'][0]['previewImage'])
         delete reviewData.Spot.SpotImages
         // console.log(reviewData)
         revArray.push(reviewData)
+        // console.log(reviewData)
     }
+    // console.log(revArray)
     res.send({ "Reviews": revArray })
 });
 
@@ -67,31 +73,32 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         where: { id: reviewId },
         include: {
             model: ReviewImage,
-            attributes: [
-                [sequelize.fn('COUNT', sequelize.col('url')), 'numRevImages']
-            ]
+            attributes: ['id']
         }
     })
     const existingRevObj = existingReview.toJSON()
-    // console.log(existingRevObj.ReviewImages[0].numRevImages)
+    console.log(existingRevObj)
+    const numberOfRevImg = existingRevObj.ReviewImages.length
+    console.log(existingRevObj.ReviewImages.length)
 
     if (existingReview) {
         if (currUserId === existingReview.userId) {
-            if (existingRevObj.ReviewImages[0].numRevImages > 10) {
+            if (numberOfRevImg < 10) {
+                const newReviewImage = ReviewImage.build({
+                    reviewId: reviewId,
+                    url: url
+                })
+                await newReviewImage.save()
+                res.json({
+                    'id': newReviewImage.id,
+                    'url': newReviewImage.url
+                })
+            } else {
                 res.status(403)
                 return res.json({
                     "message": "Maximum number of images for this resource was reached"
                 })
             }
-            const newReviewImage = ReviewImage.build({
-                reviewId: reviewId,
-                url: url
-            })
-            await newReviewImage.save()
-            res.json({
-                'id': newReviewImage.id,
-                'url': newReviewImage.url
-            })
         } else {
             res.status(403)
             return res.json({
@@ -106,7 +113,59 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     }
 });
 
+// edit a review
+router.put('/:reviewId', requireAuth, validateReviewParams, async (req, res) => {
+    const currUserId = req.user.id
+    const { reviewId } = req.params
+    const { review, stars } = req.body
+    const existingReview = await Review.findByPk(reviewId)
 
+    if (existingReview) {
+        if (currUserId === existingReview.userId) {
 
+            if (review !== undefined) existingReview.review = review
+            if (stars !== undefined) existingReview.stars = stars
+
+            await existingReview.save()
+            res.json(existingReview)
+        } else {
+            res.status(403)
+            return res.json({
+                "message": "Forbidden"
+            })
+        }
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Review couldn't be found",
+        })
+    }
+});
+
+// delete a review
+router.delete('/:reviewId', requireAuth, async (req, res) => {
+    const currUserId = req.user.id
+    const { reviewId } = req.params
+    const existingReview = await Review.findByPk(reviewId)
+
+    if (existingReview) {
+        if (currUserId === existingReview.userId) {
+            await existingReview.destroy()
+            res.json({
+                "message": "Successfully deleted"
+            })
+        } else {
+            res.status(403)
+            return res.json({
+                "message": "Forbidden"
+            })
+        }
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Review couldn't be found",
+        })
+    }
+});
 
 module.exports = router;
