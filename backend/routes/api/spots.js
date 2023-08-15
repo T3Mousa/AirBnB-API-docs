@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, Review, SpotImage, User, ReviewImage, sequelize } = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage, Booking, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { validateSpotParams, validateReviewParams } = require('./validators')
 const { Op } = require("sequelize");
@@ -9,7 +9,6 @@ const router = express.Router();
 // get all spots
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
-
         include: [
             {
                 model: Review,
@@ -41,7 +40,6 @@ router.get('/', async (req, res) => {
         ],
         group: ['Spot.id'],
     })
-
     res.json({ "Spots": spots })
 });
 
@@ -81,14 +79,12 @@ router.get('/current-user', requireAuth, async (req, res) => {
         ],
         group: ['Spot.id'],
     })
-
     res.json({ "Spots": spots })
 });
 
 // get details of a spot from an id
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params
-
     const spot = await Spot.findOne({
         where: { id: spotId },
         include: [
@@ -166,7 +162,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     const existingSpot = await Spot.findOne({
         where: { id: spotId }
     })
-
     if (existingSpot) {
         if (currUserId === existingSpot.userId) {
 
@@ -317,6 +312,84 @@ router.post('/:spotId/reviews', requireAuth, validateReviewParams, async (req, r
         })
         await newReview.save()
         res.status(201).json(newReview)
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+        })
+    }
+});
+
+// get all bookings for a spot by spotId
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    const currUserId = req.user.id
+    const { spotId } = req.params
+    const existingSpot = await Spot.findByPk(spotId)
+
+    if (existingSpot) {
+        if (existingSpot) {
+            if (currUserId === existingSpot.userId) {
+                const bookings = await existingSpot.getBookings({
+                    include: {
+                        model: User,
+                        attributes: ['id', 'firstName', 'lastName']
+                    }
+                })
+                res.json({ "Bookings": bookings })
+            } else {
+                const bookings = await existingSpot.getBookings({
+                    attributes: ['spotId', 'startDate', 'endDate']
+                })
+                res.json({ "Bookings": bookings })
+            }
+        }
+    }
+    if (!existingSpot) {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+        })
+    }
+});
+
+// create booking from spot based on spotId
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+    const currUserId = req.user.id
+    const { spotId } = req.params
+    const { startDate, endDate } = req.body
+    const existingSpot = await Spot.findByPk(spotId)
+
+    if (existingSpot) {
+        if (currUserId !== existingSpot.userId) {
+            const bookings = await existingSpot.getBookings()
+            for (let booking of bookings) {
+                const bookingObj = booking.toJSON()
+                if ((startDate >= bookingObj.startDate && startDate <= bookingObj.endDate) || (endDate >= bookingObj.startDate && endDate <= bookingObj.endDate)) {
+                    res.send(
+                        {
+                            "message": "Sorry, this spot is already booked for the specified dates",
+                            "errors": {
+                                "startDate": "Start date conflicts with an existing booking",
+                                "endDate": "End date conflicts with an existing booking"
+                            }
+                        }
+                    )
+                }
+            }
+            const newBooking = Booking.build({
+                spotId: spotId,
+                userId: currUserId,
+                startDate: startDate,
+                endDate: endDate
+            })
+            await newBooking.save()
+            res.json(newBooking)
+        } else {
+            res.status(403)
+            return res.json({
+                "message": "Forbidden"
+            })
+        }
     } else {
         res.status(404);
         return res.json({

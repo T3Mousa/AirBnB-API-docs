@@ -76,12 +76,12 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
             attributes: ['id']
         }
     })
-    const existingRevObj = existingReview.toJSON()
-    console.log(existingRevObj)
-    const numberOfRevImg = existingRevObj.ReviewImages.length
-    console.log(existingRevObj.ReviewImages.length)
-
     if (existingReview) {
+        console.log(existingReview)
+        const existingRevObj = existingReview.toJSON()
+        console.log(existingRevObj)
+        const numberOfRevImg = existingRevObj.ReviewImages.length
+        console.log(existingRevObj.ReviewImages.length)
         if (currUserId === existingReview.userId) {
             if (numberOfRevImg < 10) {
                 const newReviewImage = ReviewImage.build({
@@ -105,7 +105,8 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
                 "message": "Forbidden"
             })
         }
-    } else {
+    }
+    if (!existingReview) {
         res.status(404);
         return res.json({
             "message": "Review couldn't be found",
