@@ -1,56 +1,10 @@
 const express = require('express');
 const { Spot, Review, SpotImage, User, ReviewImage, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation')
+const { validateSpotParams, validateReviewParams } = require('./validators')
 const { Op } = require("sequelize");
 
 const router = express.Router();
-
-const validateSpotParams = [
-    check('address')
-        .exists({ checkFalsy: true })
-        .withMessage('Street address is required'),
-    check('city')
-        .exists({ checkFalsy: true })
-        .withMessage('City is required'),
-    check('state')
-        .exists({ checkFalsy: true })
-        .withMessage('State is required'),
-    check('country')
-        .exists({ checkFalsy: true })
-        .withMessage('Country is required'),
-    check('lat')
-        .exists({ checkFalsy: true })
-        .isNumeric({ min: -90, max: 90 })
-        .withMessage('Latitude is not valid'),
-    check('lng')
-        .exists({ checkFalsy: true })
-        .isNumeric({ min: -180, max: 180 })
-        .withMessage('Longitude is not valid'),
-    check('name')
-        .exists({ checkFalsy: true })
-        .isLength({ max: 49 })
-        .withMessage('Name must be less than 50 characters'),
-    check('description')
-        .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
-    check('price')
-        .exists({ checkFalsy: true })
-        .withMessage('Price per day is required'),
-    handleValidationErrors
-];
-
-const validateReviewParams = [
-    check('review')
-        .exists({ checkFalsy: true })
-        .withMessage('Review text is required'),
-    check('stars')
-        .exists({ checkFalsy: true })
-        .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5'),
-    handleValidationErrors
-];
 
 // get all spots
 router.get('/', async (req, res) => {
@@ -348,14 +302,13 @@ router.post('/:spotId/reviews', requireAuth, validateReviewParams, async (req, r
                     "message": "User already has a review for this spot",
                 })
             }
-            console.log(review)
         })
-        // if (existingSpot.userId === currUserId) {
-        //     res.status(404);
-        //     return res.json({
-        //         "message": "Owner of spot cannot leave a review",
-        //     })
-        // }
+        if (existingSpot.userId === currUserId) {
+            res.status(404);
+            return res.json({
+                "message": "Owner of spot cannot leave a review",
+            })
+        }
         const newReview = Review.build({
             userId: currUserId,
             spotId: spotId,
