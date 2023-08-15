@@ -348,14 +348,13 @@ router.post('/:spotId/reviews', requireAuth, validateReviewParams, async (req, r
                     "message": "User already has a review for this spot",
                 })
             }
-            console.log(review)
         })
-        // if (existingSpot.userId === currUserId) {
-        //     res.status(404);
-        //     return res.json({
-        //         "message": "Owner of spot cannot leave a review",
-        //     })
-        // }
+        if (existingSpot.userId === currUserId) {
+            res.status(404);
+            return res.json({
+                "message": "Owner of spot cannot leave a review",
+            })
+        }
         const newReview = Review.build({
             userId: currUserId,
             spotId: spotId,
