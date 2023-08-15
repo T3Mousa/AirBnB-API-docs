@@ -41,6 +41,17 @@ const validateSpotParams = [
     handleValidationErrors
 ];
 
+const validateReviewParams = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
 // get all spots
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
@@ -310,6 +321,49 @@ router.get('/:spotId/reviews', async (req, res) => {
             }]
         })
         res.json({ "Reviews": spotReviews })
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+        })
+    }
+});
+
+// create a review for a spot based on its id
+router.post('/:spotId/reviews', requireAuth, validateReviewParams, async (req, res) => {
+    const currUserId = req.user.id
+    const { spotId } = req.params
+    const { review, stars } = req.body
+    const existingSpot = await Spot.findOne({
+        where: { id: spotId }
+    })
+    if (existingSpot) {
+        const spotReviews = await existingSpot.getReviews()
+
+        spotReviews.forEach(rev => {
+            const review = rev.toJSON()
+            if (review.userId === currUserId) {
+                res.status(500);
+                return res.json({
+                    "message": "User already has a review for this spot",
+                })
+            }
+            console.log(review)
+        })
+        // if (existingSpot.userId === currUserId) {
+        //     res.status(404);
+        //     return res.json({
+        //         "message": "Owner of spot cannot leave a review",
+        //     })
+        // }
+        const newReview = Review.build({
+            userId: currUserId,
+            spotId: spotId,
+            review: review,
+            stars: stars
+        })
+        await newReview.save()
+        res.status(201).json(newReview)
     } else {
         res.status(404);
         return res.json({
