@@ -365,7 +365,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             for (let booking of bookings) {
                 const bookingObj = booking.toJSON()
                 if ((startDate >= bookingObj.startDate && startDate <= bookingObj.endDate) || (endDate >= bookingObj.startDate && endDate <= bookingObj.endDate)) {
-                    res.send(
+                    res.status(403).send(
                         {
                             "message": "Sorry, this spot is already booked for the specified dates",
                             "errors": {
@@ -394,6 +394,34 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         res.status(404);
         return res.json({
             "message": "Spot couldn't be found",
+        })
+    }
+});
+
+// delete an exisitng image for a spot
+router.delete('/:spotId/images/:imageId', requireAuth, async (req, res) => {
+    const currUserId = req.user.id
+    const { spotId, imageId } = req.params
+    const existingSpot = await Spot.findByPk(spotId)
+    const existingSpotImages = await existingSpot.getSpotImages({ where: { id: imageId } })
+    const existingSpotImage = existingSpotImages[0]
+
+    if (existingSpotImage) {
+        if (currUserId === existingSpot.userId) {
+            await existingSpotImage.destroy()
+            res.json({
+                "message": "Successfully deleted"
+            })
+        } else {
+            res.status(403)
+            return res.json({
+                "message": "Forbidden"
+            })
+        }
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Spot Image couldn't be found"
         })
     }
 });

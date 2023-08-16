@@ -169,4 +169,32 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
     }
 });
 
+// delete an exisitng image for a review
+router.delete('/:reviewId/images/:imageId', requireAuth, async (req, res) => {
+    const currUserId = req.user.id
+    const { reviewId, imageId } = req.params
+    const existingReview = await Review.findByPk(reviewId)
+    const existingReviewImages = await existingReview.getReviewImages({ where: { id: imageId } })
+    const existingReviewImage = existingReviewImages[0]
+
+    if (existingReviewImage) {
+        if (currUserId === existingReview.userId) {
+            await existingReviewImage.destroy()
+            res.json({
+                "message": "Successfully deleted"
+            })
+        } else {
+            res.status(403)
+            return res.json({
+                "message": "Forbidden"
+            })
+        }
+    } else {
+        res.status(404);
+        return res.json({
+            "message": "Review Image couldn't be found"
+        })
+    }
+});
+
 module.exports = router;
