@@ -1,26 +1,55 @@
 const express = require('express');
 const { Spot, Review, SpotImage, User, ReviewImage, Booking, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { validateSpotParams, validateReviewParams } = require('./validators')
+const { validateSpotParams, validateReviewParams, validateSpotQueryParams } = require('./validators')
 const { Op } = require("sequelize");
 
 const router = express.Router();
 
 // get all spots
-router.get('/', async (req, res) => {
+router.get('/', validateSpotQueryParams, async (req, res) => {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+    if (!page || page > 10) page = 1
+    if (!size || size > 20) size = 20
+
+    page = +page
+    size = +size
+
+    const paginationValues = {}
+    if (page > 0 && size > 0) {
+        paginationValues.limit = size
+        paginationValues.offset = size * (page - 1)
+    }
+
+    const where = {}
+    if (minLat && maxLat) where.lat = { [Op.between]: [+minLat, +maxLat] }
+    else if (minLat) where.lat = { [Op.gte]: +minLat }
+    else if (maxLat) where.lat = { [Op.lte]: +maxLat }
+
+    if (minLng && maxLng) where.lng = { [Op.between]: [+minLng, +maxLng] }
+    else if (minLng) where.lng = { [Op.gte]: +minLng }
+    else if (maxLng) where.lng = { [Op.lte]: +maxLng }
+
+    if (minPrice && maxPrice) where.price = { [Op.between]: [+minPrice, +maxPrice] }
+    else if (minPrice) where.price = { [Op.gte]: +minPrice }
+    else if (maxPrice) where.price = { [Op.lte]: +maxPrice }
+
+
     const spots = await Spot.findAll({
-        include: [
-            {
-                model: Review,
-                attributes: [],
-            },
-            {
-                model: SpotImage,
-                attributes: [],
-                where: { preview: true },
-                required: false
-            }
-        ],
+        ...paginationValues,
+        where,
+        // include: [
+        //     {
+        //         model: Review,
+        //         attributes: [],
+        //     },
+        //     {
+        //         model: SpotImage,
+        //         attributes: [],
+        //         where: { preview: true },
+        //         required: false,
+        //     }
+        // ],
         attributes: [
             "id",
             ["userId", "ownerId"],
@@ -34,13 +63,33 @@ router.get('/', async (req, res) => {
             "description",
             "price",
             "createdAt",
-            "updatedAt",
-            [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'],
-            [sequelize.col('url'), 'previewImage']
-        ],
-        group: ['Spot.id'],
+            "updatedAt"
+        ]
     })
-    res.json({ "Spots": spots })
+    const payload = []
+    for (let i = 0; i < spots.length; i++) {
+        const spot = spots[i]
+        const spotData = spot.toJSON()
+        const spotRating = await spot.getReviews({
+            attributes: [
+                [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('stars')), 1), 'avgRating']
+            ],
+            required: false
+        })
+        const spotImg = await spot.getSpotImages({
+            where: { preview: true },
+            attributes: [
+                ['url', 'previewImage']
+            ],
+            required: false,
+        })
+        spotData.avgRating = spotRating[0].dataValues.avgRating
+        if (!spotImg[0]) spotData.previewImage = null
+        else spotData.previewImage = spotImg[0].dataValues['previewImage']
+        payload.push(spotData)
+    }
+    res.json({ "Spots": payload, page, size })
+
 });
 
 // get all spots owned by current user
