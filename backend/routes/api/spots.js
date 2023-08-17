@@ -110,10 +110,10 @@ router.get('/current-user', requireAuth, async (req, res) => {
             "price",
             "createdAt",
             "updatedAt",
-            [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('stars')), 1), 'avgRating'],
+            [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('Reviews.stars')), 1), 'avgRating'],
             [sequelize.col('SpotImages.url'), 'previewImage']
         ],
-        group: ['Spot.id'],
+        group: ['SpotImages.url'],
     })
     res.json({ "Spots": spots })
 });
@@ -158,7 +158,7 @@ router.get('/:spotId', async (req, res) => {
             [sequelize.fn('COUNT', sequelize.col('Reviews.stars')), 'numReviews'],
             [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('Reviews.stars')), 1), 'avgStarRating']
         ],
-        group: ['Spot.id'],
+        group: ['Owner.id'],
     })
     if (!spot.id) {
         res.status(404);
