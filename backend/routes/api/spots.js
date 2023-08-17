@@ -110,12 +110,35 @@ router.get('/current-user', requireAuth, async (req, res) => {
             "price",
             "createdAt",
             "updatedAt",
-            [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('Reviews.stars')), 1), 'avgRating'],
-            [sequelize.col('SpotImages.url'), 'previewImage']
+            // [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('Reviews.stars')), 1), 'avgRating'],
+            // [sequelize.col('SpotImages.url'), 'previewImage']
         ],
-        group: ['SpotImages.url'],
+        // group: ['SpotImages.url'],
     })
-    res.json({ "Spots": spots })
+    const payload = []
+    for (let i = 0; i < spots.length; i++) {
+        const spot = spots[i]
+        const spotData = spot.toJSON()
+        const spotRating = await spot.getReviews({
+            attributes: [
+                [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('stars')), 1), 'avgRating']
+            ],
+            required: false
+        })
+        const spotImg = await spot.getSpotImages({
+            where: { preview: true },
+            attributes: [
+                ['url', 'previewImage']
+            ],
+            required: false,
+        })
+        spotData.avgRating = spotRating[0].dataValues.avgRating
+        if (!spotImg[0]) spotData.previewImage = null
+        else spotData.previewImage = spotImg[0].dataValues['previewImage']
+        payload.push(spotData)
+    }
+    res.json({ "Spots": payload })
+    // res.json({ "Spots": spots })
 });
 
 // get details of a spot from an id
