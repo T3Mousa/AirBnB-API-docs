@@ -34,22 +34,9 @@ router.get('/', validateSpotQueryParams, async (req, res) => {
     else if (minPrice) where.price = { [Op.gte]: +minPrice }
     else if (maxPrice) where.price = { [Op.lte]: +maxPrice }
 
-
     const spots = await Spot.findAll({
         ...paginationValues,
         where,
-        // include: [
-        //     {
-        //         model: Review,
-        //         attributes: [],
-        //     },
-        //     {
-        //         model: SpotImage,
-        //         attributes: [],
-        //         where: { preview: true },
-        //         required: false,
-        //     }
-        // ],
         attributes: [
             "id",
             ["userId", "ownerId"],
