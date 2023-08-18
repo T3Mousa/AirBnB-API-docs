@@ -202,7 +202,12 @@ router.post('/', requireAuth, validateSpotParams, async (req, res) => {
             price: price
         })
         await newSpot.save()
-        res.status(201).json(newSpot)
+        const modifiedResult = {
+            ...newSpot.get(),
+            ownerId: newSpot.userId,
+        }
+        delete modifiedResult.userId
+        res.status(201).json(modifiedResult)
     }
 });
 
@@ -473,10 +478,9 @@ router.delete('/:spotId/images/:imageId', requireAuth, async (req, res) => {
     const currUserId = req.user.id
     const { spotId, imageId } = req.params
     const existingSpot = await Spot.findByPk(spotId)
-    const existingSpotImages = await existingSpot.getSpotImages({ where: { id: imageId } })
-    const existingSpotImage = existingSpotImages[0]
-
-    if (existingSpotImage) {
+    if (existingSpot) {
+        const existingSpotImages = await existingSpot.getSpotImages({ where: { id: imageId } })
+        const existingSpotImage = existingSpotImages[0]
         if (currUserId === existingSpot.userId) {
             await existingSpotImage.destroy()
             res.json({
