@@ -417,7 +417,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             for (let booking of bookings) {
                 const bookingObj = booking.toJSON()
                 if ((startDate >= bookingObj.startDate && startDate <= bookingObj.endDate) || (endDate >= bookingObj.startDate && endDate <= bookingObj.endDate)) {
-                    res.status(403).send(
+                    res.status(403);
+                    return res.json(
                         {
                             "message": "Sorry, this spot is already booked for the specified dates",
                             "errors": {
