@@ -54,7 +54,7 @@ app.use((_req, _res, next) => {
     err.title = "Resource Not Found";
     err.errors = { message: "The requested resource couldn't be found." };
     err.status = 404;
-    next(err);
+    next(err.errors);
 });
 
 app.use((err, _req, _res, next) => {
@@ -73,11 +73,15 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {  // error formatter
     res.status(err.status || 500);
     console.error(err);
+    if (isProduction) {
+        delete err.title;
+        delete err.stack;
+    }
     res.json({
-        title: err.title || 'Server Error',
+        title: err.title,
         message: err.message,
         errors: err.errors,
-        stack: isProduction ? null : err.stack   // edit later
+        stack: err.stack   // edit later
     });
 });
 

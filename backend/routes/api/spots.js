@@ -247,10 +247,27 @@ router.put('/:spotId', requireAuth, validateSpotParams, async (req, res) => {
     const currUserId = req.user.id
     const { spotId } = req.params
     const { address, city, state, country, lat, lng, name, description, price } = req.body
-    const existingSpot = await Spot.findByPk(spotId)
-
+    const existingSpot = await Spot.findOne({
+        where: { id: spotId },
+        attributes: [
+            "id",
+            ["userId", "ownerId"],
+            "address",
+            "city",
+            "state",
+            "country",
+            "lat",
+            "lng",
+            "name",
+            "description",
+            "price",
+            "createdAt",
+            "updatedAt"
+        ]
+    })
     if (existingSpot) {
-        if (currUserId === existingSpot.userId) {
+        const existingSpotObj = existingSpot.toJSON()
+        if (currUserId === existingSpotObj.ownerId) {
 
             if (address !== undefined) existingSpot.address = address
             if (city !== undefined) existingSpot.city = city
