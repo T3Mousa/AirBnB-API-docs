@@ -60,12 +60,13 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         if (currUserId === existingBooking.userId) {
             if (existingBooking.endDate < currDateOnly) {
                 res.status(403);
-                res.json({
+                return res.json({
                     "message": "Past bookings can't be modified"
                 })
             }
             if (endDate < startDate) {
-                res.status(400).json({
+                res.status(400)
+                return res.json({
                     "message": "Bad Request",
                     "errors": {
                         "endDate": "endDate cannot come before startDate"
@@ -78,7 +79,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
                 const bookingObj = booking.toJSON()
                 if ((startDate >= bookingObj.startDate && startDate <= bookingObj.endDate) || (endDate >= bookingObj.startDate && endDate <= bookingObj.endDate)) {
                     res.status(403);
-                    res.send(
+                    return res.send(
                         {
                             "message": "Sorry, this spot is already booked for the specified dates",
                             "errors": {
@@ -117,17 +118,19 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 
     if (existingBooking) {
         const existingBookingObj = existingBooking.toJSON()
+        console.log(existingBookingObj)
         const spotOwner = await Spot.findOne({ where: { id: existingBookingObj.spotId } })
         const spotOwnerObj = spotOwner.toJSON()
+        console.log(spotOwnerObj)
         if (existingBookingObj.startDate < currDateOnly) {
             res.status(403);
-            res.json({
+            return res.json({
                 "message": "Bookings that have been started can't be deleted"
             })
         }
         if (currUserId === existingBookingObj.userId || currUserId === spotOwnerObj.userId) {
             await existingBooking.destroy()
-            res.json({
+            return res.json({
                 "message": "Successfully deleted"
             })
         } else {
