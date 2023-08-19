@@ -363,15 +363,15 @@ router.post('/:spotId/reviews', requireAuth, validateReviewParams, async (req, r
     if (existingSpot) {
         const spotReviews = await existingSpot.getReviews()
 
-        spotReviews.forEach(rev => {
-            const review = rev.toJSON()
+        for (let i = 0; i < spotReviews.length; i++) {
+            const review = spotReviews[i].toJSON()
             if (review.userId === currUserId) {
-                res.status(500);
+                res.status(403);
                 return res.json({
                     "message": "User already has a review for this spot",
                 })
             }
-        })
+        }
         if (existingSpot.userId === currUserId) {
             res.status(404);
             return res.json({
