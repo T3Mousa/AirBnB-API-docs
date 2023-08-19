@@ -435,21 +435,32 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
     if (existingSpot) {
         if (currUserId !== existingSpot.userId) {
-            const bookings = await existingSpot.getBookings()
-            for (let booking of bookings) {
-                const bookingObj = booking.toJSON()
-                if ((startDate >= bookingObj.startDate && startDate <= bookingObj.endDate) || (endDate >= bookingObj.startDate && endDate <= bookingObj.endDate)) {
-                    res.status(403);
-                    return res.json(
-                        {
-                            "message": "Sorry, this spot is already booked for the specified dates",
-                            "errors": {
-                                "startDate": "Start date conflicts with an existing booking",
-                                "endDate": "End date conflicts with an existing booking"
-                            }
-                        }
-                    )
+            if (endDate < startDate) {
+                res.status(400)
+                return res.json({
+                    "message": "Bad Request",
+                    "errors": {
+                        "endDate": "endDate cannot be on or before startDate"
+                    }
+                })
+            }
+            const overlappingBookings = await existingSpot.getBookings({
+                where: {
+                    startDate: { [Op.lte]: endDate },
+                    endDate: { [Op.gte]: startDate }
                 }
+            })
+            if (overlappingBookings.length > 0) {
+                res.status(403);
+                return res.json(
+                    {
+                        "message": "Sorry, this spot is already booked for the specified dates",
+                        "errors": {
+                            "startDate": "Start date conflicts with an existing booking",
+                            "endDate": "End date conflicts with an existing booking"
+                        }
+                    }
+                )
             }
             const newBooking = Booking.build({
                 spotId: spotId,
