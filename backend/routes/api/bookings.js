@@ -73,21 +73,24 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
                 })
             }
             const existingSpot = await Spot.findByPk(existingBooking.spotId)
-            const bookings = await existingSpot.getBookings()
-            for (let booking of bookings) {
-                const bookingObj = booking.toJSON()
-                if ((startDate >= bookingObj.startDate && startDate <= bookingObj.endDate) || (endDate >= bookingObj.startDate && endDate <= bookingObj.endDate)) {
-                    res.status(403);
-                    return res.send(
-                        {
-                            "message": "Sorry, this spot is already booked for the specified dates",
-                            "errors": {
-                                "startDate": "Start date conflicts with an existing booking",
-                                "endDate": "End date conflicts with an existing booking"
-                            }
-                        }
-                    )
+            const overlappingBookings = await existingSpot.getBookings({
+                where: {
+                    id: { [Op.not]: bookingId },
+                    startDate: { [Op.lte]: endDate },
+                    endDate: { [Op.gte]: startDate }
                 }
+            })
+            if (overlappingBookings.length > 0) {
+                res.status(403);
+                return res.json(
+                    {
+                        "message": "Sorry, this spot is already booked for the specified dates",
+                        "errors": {
+                            "startDate": "Start date conflicts with an existing booking",
+                            "endDate": "End date conflicts with an existing booking"
+                        }
+                    }
+                )
             }
             if (startDate !== undefined) existingBooking.startDate = startDate
             if (endDate !== undefined) existingBooking.endDate = endDate
