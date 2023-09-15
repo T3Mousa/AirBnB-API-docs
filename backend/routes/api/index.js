@@ -15,9 +15,9 @@ router.use('/spots', spotsRouter);
 router.use('/reviews', reviewsRouter);
 router.use('/bookings', bookingsRouter);
 
-router.post('/test', function (req, res) {
-    res.json({ requestBody: req.body });
-});
+// router.post('/test', function (req, res) {
+//     res.json({ requestBody: req.body });
+// });
 
 router.get("/csrf/restore", (req, res) => {
     const csrfToken = req.csrfToken();
