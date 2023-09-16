@@ -77,7 +77,7 @@ app.use((err, _req, res, _next) => {  // error formatter
         delete err.title;
         delete err.stack;
     }
-    console.error(err);
+    // console.error(err);
     res.json({
         title: err.title,
         message: err.message,

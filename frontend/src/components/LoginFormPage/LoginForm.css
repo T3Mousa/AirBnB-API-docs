@@ -1,0 +1,18 @@
+/* css for login form */
+.loginForm {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+form {
+    padding: 20px;
+}
+
+input {
+    display: block;
+    height: 10px;
+    padding: 5px;
+}
+
+.loginForm button {
+    font-size: large;
+}
