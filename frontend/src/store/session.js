@@ -18,13 +18,13 @@ export const login = (user) => async (dispatch) => {
         method: "POST",
         body: JSON.stringify({
             credential,
-            password
+            password,
         }),
     });
     if (response.ok) {
         const data = await response.json();
-        dispatch(setUser(data));
-        return data;
+        dispatch(setUser(data.user));
+        // return response;
     }
 };
 
