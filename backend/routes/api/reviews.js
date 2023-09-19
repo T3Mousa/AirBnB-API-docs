@@ -174,10 +174,9 @@ router.delete('/:reviewId/images/:imageId', requireAuth, async (req, res) => {
     const currUserId = req.user.id
     const { reviewId, imageId } = req.params
     const existingReview = await Review.findByPk(reviewId)
-    const existingReviewImages = await existingReview.getReviewImages({ where: { id: imageId } })
-    const existingReviewImage = existingReviewImages[0]
-
-    if (existingReviewImage) {
+    if (existingReview) {
+        const existingReviewImages = await existingReview.getReviewImages({ where: { id: imageId } })
+        const existingReviewImage = existingReviewImages[0]
         if (currUserId === existingReview.userId) {
             await existingReviewImage.destroy()
             res.json({
