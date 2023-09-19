@@ -56,6 +56,7 @@ export const signup = (userInfo) => async (dispatch) => {
     }
 }
 
+
 export const logout = () => async (dispatch) => {
     const response = await csrfFetch('/api/current-session', {
         method: 'DELETE'
