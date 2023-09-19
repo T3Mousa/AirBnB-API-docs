@@ -47,8 +47,10 @@ router.get('/current-user', requireAuth, async (req, res) => {
     let revArray = []
     for (let rev of reviews) {
         const reviewData = rev.toJSON()
-        // console.log(reviewData)
-        if (!reviewData.Spot.SpotImages[0] || reviewData.Spot.SpotImages === []) {
+        console.log(reviewData)
+        console.log(reviewData.Spot.SpotImages[0])
+        console.log(reviewData.Spot.SpotImages.length)
+        if (!reviewData.Spot.SpotImages[0] || reviewData.Spot.SpotImages === 0) {
             reviewData.Spot.previewImage = null
         } else {
             reviewData.Spot.previewImage = reviewData.Spot.SpotImages[0]['previewImage']
