@@ -48,7 +48,9 @@ router.get('/current-user', requireAuth, async (req, res) => {
     for (let rev of reviews) {
         const reviewData = rev.toJSON()
         // console.log(reviewData)
-        if (!reviewData.Spot.SpotImages[0] || reviewData.Spot.SpotImages === []) {
+        // console.log(reviewData.Spot.SpotImages[0])
+        // console.log(reviewData.Spot.SpotImages.length)
+        if (!reviewData.Spot.SpotImages[0] || reviewData.Spot.SpotImages.length === 0) {
             reviewData.Spot.previewImage = null
         } else {
             reviewData.Spot.previewImage = reviewData.Spot.SpotImages[0]['previewImage']
@@ -174,10 +176,9 @@ router.delete('/:reviewId/images/:imageId', requireAuth, async (req, res) => {
     const currUserId = req.user.id
     const { reviewId, imageId } = req.params
     const existingReview = await Review.findByPk(reviewId)
-    const existingReviewImages = await existingReview.getReviewImages({ where: { id: imageId } })
-    const existingReviewImage = existingReviewImages[0]
-
-    if (existingReviewImage) {
+    if (existingReview) {
+        const existingReviewImages = await existingReview.getReviewImages({ where: { id: imageId } })
+        const existingReviewImage = existingReviewImages[0]
         if (currUserId === existingReview.userId) {
             await existingReviewImage.destroy()
             res.json({
