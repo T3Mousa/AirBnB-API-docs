@@ -11,6 +11,11 @@ function LoginFormModal() {
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
 
+    const demoSignIn = (e) => {
+        setCredential('Demo-lition')
+        setPassword('password')
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
@@ -44,7 +49,8 @@ function LoginFormModal() {
                     />
                 </label>
                 {errors && <p>{errors.message}</p>}
-                <button className='loginForm' type='submit'>Log In</button>
+                <button type='submit'>Log In</button>
+                <button type='submit' onClick={(e) => demoSignIn(e)}>Demo User</button>
             </form>
         </div>
     )
