@@ -7,12 +7,23 @@ form {
     padding: 20px;
 }
 
+h1 {
+    margin-left: 20px;
+}
+
 input {
     display: block;
     height: 10px;
     padding: 5px;
 }
 
-.loginForm button {
+button {
+    display: block;
     font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 5px
+}
+
+p {
+    color: red;
 }
