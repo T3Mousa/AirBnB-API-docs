@@ -1,0 +1,17 @@
+.spots-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 20px;
+    row-gap: 20px;
+
+}
+
+.spot-preview {
+    display: flex;
+    align-self: center;
+}
+
+.location-rating {
+    display: flex;
+    justify-content: space-between;
+}
