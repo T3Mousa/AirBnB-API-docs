@@ -13,6 +13,7 @@ function Spots() {
         dispatch(getAllSpots())
     }, [dispatch])
 
+
     return (
         <div className='spots-container'>
             {spots?.map((spot) => (
