@@ -26,7 +26,7 @@ function Spots() {
                         <span> <i className="fa-solid fa-star"></i> {spot.avgRating}</span>
                     </div>
                     <div>
-                        <span>${spot.price} / night</span>
+                        <span>${spot.price} night</span>
                     </div>
                 </div >
             ))}
