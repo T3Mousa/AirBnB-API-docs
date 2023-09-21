@@ -12,57 +12,57 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "/images/spot1_1.webp",
+        url: "/images/spot1_1.jpeg",
         preview: false
       },
       {
         spotId: 1,
-        url: "/images/spot1_2.webp",
+        url: "/images/spot1_2.jpeg",
         preview: false
       },
       {
         spotId: 1,
-        url: "/images/spot1_3.webp",
+        url: "/images/spot1_3.jpeg",
         preview: true
       },
       {
         spotId: 1,
-        url: "/images/spot1_4.webp",
+        url: "/images/spot1_4.jpeg",
         preview: false
       },
       {
         spotId: 1,
-        url: "/images/spot1_5.webp",
+        url: "/images/spot1_5.jpeg",
         preview: false
       },
       {
         spotId: 2,
-        url: "/images/spot2_1.webp",
+        url: "/images/spot2_1.jpeg",
         preview: true
       },
       {
         spotId: 2,
-        url: "/images/spot2_2.webp",
+        url: "/images/spot2_2.jpeg",
         preview: false
       },
       {
         spotId: 3,
-        url: "/images/spot3_1.webp",
+        url: "/images/spot3_1.jpeg",
         preview: true
       },
       {
         spotId: 3,
-        url: "/images/spot3_2.webp",
+        url: "/images/spot3_2.jpeg",
         preview: false
       },
       {
         spotId: 4,
-        url: "/images/spot4_1.webp",
+        url: "/images/spot4_1.jpeg",
         preview: false
       },
       {
         spotId: 4,
-        url: "/images/spot4_2.webp",
+        url: "/images/spot4_2.jpeg",
         preview: true
       },
     ], {})

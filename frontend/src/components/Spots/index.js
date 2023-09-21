@@ -13,24 +13,26 @@ function Spots() {
     }, [dispatch])
 
     return (
-        <div>
+        <div className='spots-container'>
             {spots?.map((spot) => (
-                <>
+                <div className='spot-preview'>
                     <div key={spot.id}>
                         <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                            <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} />
+                            <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '300px', width: 'auto' }} />
                         </NavLink>
                     </div>
                     <div>
                         <span>{spot.city}, {spot.state} </span>
                         <span> <i className="fa-solid fa-star"></i> {spot.avgRating}</span>
-                    </div >
-                    <div>${spot.price} / night</div>
-                </>
-            ))
-            }
-        </div >
-    );
+                    </div>
+                    <div>
+                        <span>${spot.price} / night</span>
+                    </div>
+                </div >
+            ))}
+        </div>
+
+    )
 }
 
 export default Spots;
