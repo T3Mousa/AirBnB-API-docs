@@ -7,23 +7,23 @@ import './SpotDetails.css'
 function SpotDetails() {
     const { spotId } = useParams()
     const dispatch = useDispatch()
-    const spotDetails = useSelector(state => state.details)
-    console.log(spotDetails)
+    const spot = useSelector(state => state.spotDetails)
+    console.log(spot)
 
     useEffect(() => {
         dispatch(getSpotDetails(spotId))
     }, [dispatch, spotId])
 
-    const previewImageUrl = spotDetails.SpotImages?.find(image => image.preview === true)?.url
+    const previewImageUrl = spot.SpotImages?.find(image => image.preview)?.url
     console.log(previewImageUrl)
-    const nonPreviewImages = spotDetails.SpotImages?.filter(image => image.preview === false)
+    const nonPreviewImages = spot.SpotImages?.filter(image => !image.preview)
     console.log(nonPreviewImages)
 
     return (
         <>
             <div>
-                <h1>{spotDetails.name}</h1>
-                <h3>{spotDetails.city}, {spotDetails.state}, {spotDetails.country}</h3>
+                <h1>{spot.name}</h1>
+                <h3>{spot.city}, {spot.state}, {spot.country}</h3>
             </div>
             <div className='spotImages'>
                 <div className='previewImage'>
@@ -35,12 +35,12 @@ function SpotDetails() {
             </div>
             <div>
                 <div>
-                    <h1>Hosted by {spotDetails.Owner?.firstName} {spotDetails.Owner?.lastName}</h1>
-                    <p>{spotDetails.description}</p>
+                    <h1>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h1>
+                    <p>{spot.description}</p>
                 </div>
                 <div>
-                    <span>${spotDetails.price} </span>
-                    <span><i className="fa-solid fa-star"></i> {spotDetails.avgStarRating} {spotDetails.numReviews} reviews</span>
+                    <span>${spot.price} </span>
+                    <span><i className="fa-solid fa-star"></i> {spot.avgStarRating} {spot.numReviews} reviews</span>
                 </div>
             </div>
         </>

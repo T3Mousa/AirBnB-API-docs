@@ -7,7 +7,7 @@ import spotDetailsReducer from './spotDetails';
 const rootReducer = combineReducers({
     session: sessionReducer,
     spots: spotsReducer,
-    details: spotDetailsReducer
+    spotDetails: spotDetailsReducer
 });
 
 

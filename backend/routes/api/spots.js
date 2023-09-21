@@ -161,9 +161,9 @@ router.get('/:spotId', async (req, res) => {
                 "updatedAt"
             ],
         })
-        console.log(spot)
+        // console.log(spot)
         const spotData = spot.toJSON()
-        console.log(spotData)
+        // console.log(spotData)
         const spotRating = await spot.getReviews({
             attributes: [
                 [sequelize.fn('COUNT', sequelize.col('stars')), 'numReviews'],

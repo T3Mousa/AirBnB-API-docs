@@ -1,6 +1,6 @@
 import { csrfFetch } from "./csrf";
 
-const GET_SPOT_DETAILS = "spots/GET_SPOT_DETAILS";
+const GET_SPOT_DETAILS = "spotsDetails/GET_SPOT_DETAILS";
 
 const spotDetails = (spotId) => ({
     type: GET_SPOT_DETAILS,
@@ -9,12 +9,13 @@ const spotDetails = (spotId) => ({
 
 export const getSpotDetails = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
-
+    console.log(response)
     if (response.ok) {
         const data = await response.json()
-        const spotDets = data.Spots
-        console.log(spotDets)
-        dispatch(spotDetails(spotDets))
+        console.log(data)
+        const spotDeets = data.Spots
+        console.log(spotDeets)
+        dispatch(spotDetails(spotDeets))
     }
 }
 
