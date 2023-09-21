@@ -18,7 +18,7 @@ function Spots() {
                 <div className='spot-preview'>
                     <div key={spot.id}>
                         <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                            <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} />
+                            <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '300px', width: 'auto' }} />
                         </NavLink>
                     </div>
                     <div>
