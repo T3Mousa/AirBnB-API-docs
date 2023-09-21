@@ -48,7 +48,7 @@ function LoginFormModal() {
                         required
                     />
                 </label>
-                {errors && <p>{errors.message}</p>}
+                {errors && <p className='errors'>{errors.message}</p>}
                 <button type='submit'>Log In</button>
                 <button type='submit' onClick={(e) => demoSignIn(e)}>Demo User</button>
             </form>
