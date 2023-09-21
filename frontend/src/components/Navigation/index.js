@@ -10,7 +10,7 @@ function Navigation({ isLoaded }) {
     return (
         <div id='nav-bar'>
             <div>
-                <Link exact to='/' id='home-button'>
+                <Link exact='true' to='/' id='home-button'>
                     <img id='logo' src='/images/flairbnbLOGO.png' alt='flairbnb logo' />
                     <span id='logo-text'>flairbnb</span>
                 </Link>
