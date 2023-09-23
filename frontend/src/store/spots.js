@@ -24,20 +24,18 @@ export const getAllSpots = () => async (dispatch) => {
 }
 
 export const addNewSpot = (data) => async (dispatch) => {
+    data.lat = 90
+    data.lng = 180
     const response = await csrfFetch('/api/spots', {
         method: "POST",
-        // headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
     });
-    console.log(response)
-
-    if (response.ok) {
-        const spotInfo = await response.json()
-        console.log(spotInfo)
-        dispatch(addSpot(spotInfo))
-        return spotInfo
-    }
+    const spotInfo = await response.json()
+    // console.log("I'm here", spotInfo)
+    dispatch(addSpot(spotInfo))
+    return spotInfo
 }
+
 
 const initialState = {};
 
