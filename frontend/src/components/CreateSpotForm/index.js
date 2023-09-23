@@ -62,7 +62,9 @@ function CreateSpotForm() {
             <h1>Create a New Spot</h1>
             <h3>Where's your spot located?</h3>
             <p>Guests will only get your exact address once they booked a reservation.</p>
-            <label>Country
+            <label>Country <p className='errors'>
+                {errors.country && `${errors.country}`}
+            </p>
                 <input
                     type="text"
                     value={country}
@@ -70,10 +72,10 @@ function CreateSpotForm() {
                     placeholder="Country"
                 />
             </label>
-            <p className='errors'>
-                {errors.country && `${errors.country}`}
+
+            <label>Street Address <p className='errors'>
+                {errors.address && `${errors.address}`}
             </p>
-            <label>Street Address
                 <input
                     type="text"
                     value={address}
@@ -81,11 +83,11 @@ function CreateSpotForm() {
                     placeholder="Address"
                 />
             </label>
-            <p className='errors'>
-                {errors.address && `${errors.address}`}
-            </p>
+
             <div>
-                <label>City
+                <label>City <p className='errors'>
+                    {errors.city && `${errors.city}`}
+                </p>
                     <input
                         type="text"
                         value={city}
@@ -93,10 +95,10 @@ function CreateSpotForm() {
                         placeholder="City"
                     />
                 </label>
-                <p className='errors'>
-                    {errors.city && `${errors.city}`}
+
+                <label>State <p className='errors'>
+                    {errors.state && `${errors.state}`}
                 </p>
-                <label>State
                     <input
                         type="text"
                         value={state}
@@ -104,9 +106,7 @@ function CreateSpotForm() {
                         placeholder="STATE"
                     />
                 </label>
-                <p className='errors'>
-                    {errors.state && `${errors.state}`}
-                </p>
+
             </div>
             <div>
                 <label>Latitude
