@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { addNewSpot } from "../../store/spots";
 
 function CreateSpotForm() {
@@ -9,22 +9,21 @@ function CreateSpotForm() {
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
     const [country, setCountry] = useState('')
-    const [lat, setLat] = useState(0)
-    const [lng, setLng] = useState(0)
+    const [lat, setLat] = useState()
+    const [lng, setLng] = useState()
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState()
     // const [previewImage, setPreviewImage] = useState('')
     // const [image1Url, setImage1Url] = useState('')
     // const [image2Url, setImage2Url] = useState('')
     // const [image3Url, setImage3Url] = useState('')
     // const [image4Url, setImage4Url] = useState('')
-    const [errors, setError] = useState({})
+    const [errors, setErrors] = useState({})
     const history = useHistory()
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setErrors({})
         const spotInfo = {
             address,
             city,
@@ -41,18 +40,22 @@ function CreateSpotForm() {
             // image3Url,
             // image4Url
         };
-        // console.log(spotInfo)
+        console.log(spotInfo)
 
-        // let createdSpot = spotInfo;
-
-        let newSpot = dispatch(addNewSpot(spotInfo));
-        // console.log(newSpot)
+        let newSpot = await dispatch(addNewSpot(spotInfo));
+        console.log(newSpot)
         // console.log(newSpot.id)
-        history.push('/')
-        history.push(`/spots/${newSpot.id}`);
-        // return <Redirect to={`/spots/${newSpot.id}`} />;
-    };
+        if (newSpot?.id) {
+            history.push(`/spots/${newSpot?.id}`);
+        } else {
+            setErrors(newSpot?.errors)
+        }
 
+        // console.log(errors)
+        // console.log(errors.errors)
+        // console.log(Response.errors)
+        // setErrors(errors.errors)
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -64,53 +67,61 @@ function CreateSpotForm() {
                     type="text"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    required
                     placeholder="Country"
                 />
             </label>
+            <p className='errors'>
+                {errors.country && `${errors.country}`}
+            </p>
             <label>Street Address
                 <input
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    required
                     placeholder="Address"
                 />
             </label>
+            <p className='errors'>
+                {errors.address && `${errors.address}`}
+            </p>
             <div>
                 <label>City
                     <input
                         type="text"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        required
                         placeholder="City"
                     />
                 </label>
+                <p className='errors'>
+                    {errors.city && `${errors.city}`}
+                </p>
                 <label>State
                     <input
                         type="text"
                         value={state}
                         onChange={(e) => setState(e.target.value)}
-                        required
                         placeholder="STATE"
                     />
                 </label>
+                <p className='errors'>
+                    {errors.state && `${errors.state}`}
+                </p>
             </div>
             <div>
                 <label>Latitude
                     <input
-                        type="text"
-                        value={lat}
-                        onChange={(e) => setLat(e.target.value)}
+                        type="number"
+                        defaultValue={90}
+                        onChange={(e) => setLat(e.target.defaultValue)}
                         placeholder="Latitude"
                     />
                 </label>
                 <label>Longitude
                     <input
-                        type="text"
-                        value={lng}
-                        onChange={(e) => setLng(e.target.value)}
+                        type="number"
+                        defaultValue={180}
+                        onChange={(e) => setLng(e.target.defaultValue)}
                         placeholder="Longitude"
                     />
                 </label>
@@ -123,10 +134,12 @@ function CreateSpotForm() {
                 <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    required
                     placeholder="Please write at least 30 characters"
                 />
             </label>
+            <p className='errors'>
+                {errors.description && "Description needs a minimum of 30 characters"}
+            </p>
             <label>
                 <h3>Create a title for your spot</h3>
                 <p>
@@ -136,10 +149,12 @@ function CreateSpotForm() {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    required
                     placeholder="Name of your spot"
                 />
             </label>
+            <p className='errors'>
+                {errors.name && `${errors.name}`}
+            </p>
             <label>
                 <h3>Set a base price for your spot</h3>
                 <p>
@@ -150,11 +165,13 @@ function CreateSpotForm() {
                         type="number"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
-                        required
                         placeholder="Price per night (USD)"
                     />
                 </span>
             </label>
+            <p className='errors'>
+                {errors.price && `${errors.price}`}
+            </p>
             {/* <label>
                 <h3>Liven up your spot with photos</h3>
                 <p>
