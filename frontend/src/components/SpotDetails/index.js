@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSpotDetails } from '../../store/spotDetails';
@@ -7,18 +7,23 @@ import './SpotDetails.css'
 function SpotDetails() {
     const { spotId } = useParams()
     const dispatch = useDispatch()
-    const spot = useSelector(state => state.spotDetails)
+    const spot = useSelector(state => state?.spotDetails)
+    const [isLoaded, setIsLoaded] = useState(false)
     console.log(spot)
 
     useEffect(() => {
         dispatch(getSpotDetails(spotId))
-    }, [dispatch, spotId])
+            .then(() => setIsLoaded(true))
 
-    const previewImageUrl = spot.SpotImages?.find(image => image.preview)?.url
-    console.log(previewImageUrl)
-    const nonPreviewImages = spot.SpotImages?.filter(image => !image.preview)
-    console.log(nonPreviewImages)
+    }, [dispatch, spotId, isLoaded])
 
+    // const previewImageUrl = spot?.SpotImages?.find(image => image.preview)?.url
+    // console.log(previewImageUrl)
+    // const nonPreviewImages = spot?.SpotImages?.filter(image => !image.preview)
+    // console.log(nonPreviewImages)
+    if (!isLoaded) {
+        return <h1>Loading</h1>
+    }
     return (
         <>
             <div>
@@ -26,16 +31,11 @@ function SpotDetails() {
                 <h3>{spot.city}, {spot.state}, {spot.country}</h3>
             </div>
             <div className='spotImages'>
-                <div className='previewImage'>
-                    <img src={previewImageUrl} alt={previewImageUrl} style={{ height: '455px', width: 'auto' }} />
-                </div>
-                <div className='nonPreviewImages'>
-                    {nonPreviewImages.map((image, i) => <img src={image.url} alt={image.url} key={i} style={{ height: '220px', width: 'auto' }} />)}
-                </div>
+                {spot.SpotImages.map((image, i) => <img src={image.url} alt={image.url} key={i} style={{ height: '450px', width: 'auto' }} />)}
             </div>
             <div>
                 <div>
-                    <h1>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h1>
+                    <h2>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
                     <p>{spot.description}</p>
                 </div>
                 <div>

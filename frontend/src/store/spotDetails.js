@@ -1,6 +1,6 @@
 import { csrfFetch } from "./csrf";
 
-const GET_SPOT_DETAILS = "spotsDetails/GET_SPOT_DETAILS";
+const GET_SPOT_DETAILS = "spotDetails/GET_SPOT_DETAILS";
 
 const spotDetails = (spotId) => ({
     type: GET_SPOT_DETAILS,
@@ -12,9 +12,9 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
     console.log(response)
     if (response.ok) {
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         const spotDeets = data.Spots
-        console.log(spotDeets)
+        // console.log(spotDeets)
         dispatch(spotDetails(spotDeets))
     }
 }
@@ -26,7 +26,7 @@ const spotDetailsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT_DETAILS:
 
-            return action.spotId
+            return action.spotId;
         default:
             return state;
     }
