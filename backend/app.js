@@ -59,6 +59,7 @@ app.use((_req, _res, next) => {
 
 app.use((err, _req, _res, next) => {
     // check if error is a Sequelize error:
+    // console.log(err.errors, "we are here")
     if (err instanceof ValidationError) {
         let errors = {};
         for (let error of err.errors) {
@@ -71,13 +72,12 @@ app.use((err, _req, _res, next) => {
 });
 
 app.use((err, _req, res, _next) => {  // error formatter
-    // console.log(err, "we are here")
     res.status(err.status || 500);
     if (isProduction) {
         delete err.title;
         delete err.stack;
     }
-    // console.error(err);
+    console.error(err);
     res.json({
         title: err.title,
         message: err.message,
