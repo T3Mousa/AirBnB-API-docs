@@ -12,9 +12,9 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
     console.log(response)
     if (response.ok) {
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         const spotDeets = data.Spots
-        console.log(spotDeets)
+        // console.log(spotDeets)
         dispatch(spotDetails(spotDeets))
     }
 }

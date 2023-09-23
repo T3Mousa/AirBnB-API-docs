@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, Redirect } from "react-router-dom";
 import { addNewSpot } from "../../store/spots";
-// import SpotDetails from "../SpotDetails";
 
 function CreateSpotForm() {
     const dispatch = useDispatch()
@@ -10,20 +9,20 @@ function CreateSpotForm() {
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
     const [country, setCountry] = useState('')
-    const [latitude, setLatitude] = useState(0)
-    const [longitude, setLongitude] = useState(0)
+    const [lat, setLat] = useState(0)
+    const [lng, setLng] = useState(0)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
-    const [previewImage, setPreviewImage] = useState('')
-    const [image1Url, setImage1Url] = useState('')
-    const [image2Url, setImage2Url] = useState('')
-    const [image3Url, setImage3Url] = useState('')
-    const [image4Url, setImage4Url] = useState('')
+    // const [previewImage, setPreviewImage] = useState('')
+    // const [image1Url, setImage1Url] = useState('')
+    // const [image2Url, setImage2Url] = useState('')
+    // const [image3Url, setImage3Url] = useState('')
+    // const [image4Url, setImage4Url] = useState('')
     const [errors, setError] = useState({})
     const history = useHistory()
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         const spotInfo = {
@@ -31,26 +30,27 @@ function CreateSpotForm() {
             city,
             state,
             country,
-            latitude,
-            longitude,
+            lat,
+            lng,
             name,
             description,
             price,
-            previewImage,
-            image1Url,
-            image2Url,
-            image3Url,
-            image4Url
+            // previewImage,
+            // image1Url,
+            // image2Url,
+            // image3Url,
+            // image4Url
         };
+        // console.log(spotInfo)
 
-        let createdSpot = spotInfo;
+        // let createdSpot = spotInfo;
 
-        if (createdSpot) {
-            let newSpot = await dispatch(addNewSpot(createdSpot));
-            history.push('/')
-            history.push('/spots/' + newSpot.id);
-            return <Redirect to={`/spots/${newSpot.id}`} />;
-        }
+        let newSpot = dispatch(addNewSpot(spotInfo));
+        // console.log(newSpot)
+        // console.log(newSpot.id)
+        history.push('/')
+        history.push(`/spots/${newSpot.id}`);
+        // return <Redirect to={`/spots/${newSpot.id}`} />;
     };
 
 
@@ -101,16 +101,16 @@ function CreateSpotForm() {
                 <label>Latitude
                     <input
                         type="text"
-                        value={latitude}
-                        onChange={(e) => setLatitude(e.target.value)}
+                        value={lat}
+                        onChange={(e) => setLat(e.target.value)}
                         placeholder="Latitude"
                     />
                 </label>
                 <label>Longitude
                     <input
                         type="text"
-                        value={longitude}
-                        onChange={(e) => setLongitude(e.target.value)}
+                        value={lng}
+                        onChange={(e) => setLng(e.target.value)}
                         placeholder="Longitude"
                     />
                 </label>
@@ -155,7 +155,7 @@ function CreateSpotForm() {
                     />
                 </span>
             </label>
-            <label>
+            {/* <label>
                 <h3>Liven up your spot with photos</h3>
                 <p>
                     Submit a link to at least one photo to publish your spot.
@@ -191,7 +191,7 @@ function CreateSpotForm() {
                     onChange={(e) => setImage4Url(e.target.value)}
                     placeholder="Image URL"
                 />
-            </label>
+            </label> */}
             <button type='submit'>Create Spot</button>
         </form >
     )

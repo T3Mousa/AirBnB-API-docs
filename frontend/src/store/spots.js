@@ -26,12 +26,14 @@ export const getAllSpots = () => async (dispatch) => {
 export const addNewSpot = (data) => async (dispatch) => {
     const response = await csrfFetch('/api/spots', {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        // headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
     });
+    console.log(response)
 
     if (response.ok) {
         const spotInfo = await response.json()
+        console.log(spotInfo)
         dispatch(addSpot(spotInfo))
         return spotInfo
     }
@@ -46,7 +48,7 @@ const spotsReducer = (state = initialState, action) => {
             action.spots.forEach((spot) => newState[spot.id] = spot);
             return newState;
         case CREATE_SPOT:
-            return { ...state, [action.spotInfo.spotId]: action.spotInfo };
+            return { ...state, [action.spotInfo.id]: action.spotInfo };
         default:
             return state;
     }
