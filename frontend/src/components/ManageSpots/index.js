@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, Route } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton'
 import DeleteSpotFormModal from "../DeleteSpotFormModal";
 import { getAllSpots } from "../../store/spots";
@@ -43,6 +43,7 @@ function ManageSpots() {
     }
 
 
+
     return (
         <>
             <h1>Manage Your Spots</h1>
@@ -62,7 +63,7 @@ function ManageSpots() {
                         <div>${spot.price} night</div>
                         <div className="update-delete">
                             <button>
-                                Update
+                                <Link to={`/spots/${spot.id}/edit`} style={{ textDecoration: 'none', color: 'black' }}>Update</Link>
                             </button>
                             <OpenModalButton
                                 buttonText='Delete'

@@ -1,5 +1,6 @@
 import { csrfFetch } from "./csrf";
 
+// const GET_ONE_SPOT = "spots/GET_ONE_SPOT"
 const GET_SPOTS = "spots/GET_SPOTS";
 const GET_SPOT_DETAILS = "spotDetails/GET_SPOT_DETAILS";
 const CREATE_SPOT = "spots/CREATE_SPOT"
@@ -7,6 +8,10 @@ const ADD_SPOT_IMAGE = "spots/ADD_SPOT_IMAGE"
 const REMOVE_SPOT = "spots/REMOVE_SPOT"
 const UPDATE_SPOT = "spots/UPDATE_SPOT"
 
+// export const getSpot = (spot) => ({
+//     type: GET_ONE_SPOT,
+//     spot
+// })
 
 const allSpots = (spots) => ({
     type: GET_SPOTS,
@@ -59,12 +64,13 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
         const spotDeets = data.Spots
         // console.log(spotDeets)
         dispatch(spotDetails(spotDeets))
+        return spotDeets
     }
 }
 
 export const addNewSpot = (spotData, imageData) => async (dispatch) => {
-    // spotData.lat = 90
-    // spotData.lng = 180
+    spotData.lat = 90
+    spotData.lng = 180
     const response = await csrfFetch('/api/spots', {
         method: "POST",
         body: JSON.stringify(spotData),
@@ -114,7 +120,7 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 }
 
 export const editSpot = (spotData) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotData.id}`, {
+    const response = await csrfFetch(`/api/spots/${spotData.id}/edit`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(spotData)
@@ -122,6 +128,7 @@ export const editSpot = (spotData) => async (dispatch) => {
 
     const updatedSpot = await response.json()
     dispatch(updateSpot(updatedSpot))
+    console.log(updatedSpot)
     return updatedSpot
 }
 
@@ -143,7 +150,7 @@ const spotsReducer = (state = initialState, action) => {
             delete newState[action.spotId];
             return newState;
         case UPDATE_SPOT:
-            newState[action.spotInfo.id] = { ...newState[action.spotInfo.id], ...action.spotInfo }
+            newState[action.spots] = { ...newState[action.spots], ...action.spots }
             return newState
         default:
             return state;
