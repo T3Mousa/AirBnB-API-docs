@@ -308,6 +308,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
     if (existingSpot) {
         if (currUserId === existingSpot.userId) {
+            console.log(existingSpot)
             await existingSpot.destroy()
             res.json({
                 "message": "Successfully deleted"
