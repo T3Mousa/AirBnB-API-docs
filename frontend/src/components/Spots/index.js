@@ -7,7 +7,7 @@ import './Spots.css'
 function Spots() {
     const dispatch = useDispatch();
     const spots = useSelector(state => Object.values(state?.spots))
-    // console.log(spots)
+    console.log(spots)
 
     useEffect(() => {
         dispatch(getAllSpots())
@@ -17,8 +17,8 @@ function Spots() {
     return (
         <div className='spots-container'>
             {spots?.map((spot) => (
-                <div className='spot-preview' key={spot.id}>
-                    <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                <div className='spot-preview' >
+                    <NavLink to={`/spots/${spot.id}`} key={spot.id} style={{ textDecoration: 'none', color: 'black' }}>
                         <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '200px', width: 'auto' }} />
                     </NavLink>
                     <div className="location-rating">
