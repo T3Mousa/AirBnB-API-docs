@@ -6,6 +6,7 @@ import Navigation from './components/Navigation';
 import Spots from './components/Spots';
 import SpotDetails from './components/SpotDetails';
 import CreateSpotForm from './components/CreateSpotForm';
+import ManageSpots from './components/ManageSpots';
 
 function App() {
   const dispatch = useDispatch()
@@ -20,6 +21,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded &&
         <Switch>
+          <Route path='/spots/current-user'>
+            <ManageSpots />
+          </Route>
           <Route path='/spots/:spotId'>
             <SpotDetails />
           </Route>

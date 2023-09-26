@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { addNewSpot, addNewSpotImages } from "../../store/spots";
+import { addNewSpot } from "../../store/spots";
 
 function CreateSpotForm() {
     const dispatch = useDispatch()
@@ -28,20 +28,7 @@ function CreateSpotForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({})
-        // if (images.length === 0) {
-        //     setErrors({
-        //         image: "Preview image is required."
-        //     })
-        // } else {
-        //     for (let i = 0; images.length < i; i++) {
-        //         let image = images[i]
-        //         if (!image.endsWith('.png') || !image.endsWith('.jpg') || !image.endsWith('.jpeg')) {
-        //             setErrors({
-        //                 image: "Image URL must end in .png, .jpg, or .jpeg"
-        //             })
-        //         }
-        //     }
-        // }
+
 
         const spotInfo = {
             address,
@@ -60,7 +47,6 @@ function CreateSpotForm() {
                 { url: image3Url, preview: false },
                 { url: image4Url, preview: false }
             ]
-            // imagesUrlArray: imagesUrlArray.filter((imageUrl) => imageUrl.trim() !== '')
         };
 
         let newSpot = await dispatch(addNewSpot(spotInfo, spotInfo.imagesArray));
