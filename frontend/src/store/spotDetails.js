@@ -1,35 +1,35 @@
-// import { csrfFetch } from "./csrf";
+import { csrfFetch } from "./csrf";
 
-// const GET_SPOT_DETAILS = "spotDetails/GET_SPOT_DETAILS";
+const GET_SPOT_DETAILS = "spotDetails/GET_SPOT_DETAILS";
 
-// const spotDetails = (spotId) => ({
-//     type: GET_SPOT_DETAILS,
-//     spotId
-// });
+const spotDetails = (spot) => ({
+    type: GET_SPOT_DETAILS,
+    spot
+});
 
-// export const getSpotDetails = (spotId) => async (dispatch) => {
-//     const response = await csrfFetch(`/api/spots/${spotId}`)
-//     console.log(response)
-//     if (response.ok) {
-//         const data = await response.json()
-//         // console.log(data)
-//         const spotDeets = data.Spots
-//         // console.log(spotDeets)
-//         dispatch(spotDetails(spotDeets))
-//     }
-// }
+export const getSpotDetails = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`)
+    console.log(response)
+    if (response.ok) {
+        const data = await response.json()
+        // console.log(data)
+        const spotDeets = data.Spots
+        // console.log(spotDeets)
+        dispatch(spotDetails(spotDeets))
+        return spotDeets
+    }
+}
 
-// const initialState = null
+const initialState = null
 
-// const spotDetailsReducer = (state = initialState, action) => {
+const spotDetailsReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case GET_SPOT_DETAILS:
+            let newState = { ...action.spot }
+            return newState;
+        default:
+            return state;
+    }
+};
 
-//     switch (action.type) {
-//         case GET_SPOT_DETAILS:
-
-//             return action.spotId;
-//         default:
-//             return state;
-//     }
-// };
-
-// export default spotDetailsReducer;
+export default spotDetailsReducer;

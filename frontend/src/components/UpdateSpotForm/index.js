@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editSpot } from "../../store/userSpots";
-import { getSpotDetails } from "../../store/spots";
+import { getSpotDetails } from "../../store/spotDetails";
 
 function UpdateSpotForm() {
     const { spotId } = useParams()

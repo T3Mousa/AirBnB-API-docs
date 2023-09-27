@@ -1,9 +1,10 @@
 import { csrfFetch } from "./csrf";
+import { getSpotDetails } from "./spotDetails";
 
 // const GET_ONE_SPOT = "spots/GET_ONE_SPOT"
 const GET_SPOTS = "spots/GET_SPOTS";
 // const GET_USER_SPOTS = "spots/GET_USER_SPOTS"
-const GET_SPOT_DETAILS = "spotDetails/GET_SPOT_DETAILS";
+// const GET_SPOT_DETAILS = "spots/GET_SPOT_DETAILS";
 const CREATE_SPOT = "spots/CREATE_SPOT"
 const ADD_SPOT_IMAGE = "spots/ADD_SPOT_IMAGE"
 // const REMOVE_SPOT = "spots/REMOVE_SPOT"
@@ -24,10 +25,10 @@ const allSpots = (spots) => ({
 //     spots
 // })
 
-const spotDetails = (spot) => ({
-    type: GET_SPOT_DETAILS,
-    spot
-});
+// const spotDetails = (spot) => ({
+//     type: GET_SPOT_DETAILS,
+//     spot
+// });
 
 const addSpot = (spotInfo, imageInfo) => ({
     type: CREATE_SPOT,
@@ -71,18 +72,18 @@ export const getAllSpots = () => async (dispatch) => {
 //     dispatch(userSpots(userSpotDataArray))
 // }
 
-export const getSpotDetails = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}`)
-    console.log(spotId)
-    if (response.ok) {
-        const data = await response.json()
-        // console.log(data)
-        const spotDeets = data.Spots
-        // console.log(spotDeets)
-        dispatch(spotDetails(spotDeets))
-        return spotDeets
-    }
-}
+// export const getSpotDetails = (spotId) => async (dispatch) => {
+//     const response = await csrfFetch(`/api/spots/${spotId}`)
+//     console.log(spotId)
+
+//     const data = await response.json()
+//     // console.log(data)
+//     const spotDeets = data.Spots
+//     // console.log(spotDeets)
+//     dispatch(spotDetails(spotDeets))
+//     return spotDeets
+
+// }
 
 export const addNewSpot = (spotData, imageData) => async (dispatch) => {
     spotData.lat = 90
@@ -163,10 +164,10 @@ const spotsReducer = (state = initialState, action) => {
         //     action.spots.forEach((spot) => newState.userSpots[spot.id] = spot)
         // let userSpotsState = {}
         // action.spots.forEach((spot) => newState.userSpots[spot.id] = spot)
-        case GET_SPOT_DETAILS:
-            // console.log(action.spot)
-            newState = { ...action.spot }
-            return newState;
+        // case GET_SPOT_DETAILS:
+        //     // console.log(action.spot)
+        //     newState = { ...action.spot }
+        //     return newState;
         case CREATE_SPOT:
             return { ...state, [action.spotInfo.id]: action.spotInfo };
         // case REMOVE_SPOT:

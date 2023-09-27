@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getSpotDetails } from '../../store/spots';
+import { getSpotDetails } from '../../store/spotDetails';
 import './SpotDetails.css'
 
 function SpotDetails() {
     const { spotId } = useParams()
     const dispatch = useDispatch()
-    const spot = useSelector(state => state?.spots)
+    const spot = useSelector(state => state?.spotDetails)
     const [isLoaded, setIsLoaded] = useState(false)
     console.log(spot)
 
