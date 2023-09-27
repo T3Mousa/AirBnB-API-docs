@@ -92,29 +92,43 @@ export const addNewSpot = (spotData, imageData) => async (dispatch) => {
         method: "POST",
         body: JSON.stringify(spotData),
     });
-    const newSpot = await response.json()
-    // console.log("I'm here", spotInfo)
+    if (response.ok) {
+        const newSpot = await response.json()
+        // console.log("I'm here", spotInfo)
 
-    // dispatch(addSpot(spotInfo))
-    // return spotInfo
-    if (newSpot) {
-        dispatch(addNewSpotImages(newSpot, imageData))
+        // dispatch(addSpot(spotInfo))
+        // return spotInfo
+        if (newSpot.id) {
+            dispatch(addNewSpotImages(newSpot, imageData))
+        }
+        return newSpot
     }
-    return newSpot
 }
 
 export const addNewSpotImages = (spot, images) => async (dispatch) => {
     // const [...{ url, preview }] = images
-    if (images) {
-        spot.SpotImages = []
+    spot.SpotImages = []
+    if (images.length) {
         for (let i = 0; i < images.length; i++) {
-            if (images[i].url) {
+            if (i === 0) {
                 const response = await csrfFetch(`/api/spots/${spot.id}/images`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        url: images[i].url,
+                        url: images[i],
                         preview: true
+                    })
+                });
+                const newImageInfo = await response.json()
+                spot.SpotImages.push(newImageInfo)
+            }
+            if (i > 0 && images[i] !== '') {
+                const response = await csrfFetch(`/api/spots/${spot.id}/images`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        url: images[i],
+                        preview: false
                     })
                 });
                 const newImageInfo = await response.json()
@@ -123,8 +137,10 @@ export const addNewSpotImages = (spot, images) => async (dispatch) => {
         }
         console.log(spot.SpotImages)
     }
-    dispatch(getSpotDetails(spot))
-    return spot.id
+    if (spot.id) {
+        dispatch(getSpotDetails(spot.id))
+        return spot.id
+    }
 }
 
 // export const deleteSpot = (spotId) => async (dispatch) => {

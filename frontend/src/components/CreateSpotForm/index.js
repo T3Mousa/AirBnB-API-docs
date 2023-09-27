@@ -14,7 +14,7 @@ function CreateSpotForm() {
     const [lng, setLng] = useState(180)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [price, setPrice] = useState()
+    const [price, setPrice] = useState('')
     const [previewImageUrl, setPreviewImageUrl] = useState('')
     const [image1Url, setImage1Url] = useState('')
     const [image2Url, setImage2Url] = useState('')
@@ -39,11 +39,11 @@ function CreateSpotForm() {
             description,
             price,
             imagesArray: [
-                { url: previewImageUrl, preview: true },
-                { url: image1Url, preview: false },
-                { url: image2Url, preview: false },
-                { url: image3Url, preview: false },
-                { url: image4Url, preview: false }
+                previewImageUrl,
+                image1Url,
+                image2Url,
+                image3Url,
+                image4Url
             ]
         };
 
@@ -66,14 +66,14 @@ function CreateSpotForm() {
 
 
         let newSpot = await dispatch(addNewSpot(spotInfo, spotInfo.imagesArray));
-        console.log(newSpot?.country)
+        // console.log(newSpot?.country)
         // console.log(newSpot.id)
-        if (newSpot?.id) {
-            history.push('/')
-            history.push(`/spots/${newSpot?.id}`);
-        } else {
+        if (Object.values(errorsObj).length) {
             // console.log(errorsObj)
             setErrors(errorsObj)
+        } else if (newSpot?.id) {
+            // history.push('/')
+            history.push(`/spots/${newSpot?.id}`);
         }
 
     }
@@ -218,7 +218,7 @@ function CreateSpotForm() {
                     placeholder="Image Url"
                 />
                 <p className='errors'>
-                    {image1Url && errors.image1Url && `${errors.image1Url}`}
+                    {errors.image1Url && `${errors.image1Url}`}
                 </p>
                 <input
                     type='url'
@@ -227,7 +227,7 @@ function CreateSpotForm() {
                     placeholder="Image Url"
                 />
                 <p className='errors'>
-                    {image2Url && errors.image2Url && `${errors.image2Url}`}
+                    {errors.image2Url && `${errors.image2Url}`}
                 </p>
                 <input
                     type='url'
@@ -236,7 +236,7 @@ function CreateSpotForm() {
                     placeholder="Image Url"
                 />
                 <p className='errors'>
-                    {image3Url && errors.image3Url && `${errors.image3Url}`}
+                    {errors.image3Url && `${errors.image3Url}`}
                 </p>
                 <input
                     type='url'
@@ -245,7 +245,7 @@ function CreateSpotForm() {
                     placeholder="Image Url"
                 />
                 <p className='errors'>
-                    {image4Url && errors.image4Url && `${errors.image4Url}`}
+                    {errors.image4Url && `${errors.image4Url}`}
                 </p>
             </label>
 
