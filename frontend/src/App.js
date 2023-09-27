@@ -22,6 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded &&
         <Switch>
+          <Route exact path='/'>
+            <Spots />
+          </Route>
           <Route path='/spots/current-user'>
             <ManageSpots />
           </Route>
@@ -33,9 +36,6 @@ function App() {
           </Route>
           <Route path='/spots'>
             <CreateSpotForm />
-          </Route>
-          <Route exact path='/'>
-            <Spots />
           </Route>
         </Switch>}
     </>

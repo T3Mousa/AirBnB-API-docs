@@ -3,21 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Link, Route } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton'
 import DeleteSpotFormModal from "../DeleteSpotFormModal";
-import { getAllSpots } from "../../store/spots";
+import { getUserSpots } from "../../store/userSpots";
 import './ManageSpots.css'
 
 function ManageSpots() {
-    const sessionUser = useSelector(state => state.session.user.id);
-    // console.log(sessionUser)
+    const sessionUser = useSelector(state => state.session.user);
+    console.log(sessionUser)
     const dispatch = useDispatch();
-    const userSpots = useSelector(state => Object.values(state?.spots).filter((spot) => spot.ownerId === sessionUser))
+    // const userSpots = useSelector(state => Object.values(state?.spots).filter((spot) => spot.ownerId === sessionUser))
+    const userSpots = Object.values(useSelector(state => state.userSpots))
+    console.log(userSpots)
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef()
-    console.log(userSpots)
+    const [isLoaded, setIsLoaded] = useState(false)
+    const useSpotsArray = []
+    // console.log(userSpots)
 
     useEffect(() => {
-        dispatch(getAllSpots())
-    }, [dispatch])
+        dispatch(getUserSpots(sessionUser)).then(() => setIsLoaded(true))
+    }, [dispatch, sessionUser, isLoaded])
 
     const openMenu = () => {
         if (showMenu) return;
@@ -42,7 +46,9 @@ function ManageSpots() {
         setShowMenu(false)
     }
 
-
+    // return (
+    //     <h1>testing</h1>
+    // )
 
     return (
         <>

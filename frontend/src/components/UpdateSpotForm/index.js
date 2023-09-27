@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { editSpot, getSpotDetails } from "../../store/spots";
+import { editSpot } from "../../store/userSpots";
+import { getSpotDetails } from "../../store/spots";
 
 function UpdateSpotForm() {
     const { spotId } = useParams()
     const dispatch = useDispatch()
 
-    const spot = useSelector(state => state?.spots)
+    const spot = useSelector(state => state?.userSpots[spotId])
     console.log(spot)
     const [isLoaded, setIsLoaded] = useState(false)
     const [address, setAddress] = useState(spot.address)
@@ -28,14 +29,13 @@ function UpdateSpotForm() {
     const [errors, setErrors] = useState({})
     const history = useHistory()
 
-    useEffect(() => {
-        dispatch(getSpotDetails(spotId)).then(() => setIsLoaded(true))
-    }, [dispatch, spotId, isLoaded])
+    // useEffect(() => {
+    //     dispatch(getSpotDetails(spotId)).then(() => setIsLoaded(true))
+    // }, [dispatch, spotId, isLoaded])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({})
-
 
         const spotInfo = {
             address,
@@ -56,13 +56,30 @@ function UpdateSpotForm() {
             ]
         };
 
+        let errorsObj = {}
+        if (!country) errorsObj.country = "Country is required"
+        if (!address) errorsObj.address = "Address is required"
+        if (!city) errorsObj.city = "City is required"
+        if (!state) errorsObj.state = "State is required"
+        if (!lat) errorsObj.lat = "Latitude is required"
+        if (!lng) errorsObj.lng = "Longitude is required"
+        if (description.length < 30) errorsObj.description = "Description needs a minimum of 30 characters"
+        if (!name) errorsObj.name = "Name is required"
+        if (!price) errorsObj.price = "Price is required"
+        if (!previewImageUrl) errorsObj.previewImageUrl = "Preview image is required."
+        if (previewImageUrl && (!previewImageUrl.endsWith('.png') || !previewImageUrl.endsWith('.jpg') || !previewImageUrl.endsWith('.jpeg'))) errorsObj.previewImageUrl = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image1Url && (!image1Url.endsWith('.png') || !image1Url.endsWith('.jpg') || !image1Url.endsWith('.jpeg'))) errorsObj.image1Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image2Url && (!image2Url.endsWith('.png') || !image2Url.endsWith('.jpg') || !image2Url.endsWith('.jpeg'))) errorsObj.image2Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image3Url && (!image3Url.endsWith('.png') || !image3Url.endsWith('.jpg') || !image3Url.endsWith('.jpeg'))) errorsObj.image3Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image4Url && (!image4Url.endsWith('.png') || !image4Url.endsWith('.jpg') || !image4Url.endsWith('.jpeg'))) errorsObj.image4Url = "Image URL must end in .png, .jpg, or .jpeg"
+
         let updatedSpot = await dispatch(editSpot(spotInfo));
         // console.log(updatedSpot?.country)
         // console.log(newSpot.id)
         if (updatedSpot?.id) {
             history.push(`/spots/${updatedSpot?.id}`);
         } else {
-            setErrors(updatedSpot?.errors)
+            setErrors(errorsObj)
         }
 
     }

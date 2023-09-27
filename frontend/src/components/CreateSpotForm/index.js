@@ -69,6 +69,7 @@ function CreateSpotForm() {
         console.log(newSpot?.country)
         // console.log(newSpot.id)
         if (newSpot?.id) {
+            history.push('/')
             history.push(`/spots/${newSpot?.id}`);
         } else {
             // console.log(errorsObj)
