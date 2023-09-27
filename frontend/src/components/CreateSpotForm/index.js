@@ -47,33 +47,33 @@ function CreateSpotForm() {
             ]
         };
 
-        // let errorsObj = {}
-        // if (!country) errorsObj.country = "Country is required"
-        // if (!address) errorsObj.address = "Address is required"
-        // if (!city) errorsObj.city = "City is required"
-        // if (!state) errorsObj.state = "State is required"
-        // if (!lat) errorsObj.lat = "Latitude is required"
-        // if (!lng) errorsObj.lng = "Longitude is required"
-        // if (description.length < 30) errorsObj.description = "Description needs a minimum of 30 characters"
-        // if (!name) errorsObj.name = "Name is required"
-        // if (!price) errorsObj.price = "Price is required"
-        // if (!previewImageUrl) errorsObj.previewImageUrl = "Preview image is required."
-        // if (previewImageUrl && (!previewImageUrl.endsWith('.png') || !previewImageUrl.endsWith('.jpg') || !previewImageUrl.endsWith('.jpeg'))) errorsObj.previewImageUrl = "Image URL must end in .png, .jpg, or .jpeg"
-        // if (image1Url && (!image1Url.endsWith('.png') || !image1Url.endsWith('.jpg') || !image1Url.endsWith('.jpeg'))) errorsObj.image1Url = "Image URL must end in .png, .jpg, or .jpeg"
-        // if (image2Url && (!image2Url.endsWith('.png') || !image2Url.endsWith('.jpg') || !image2Url.endsWith('.jpeg'))) errorsObj.image2Url = "Image URL must end in .png, .jpg, or .jpeg"
-        // if (image3Url && (!image3Url.endsWith('.png') || !image3Url.endsWith('.jpg') || !image3Url.endsWith('.jpeg'))) errorsObj.image3Url = "Image URL must end in .png, .jpg, or .jpeg"
-        // if (image4Url && (!image4Url.endsWith('.png') || !image4Url.endsWith('.jpg') || !image4Url.endsWith('.jpeg'))) errorsObj.image4Url = "Image URL must end in .png, .jpg, or .jpeg"
+        let errorsObj = {}
+        if (!country) errorsObj.country = "Country is required"
+        if (!address) errorsObj.address = "Address is required"
+        if (!city) errorsObj.city = "City is required"
+        if (!state) errorsObj.state = "State is required"
+        if (!lat) errorsObj.lat = "Latitude is required"
+        if (!lng) errorsObj.lng = "Longitude is required"
+        if (description.length < 30) errorsObj.description = "Description needs a minimum of 30 characters"
+        if (!name) errorsObj.name = "Name is required"
+        if (!price) errorsObj.price = "Price is required"
+        if (!previewImageUrl) errorsObj.previewImageUrl = "Preview image is required."
+        if (previewImageUrl && (!previewImageUrl.endsWith('.png') || !previewImageUrl.endsWith('.jpg') || !previewImageUrl.endsWith('.jpeg'))) errorsObj.previewImageUrl = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image1Url && (!image1Url.endsWith('.png') || !image1Url.endsWith('.jpg') || !image1Url.endsWith('.jpeg'))) errorsObj.image1Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image2Url && (!image2Url.endsWith('.png') || !image2Url.endsWith('.jpg') || !image2Url.endsWith('.jpeg'))) errorsObj.image2Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image3Url && (!image3Url.endsWith('.png') || !image3Url.endsWith('.jpg') || !image3Url.endsWith('.jpeg'))) errorsObj.image3Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image4Url && (!image4Url.endsWith('.png') || !image4Url.endsWith('.jpg') || !image4Url.endsWith('.jpeg'))) errorsObj.image4Url = "Image URL must end in .png, .jpg, or .jpeg"
 
 
         let newSpot = await dispatch(addNewSpot(spotInfo, spotInfo.imagesArray));
         // console.log(newSpot?.country)
         // console.log(newSpot.id)
-        if (newSpot?.id) {
+        if (Object.values(errorsObj).length) {
+            // console.log(errorsObj)
+            setErrors(errorsObj)
+        } else if (newSpot?.id) {
             // history.push('/')
             history.push(`/spots/${newSpot?.id}`);
-        } else {
-            // console.log(errorsObj)
-            setErrors(newSpot?.errors)
         }
 
     }

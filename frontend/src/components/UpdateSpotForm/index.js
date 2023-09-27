@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editSpot } from "../../store/userSpots";
-import { getSpotDetails } from "../../store/spotDetails";
 
 function UpdateSpotForm() {
     const { spotId } = useParams()
@@ -10,7 +9,7 @@ function UpdateSpotForm() {
 
     const spot = useSelector(state => state?.userSpots[spotId])
     console.log(spot)
-    const [isLoaded, setIsLoaded] = useState(false)
+    // const [isLoaded, setIsLoaded] = useState(false)
     const [address, setAddress] = useState(spot.address)
     const [city, setCity] = useState(spot.city)
     const [state, setState] = useState(spot.state)
@@ -20,18 +19,15 @@ function UpdateSpotForm() {
     const [name, setName] = useState(spot.name)
     const [description, setDescription] = useState(spot.description)
     const [price, setPrice] = useState(spot.price)
-    const [previewImageUrl, setPreviewImageUrl] = useState(spot.previewImageUrl)
-    const [image1Url, setImage1Url] = useState(spot.image1Url)
-    const [image2Url, setImage2Url] = useState(spot.image2Url)
-    const [image3Url, setImage3Url] = useState(spot.image3Url)
-    const [image4Url, setImage4Url] = useState(spot.image4Url)
+    const [previewImageUrl, setPreviewImageUrl] = useState(spot.previewImageUrl ? spot.previewImageUrl : '')
+    const [image1Url, setImage1Url] = useState(spot.image1Url ? spot.image1Url : '')
+    const [image2Url, setImage2Url] = useState(spot.image2Url ? spot.image2Url : '')
+    const [image3Url, setImage3Url] = useState(spot.image3Url ? spot.image3Url : '')
+    const [image4Url, setImage4Url] = useState(spot.image4Url ? spot.image4Url : '')
 
     const [errors, setErrors] = useState({})
     const history = useHistory()
 
-    // useEffect(() => {
-    //     dispatch(getSpotDetails(spotId)).then(() => setIsLoaded(true))
-    // }, [dispatch, spotId, isLoaded])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,13 +44,14 @@ function UpdateSpotForm() {
             description,
             price,
             imagesArray: [
-                { url: previewImageUrl, preview: true },
-                { url: image1Url, preview: false },
-                { url: image2Url, preview: false },
-                { url: image3Url, preview: false },
-                { url: image4Url, preview: false }
+                previewImageUrl,
+                image1Url,
+                image2Url,
+                image3Url,
+                image4Url
             ]
         };
+        console.log(spotInfo)
 
         let errorsObj = {}
         if (!country) errorsObj.country = "Country is required"
@@ -73,16 +70,17 @@ function UpdateSpotForm() {
         if (image3Url && (!image3Url.endsWith('.png') || !image3Url.endsWith('.jpg') || !image3Url.endsWith('.jpeg'))) errorsObj.image3Url = "Image URL must end in .png, .jpg, or .jpeg"
         if (image4Url && (!image4Url.endsWith('.png') || !image4Url.endsWith('.jpg') || !image4Url.endsWith('.jpeg'))) errorsObj.image4Url = "Image URL must end in .png, .jpg, or .jpeg"
 
-        let updatedSpot = await dispatch(editSpot(spotInfo));
-        // console.log(updatedSpot?.country)
-        // console.log(newSpot.id)
-        if (updatedSpot?.id) {
-            history.push(`/spots/${updatedSpot?.id}`);
-        } else {
+
+        let updatedSpot = await dispatch(editSpot(spotInfo, spotInfo.SpotImages));
+
+        if (Object.values(errorsObj).length) {
             setErrors(errorsObj)
+        } else {
+            history.push(`/spots/${updatedSpot?.id}`);
         }
 
     }
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -94,7 +92,7 @@ function UpdateSpotForm() {
             </p>
                 <input
                     type="text"
-                    value={spot.country}
+                    value={country}
                     onChange={(e) => setCountry(e.target.value)}
                 />
             </label>
@@ -104,7 +102,7 @@ function UpdateSpotForm() {
             </p>
                 <input
                     type="text"
-                    value={spot.address}
+                    value={address}
                     onChange={(e) => setAddress(e.target.value)}
                 />
             </label>
@@ -115,7 +113,7 @@ function UpdateSpotForm() {
                 </p>
                     <input
                         type="text"
-                        value={spot.city}
+                        value={city}
                         onChange={(e) => setCity(e.target.value)}
                     />
                 </label>
@@ -125,7 +123,7 @@ function UpdateSpotForm() {
                 </p>
                     <input
                         type="text"
-                        value={spot.state}
+                        value={state}
                         onChange={(e) => setState(e.target.value)}
                     />
                 </label>
@@ -153,7 +151,7 @@ function UpdateSpotForm() {
                     Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.
                 </p>
                 <textarea
-                    value={spot.description}
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </label>
@@ -167,7 +165,7 @@ function UpdateSpotForm() {
                 </p>
                 <input
                     type="text"
-                    value={spot.name}
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
             </label>
@@ -182,7 +180,7 @@ function UpdateSpotForm() {
                 <span>
                     $ <input
                         type="number"
-                        value={spot.price}
+                        value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
                 </span>
@@ -231,5 +229,6 @@ function UpdateSpotForm() {
         </form >
     )
 }
+
 
 export default UpdateSpotForm;

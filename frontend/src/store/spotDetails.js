@@ -2,10 +2,13 @@ import { csrfFetch } from "./csrf";
 
 const GET_SPOT_DETAILS = "spotDetails/GET_SPOT_DETAILS";
 
+
 const spotDetails = (spot) => ({
     type: GET_SPOT_DETAILS,
     spot
 });
+
+
 
 export const getSpotDetails = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
@@ -20,7 +23,7 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
     }
 }
 
-const initialState = null
+const initialState = {}
 
 const spotDetailsReducer = (state = initialState, action) => {
     switch (action.type) {

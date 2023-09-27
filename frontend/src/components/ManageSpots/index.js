@@ -69,7 +69,7 @@ function ManageSpots() {
                         <div>${spot.price} night</div>
                         <div className="update-delete">
                             <button>
-                                <Link to={`/spots/${spot.id}/edit`} style={{ textDecoration: 'none', color: 'black' }}>Update</Link>
+                                <Link to={`/spots/${spot.id}/edit`} key={spot.id} style={{ textDecoration: 'none', color: 'black' }}>Update</Link>
                             </button>
                             <OpenModalButton
                                 buttonText='Delete'
