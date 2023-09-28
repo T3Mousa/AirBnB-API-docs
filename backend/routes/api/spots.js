@@ -171,7 +171,7 @@ router.get('/:spotId', async (req, res) => {
             ],
             required: false
         })
-        console.log(spotRating)
+        // console.log(spotRating)
         spotData.numReviews = spotRating[0].dataValues.numReviews
         spotData.avgStarRating = spotRating[0].dataValues.avgStarRating
         res.json({ "Spots": spotData })

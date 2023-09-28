@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { getAllSpots } from '../../store/spots';
@@ -6,30 +6,40 @@ import './Spots.css'
 
 function Spots() {
     const dispatch = useDispatch();
-    const spots = useSelector(state => Object.values(state?.spots))
+    const spots = Object.values(useSelector(state => state?.spots))
+    const [isLoaded, setIsLoaded] = useState(false)
     console.log(spots)
 
     useEffect(() => {
-        dispatch(getAllSpots())
-    }, [dispatch])
+        dispatch(getAllSpots()).then(() => setIsLoaded(true))
 
+    }, [dispatch, isLoaded])
 
+    // if (!isLoaded) {
+    //     return (
+    //         <h1>is Loading</h1>
+    //     )
+    // }
     return (
-        <div className='spots-container'>
-            {spots?.map((spot) => (
-                <div className='spot-preview' >
-                    <NavLink to={`/spots/${spot.id}`} key={spot.id} style={{ textDecoration: 'none', color: 'black' }}>
-                        <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '200px', width: 'auto' }} />
-                    </NavLink>
-                    <div className="location-rating">
-                        <span>{spot.city}, {spot.state} </span>
-                        <span><i className="fa-solid fa-star"></i> {spot.avgRating}</span>
-                    </div>
-                    <div>${spot.price} night</div>
-                </div>
-            ))
+        <>
+            {isLoaded &&
+                <div className='spots-container'>
+                    {spots?.map((spot, i) => (
+                        <div className='spot-preview' key={i}>
+                            <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '200px', width: 'auto' }} />
+                            </NavLink>
+                            <div className="location-rating">
+                                <span>{spot.city}, {spot.state} </span>
+                                <span><i className="fa-solid fa-star"></i> {spot.avgRating}</span>
+                            </div>
+                            <div>${spot.price} night</div>
+                        </div>
+                    ))
+                    }
+                </div >
             }
-        </div >
+        </>
 
     )
 }
