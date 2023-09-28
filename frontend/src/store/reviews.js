@@ -1,28 +1,28 @@
 import { csrfFetch } from "./csrf";
 
-const GET_REVIEWS = "reviews/GET_REVIEWS"
-const CREATE_REVIEW = "reviews/CREATE_REVIEW"
+const GET_SPOT_REVIEWS = "reviews/GET_REVIEWS"
+const CREATE_SPOT_REVIEW = "reviews/CREATE_REVIEW"
 
 
-const allReviews = (reviews) => ({
-    type: GET_REVIEWS,
+const allSpotReviews = (reviews) => ({
+    type: GET_SPOT_REVIEWS,
     reviews
 })
 
 const createReview = (review) => ({
-    type: CREATE_REVIEW,
+    type: CREATE_SPOT_REVIEW,
     review
 })
 
-export const getAllReviews = (spotId) => async (dispatch) => {
+export const getAllSpotReviews = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
     if (response.ok) {
         const data = await response.json()
-        const reviews = data.Reviews
-        dispatch(allReviews(reviews))
-        console.log(reviews)
-        return reviews
+        const spotReviews = data.Reviews
+        dispatch(allSpotReviews(spotReviews))
+        console.log(spotReviews)
+        return spotReviews
     }
 }
 
@@ -33,6 +33,7 @@ export const postReview = (spotId, reviewData) => async (dispatch) => {
     })
 
     const newReview = await response.json()
+    console.log(newReview)
     dispatch(createReview(newReview))
     return newReview
 }
@@ -43,10 +44,11 @@ const initialState = {}
 const reviewsReducer = (state = initialState, action) => {
     let newState = { ...state }
     switch (action.type) {
-        case GET_REVIEWS:
-            action.reviews.forEach((review) => newState[review.id] = review);
-            return newState;
-        case CREATE_REVIEW:
+        case GET_SPOT_REVIEWS:
+            let spotReviewState = {}
+            action.reviews.forEach((review) => spotReviewState[review.id] = review);
+            return spotReviewState;
+        case CREATE_SPOT_REVIEW:
             return { ...state, [action.review.id]: action.review };
         default:
             return state;

@@ -8,11 +8,11 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef()
-    console.log(user)
-    console.log(spot)
-    console.log(reviews)
-    console.log(spotReviewedByUser)
-    console.log(spotOwnedByUser)
+    // console.log(user)
+    // console.log(spot)
+    // console.log(reviews)
+    // console.log(spotReviewedByUser)
+    // console.log(spotOwnedByUser)
     const openMenu = () => {
         if (showMenu) return;
         setShowMenu(true);
@@ -39,8 +39,13 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
     return (
         <div className='reviewHeading'>
             <h2><i className="fa-solid fa-star"></i>
-                {!reviews && "New"}
-                {spot.avgStarRating ? spot.avgStarRating : "New"} &middot; {spot.avgStarRating ? spot.numReviews : ""} {spot.numReviews && "reviews"}
+                {spot.avgStarRating ? spot.avgStarRating : "New"}
+                {spot.avgStarRating && " · "}
+                {spot.avgStarRating ? spot.numReviews : ""}
+                {spot.numReviews === 0 && ""}
+                {spot.numReviews === 1 && " review"}
+                {spot.numReviews > 1 && " reviews"}
+
             </h2>
             {user && !spotReviewedByUser && !spotOwnedByUser &&
                 <OpenModalButton

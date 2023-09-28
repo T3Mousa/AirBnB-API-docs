@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal';
 import { postReview } from '../../store/reviews';
 
 function CreateReviewFormModal({ spotId }) {
     const dispatch = useDispatch();
+    const history = useHistory()
     const [review, setReview] = useState('')
     const [stars, setStars] = useState('')
     const [errors, setErrors] = useState({})
@@ -24,10 +26,12 @@ function CreateReviewFormModal({ spotId }) {
 
         dispatch(postReview(spotId, reviewInfo))
             .then(closeModal)
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data.errors) setErrors(data.errors);
-            })
+        // .catch(async (res) => {
+        //     const data = await res.json();
+        //     if (data.errors) setErrors(data.errors);
+        // })
+
+        history.push(`/spots/${spotId}`)
     }
 
     return (
@@ -35,14 +39,14 @@ function CreateReviewFormModal({ spotId }) {
             <h1>How was your stay?</h1>
             <form onSubmit={handleSubmit}>
                 {errors.length && `${errors.message}`}
-                <lable>
+                <label>
                     <textarea
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
                         placeholder="Leave your review here..."
                         style={{ height: "200px" }}
                     />
-                </lable>
+                </label>
                 <label>
                     <select
                         name='rating'
@@ -58,8 +62,8 @@ function CreateReviewFormModal({ spotId }) {
 
                     </select>
                 </label>
+                <button type='submit' disabled={submitDisabled}>Submit Your Review</button>
             </form>
-            <button type='submit' disabled={submitDisabled}>Submit Your Review</button>
         </div>
     )
 }

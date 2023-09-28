@@ -5,6 +5,16 @@ import DeleteReviewFormModal from '../DeleteReviewFormModal';
 
 function Review({ review, user }) {
     // const dispatch = useDispatch()
+    const reviewDate = new Date(review.createdAt)
+    const reviewMonth = reviewDate.toLocaleString('default', { month: 'long' })
+    console.log(reviewMonth)
+    const reviewYear = reviewDate.getFullYear()
+    console.log(reviewYear)
+    // console.log(review.createdAt)
+    // console.log(new Date(review.createdAt))
+    // let month = new Date(review.createdAt).getMonth()
+    // console.log()
+    // const months = [January, February, March, April, May, June, July, August]
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef()
 
@@ -34,7 +44,8 @@ function Review({ review, user }) {
     return (
         <div>
             <div className='singleReview'>
-                <h4>{review.User.firstname}</h4>
+                <h4>{review.User.firstName}</h4>
+                <h4>{reviewMonth} {reviewYear}</h4>
                 <p>{review.review}</p>
                 {(user && user.id === review.User.id) &&
                     <OpenModalButton
