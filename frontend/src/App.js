@@ -8,6 +8,7 @@ import SpotDetails from './components/SpotDetails';
 import CreateSpotForm from './components/CreateSpotForm';
 import ManageSpots from './components/ManageSpots';
 import UpdateSpotForm from './components/UpdateSpotForm';
+import Reviews from './components/Reviews/Reviews';
 
 function App() {
   const dispatch = useDispatch()
@@ -15,7 +16,7 @@ function App() {
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true))
-  }, [dispatch])
+  }, [dispatch, isLoaded])
 
   return (
     <>
@@ -30,6 +31,9 @@ function App() {
           </Route>
           <Route path='/spots/:spotId/edit'>
             <UpdateSpotForm />
+          </Route>
+          <Route path='/spots/:spotId/reviews'>
+            <Reviews />
           </Route>
           <Route path='/spots/:spotId'>
             <SpotDetails />

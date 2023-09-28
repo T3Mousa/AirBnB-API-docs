@@ -15,7 +15,8 @@ export const getAllReviews = (spotId) => async (dispatch) => {
         const data = await response.json()
         const reviews = data.Reviews
         dispatch(allReviews(reviews))
-        return reviews
+        console.log(reviews)
+        // return reviews
     }
 }
 
