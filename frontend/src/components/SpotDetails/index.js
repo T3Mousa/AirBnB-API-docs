@@ -10,7 +10,7 @@ function SpotDetails() {
     const { spotId } = useParams()
     const dispatch = useDispatch()
     const spot = useSelector(state => state?.spotDetails)
-    const reviews = useSelector(state => state?.reviews)
+    const reviews = Object.values(useSelector(state => state?.reviews))
     const [isLoaded, setIsLoaded] = useState(false)
     console.log(spot.SpotImages)
     console.log(reviews)
