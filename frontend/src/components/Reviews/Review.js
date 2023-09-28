@@ -35,6 +35,7 @@ function Review({ review, user }) {
         <div>
             <div className='singleReview'>
                 <h4>{review.User.firstname}</h4>
+                <p>{review.review}</p>
                 {(user && user.id === review.User.id) &&
                     <OpenModalButton
                         buttonText='Delete'
@@ -42,7 +43,7 @@ function Review({ review, user }) {
                         modalComponent={<DeleteReviewFormModal review={review} />}
                     />}
             </div>
-            <p>{review.review}</p>
+
         </div>
     )
 }
