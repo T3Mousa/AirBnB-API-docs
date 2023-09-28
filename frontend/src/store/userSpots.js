@@ -108,7 +108,7 @@ const userSpotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_USER_SPOTS:
             action.spots.forEach((spot) => newState[spot.id] = spot)
-            console.log(action.spots)
+            // console.log(action.spots)
             return newState;
         case REMOVE_SPOT:
             delete newState[action.spotId];
