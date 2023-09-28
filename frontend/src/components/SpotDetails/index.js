@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Route } from 'react-router-dom';
 import { getSpotDetails } from '../../store/spotDetails';
-import { getAllReviews } from '../../store/reviews';
+import { getAllSpotReviews } from '../../store/reviews';
 import Reviews from '../Reviews/Reviews';
 import './SpotDetails.css'
 
@@ -12,11 +12,11 @@ function SpotDetails() {
     const spot = useSelector(state => state?.spotDetails)
     const reviews = Object.values(useSelector(state => state?.reviews))
     const [isLoaded, setIsLoaded] = useState(false)
-    console.log(spot.SpotImages)
+    // console.log(spot.SpotImages)
     console.log(reviews)
 
     useEffect(() => {
-        dispatch(getSpotDetails(spotId)).then(() => dispatch(getAllReviews(spotId)))
+        dispatch(getSpotDetails(spotId)).then(() => dispatch(getAllSpotReviews(spotId)))
             .then(() => setIsLoaded(true))
 
     }, [dispatch, spotId, isLoaded])
@@ -44,8 +44,15 @@ function SpotDetails() {
                     <p>{spot.description}</p>
                 </div>
                 <div>
-                    <span>${spot.price} </span>
-                    <span><i className="fa-solid fa-star"></i>{spot.avgStarRating} &middot; {spot.numReviews} reviews</span>
+                    <span>${spot.price}/night </span>
+                    <span><i className="fa-solid fa-star"></i>
+                        {spot.avgStarRating ? spot.avgStarRating : "New"}
+                        {spot.avgStarRating && " · "}
+                        {spot.avgStarRating ? spot.numReviews : ""}
+                        {spot.numReviews === 0 && ""}
+                        {spot.numReviews === 1 && " review"}
+                        {spot.numReviews > 1 && " reviews"}
+                    </span>
                 </div>
             </div>
             <div>

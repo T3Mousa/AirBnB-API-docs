@@ -8,7 +8,7 @@ function Spots() {
     const dispatch = useDispatch();
     const spots = Object.values(useSelector(state => state?.spots))
     const [isLoaded, setIsLoaded] = useState(false)
-    console.log(spots)
+    // console.log(spots)
 
     useEffect(() => {
         dispatch(getAllSpots()).then(() => setIsLoaded(true))
