@@ -1,21 +1,23 @@
-.spots-container {
+.spotsContainer {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 20px;
-    row-gap: 20px;
-
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
 }
 
-.spot-preview {
-    display: inline;
-    align-self: center;
+.spotPreview {
+    /* display: inline-block;
+    align-self: center; */
+    display: inline-block;
 }
 
-.location-rating {
+.locationRating {
     display: flex;
     justify-content: space-between;
 }
 
-.update-delete {
-    display: flex
+.updateDelete {
+    display: flex;
+    align-content: flex-start;
+
 }

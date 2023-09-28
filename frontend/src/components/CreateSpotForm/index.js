@@ -58,21 +58,22 @@ function CreateSpotForm() {
         if (!name) errorsObj.name = "Name is required"
         if (!price) errorsObj.price = "Price is required"
         if (!previewImageUrl) errorsObj.previewImageUrl = "Preview image is required."
-        if (previewImageUrl && (!previewImageUrl.endsWith('.png') || !previewImageUrl.endsWith('.jpg') || !previewImageUrl.endsWith('.jpeg'))) errorsObj.previewImageUrl = "Image URL must end in .png, .jpg, or .jpeg"
-        if (image1Url && (!image1Url.endsWith('.png') || !image1Url.endsWith('.jpg') || !image1Url.endsWith('.jpeg'))) errorsObj.image1Url = "Image URL must end in .png, .jpg, or .jpeg"
-        if (image2Url && (!image2Url.endsWith('.png') || !image2Url.endsWith('.jpg') || !image2Url.endsWith('.jpeg'))) errorsObj.image2Url = "Image URL must end in .png, .jpg, or .jpeg"
-        if (image3Url && (!image3Url.endsWith('.png') || !image3Url.endsWith('.jpg') || !image3Url.endsWith('.jpeg'))) errorsObj.image3Url = "Image URL must end in .png, .jpg, or .jpeg"
-        if (image4Url && (!image4Url.endsWith('.png') || !image4Url.endsWith('.jpg') || !image4Url.endsWith('.jpeg'))) errorsObj.image4Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (previewImageUrl && (!previewImageUrl.endsWith('.png') && !previewImageUrl.endsWith('.jpg') && !previewImageUrl.endsWith('.jpeg'))) errorsObj.previewImageUrl = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image1Url && !image1Url.endsWith('.png') && !image1Url.endsWith('.jpg') && !image1Url.endsWith('.jpeg')) errorsObj.image1Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image2Url && !image2Url.endsWith('.png') && !image2Url.endsWith('.jpg') && !image2Url.endsWith('.jpeg')) errorsObj.image2Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image3Url && !image3Url.endsWith('.png') && !image3Url.endsWith('.jpg') && !image3Url.endsWith('.jpeg')) errorsObj.image3Url = "Image URL must end in .png, .jpg, or .jpeg"
+        if (image4Url && !image4Url.endsWith('.png') && !image4Url.endsWith('.jpg') && !image4Url.endsWith('.jpeg')) errorsObj.image4Url = "Image URL must end in .png, .jpg, or .jpeg"
 
 
-        let newSpot = await dispatch(addNewSpot(spotInfo, spotInfo.imagesArray));
+        // let newSpot = await dispatch(addNewSpot(spotInfo, spotInfo.imagesArray));
         // console.log(newSpot?.country)
         // console.log(newSpot.id)
         if (Object.values(errorsObj).length) {
             // console.log(errorsObj)
             setErrors(errorsObj)
-        } else if (newSpot?.id) {
+        } else {
             // history.push('/')
+            let newSpot = await dispatch(addNewSpot(spotInfo, spotInfo.imagesArray));
             history.push(`/spots/${newSpot?.id}`);
         }
 
@@ -203,7 +204,7 @@ function CreateSpotForm() {
                     Submit a link to at least one photo to publish your spot.
                 </p>
                 <input
-                    type='url'
+                    type='text'
                     value={previewImageUrl}
                     onChange={(e) => setPreviewImageUrl(e.target.value)}
                     placeholder="Preview Image Url"
@@ -212,7 +213,7 @@ function CreateSpotForm() {
                     {errors.previewImageUrl && `${errors.previewImageUrl}`}
                 </p>
                 <input
-                    type='url'
+                    type='text'
                     value={image1Url}
                     onChange={(e) => setImage1Url(e.target.value)}
                     placeholder="Image Url"
@@ -221,7 +222,7 @@ function CreateSpotForm() {
                     {errors.image1Url && `${errors.image1Url}`}
                 </p>
                 <input
-                    type='url'
+                    type='text'
                     value={image2Url}
                     onChange={(e) => setImage2Url(e.target.value)}
                     placeholder="Image Url"
@@ -230,7 +231,7 @@ function CreateSpotForm() {
                     {errors.image2Url && `${errors.image2Url}`}
                 </p>
                 <input
-                    type='url'
+                    type='text'
                     value={image3Url}
                     onChange={(e) => setImage3Url(e.target.value)}
                     placeholder="Image Url"
@@ -239,7 +240,7 @@ function CreateSpotForm() {
                     {errors.image3Url && `${errors.image3Url}`}
                 </p>
                 <input
-                    type='url'
+                    type='text'
                     value={image4Url}
                     onChange={(e) => setImage4Url(e.target.value)}
                     placeholder="Image Url"
