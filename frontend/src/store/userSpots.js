@@ -48,7 +48,7 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 export const editSpot = (spotData, imageData) => async (dispatch) => {
     spotData.lat = 90
     spotData.lng = 180
-    const response = await csrfFetch(`/api/spots/${spotData.id}`, {
+    const response = await csrfFetch(`/api/spots/${+spotData.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(spotData)
@@ -57,6 +57,7 @@ export const editSpot = (spotData, imageData) => async (dispatch) => {
         const updatedSpot = await response.json()
         dispatch(addUpdatedSpotImages(updatedSpot, imageData))
         console.log(updatedSpot)
+        console.log(imageData)
         return updatedSpot
     }
 }
@@ -64,21 +65,11 @@ export const editSpot = (spotData, imageData) => async (dispatch) => {
 export const addUpdatedSpotImages = (spot, images) => async (dispatch) => {
     // const [...{ url, preview }] = images
     spot.SpotImages = []
+    console.log(images, "this is the images array")
     if (images.length) {
         for (let i = 0; i < images.length; i++) {
-            if (i === 0) {
-                const response = await csrfFetch(`/api/spots/${spot.id}/images`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        url: images[i],
-                        preview: true
-                    })
-                });
-                const newImageInfo = await response.json()
-                spot.SpotImages.push(newImageInfo)
-            }
-            if (i > 0 && images[i] !== '') {
+
+            if (images[i] !== '') {
                 const response = await csrfFetch(`/api/spots/${spot.id}/images`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -114,7 +105,7 @@ const userSpotsReducer = (state = initialState, action) => {
             delete newState[action.spotId];
             return newState;
         case UPDATE_SPOT:
-            newState[action.spots.id] = { ...newState[action.spots.id], ...action.spots.id }
+            newState[action.spot.id] = { ...newState[action.spot.id], ...action.spot.id }
             return newState
         default:
             return newState;

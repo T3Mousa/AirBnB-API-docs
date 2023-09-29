@@ -51,7 +51,6 @@ app.use(routes);
 // Error handling middleware
 app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
-    console.log(err.errors, "we are here")
     err.title = "Resource Not Found";
     err.errors = { message: "The requested resource couldn't be found." };
     err.status = 404;
@@ -59,6 +58,7 @@ app.use((_req, _res, next) => {
 });
 
 app.use((err, _req, _res, next) => {
+    console.log(err.errors, "we are here")
     // check if error is a Sequelize error:
     if (err instanceof ValidationError) {
         let errors = {};

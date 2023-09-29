@@ -9,36 +9,41 @@ function CreateReviewFormModal({ spotId }) {
     const history = useHistory()
     const [review, setReview] = useState('')
     const [stars, setStars] = useState('')
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState([])
     const { closeModal } = useModal()
 
     const submitDisabled = !(review.length >= 10 && stars)
 
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors({});
+        setErrors([]);
         const reviewInfo = {
             review,
             stars
         }
 
-        dispatch(postReview(spotId, reviewInfo))
-            .then(closeModal)
-        // .catch(async (res) => {
-        //     const data = await res.json();
-        //     if (data.errors) setErrors(data.errors);
-        // })
+        await dispatch(postReview(spotId, reviewInfo))
+            .then((res) => {
+                console.log(res)
+                if (res.message) {
+                    setErrors({ message: res.message })
+                } else {
+                    closeModal()
+                    history.push(`/spots/${spotId}`)
+                }
+            })
 
-        history.push(`/spots/${spotId}`)
     }
 
     return (
         <div className='signUpForm'>
             <h1>How was your stay?</h1>
             <form onSubmit={handleSubmit}>
-                {errors.length && `${errors.message}`}
+                <p className='errors'>
+                    {errors.message ? `${errors.message}` : ""}
+                </p>
                 <label>
                     <textarea
                         value={review}
@@ -62,6 +67,18 @@ function CreateReviewFormModal({ spotId }) {
 
                     </select>
                 </label>
+                {/* <label>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                            key={star}
+                            type="button"
+                            // onClick={handleRatingClick(star)}
+                            onClick={(star) => setStars(star)}
+                            className={star <= stars ? 'selected' : ''}
+                        >
+                        </button>
+                    ))}
+                </label> */}
                 <button type='submit' disabled={submitDisabled}>Submit Your Review</button>
             </form>
         </div>

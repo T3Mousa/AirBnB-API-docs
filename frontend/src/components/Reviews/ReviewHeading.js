@@ -2,17 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import CreateReviewFormModal from '../CreateReviewFormModal';
+import { getAllSpotReviews } from '../../store/reviews';
 
 function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUser }) {
 
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef()
-    // console.log(user)
-    // console.log(spot)
-    // console.log(reviews)
-    // console.log(spotReviewedByUser)
-    // console.log(spotOwnedByUser)
+
     const openMenu = () => {
         if (showMenu) return;
         setShowMenu(true);
@@ -34,6 +31,7 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
 
     const closeMenu = () => {
         setShowMenu(false)
+
     }
 
     return (
@@ -56,16 +54,6 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
             }
         </div>
     )
-    // if (!reviews) {
-    //     return (
-    //         <div className='reviewHeading'>
-    //             <h2>
-    //                 <i className="fa-solid fa-star"></i> New
-    //             </h2>
-    //             {user && !spotOwnedByUser && <button className="createReviewButton">Post Your Review</button>}
-    //         </div>
-    //     )
-    // }
 }
 
 export default ReviewHeading;

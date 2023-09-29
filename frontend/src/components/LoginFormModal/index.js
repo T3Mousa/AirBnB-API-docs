@@ -12,6 +12,7 @@ function LoginFormModal() {
     const { closeModal } = useModal()
 
     const demoSignIn = (e) => {
+        e.preventDefault()
         setCredential('Demo-lition')
         setPassword('password')
     }

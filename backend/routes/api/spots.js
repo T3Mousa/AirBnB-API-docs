@@ -285,6 +285,7 @@ router.put('/:spotId', requireAuth, validateSpotParams, async (req, res) => {
             if (price !== undefined) existingSpot.price = price
 
             await existingSpot.save()
+            console.log(existingSpot)
             res.json(existingSpot)
         } else {
             res.status(403)
