@@ -1,4 +1,6 @@
 import { csrfFetch } from "./csrf";
+import { restoreUser } from "./session";
+import { getSpotDetails } from "./spotDetails";
 
 const GET_SPOT_REVIEWS = "reviews/GET_SPOT_REVIEWS"
 const CREATE_SPOT_REVIEW = "reviews/CREATE_SPOT_REVIEW"
@@ -41,6 +43,8 @@ export const postReview = (spotId, reviewData) => async (dispatch) => {
     if (newReview.id) {
         console.log(newReview)
         dispatch(createReview(newReview))
+        dispatch(getAllSpotReviews(`${spotId}`))
+        dispatch(getSpotDetails(`${spotId}`))
         return newReview
     }
     else {
@@ -48,14 +52,16 @@ export const postReview = (spotId, reviewData) => async (dispatch) => {
     }
 }
 
-export const deleteSpotReview = (reviewId) => async (dispatch) => {
+export const deleteSpotReview = (reviewId, spotId) => async (dispatch) => {
     // console.log(reviewId)
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
     });
-    // const review = await response.json()
-    console.log(response)
+    const review = await response.json()
+    console.log(review)
     dispatch(deleteReview(reviewId))
+    dispatch(getSpotDetails(`${spotId}`))
+    return review
 }
 
 
@@ -69,7 +75,9 @@ const reviewsReducer = (state = initialState, action) => {
             action.reviews.forEach((review) => spotReviewState[review.id] = review);
             return spotReviewState;
         case CREATE_SPOT_REVIEW:
-            return { ...state, [action.review.id]: action.review };
+            // newState[action.review.id] = { ...action.review }
+            // return newState;
+            return { ...state, [action.review.id]: action.review }
         case DELETE_SPOT_REVIEW:
             delete newState[action.reviewId];
             return newState;

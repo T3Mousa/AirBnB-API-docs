@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import CreateReviewFormModal from '../CreateReviewFormModal';
+import { getAllSpotReviews } from '../../store/reviews';
 
 function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUser }) {
 
@@ -30,6 +31,7 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
 
     const closeMenu = () => {
         setShowMenu(false)
+
     }
 
     return (
