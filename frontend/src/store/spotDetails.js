@@ -15,7 +15,7 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
     console.log(response)
     if (response.ok) {
         const data = await response.json()
-        // console.log(data)
+        console.log(data)
         const spotDeets = data.Spots
         console.log(spotDeets.SpotImages)
         dispatch(spotDetails(spotDeets))
@@ -28,7 +28,7 @@ const initialState = {}
 const spotDetailsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT_DETAILS:
-            let newState = action.spot
+            let newState = { ...action.spot }
             return newState;
         default:
             return state;

@@ -37,10 +37,10 @@ function Review({ review, user }) {
     return (
         <div>
             <div className='singleReview'>
-                <h4>{review.User.firstName}</h4>
+                <h4>{review?.User?.firstName}</h4>
                 <h4>{reviewMonth} {reviewYear}</h4>
-                <p>{review.review}</p>
-                {(user && user.id === review.User.id) &&
+                <p>{review?.review}</p>
+                {(user && user?.id === review?.User?.id) &&
                     <OpenModalButton
                         buttonText='Delete'
                         onButtonClick={closeMenu}

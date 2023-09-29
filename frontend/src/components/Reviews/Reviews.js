@@ -4,9 +4,13 @@ import ReviewHeading from '../Reviews/ReviewHeading';
 import Review from '../Reviews/Review';
 
 function Reviews({ spot, reviews }) {
-    const sessionUser = useSelector(state => state.session.user);
+    const sessionUser = useSelector(state => state?.session.user);
     if (!reviews) return;
-    const spotReviewedByUser = (sessionUser && reviews?.some((review) => review.User.id === sessionUser.id))
+    console.log(reviews)
+    // console.log(reviews[0].User.id)
+    console.log(sessionUser.id)
+    const spotReviewedByUser = (sessionUser && reviews?.some((rev) => rev?.User?.id === sessionUser?.id))
+
     const spotOwnedByUser = (sessionUser && spot.ownerId === sessionUser.id)
 
     return (

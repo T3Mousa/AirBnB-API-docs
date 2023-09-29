@@ -8,15 +8,13 @@ function CreateReviewFormModal({ spotId }) {
     const dispatch = useDispatch();
     const history = useHistory()
     const [review, setReview] = useState('')
-    const [stars, setStars] = useState(null)
+    const [stars, setStars] = useState('')
     const [errors, setErrors] = useState([])
     const { closeModal } = useModal()
 
     const submitDisabled = !(review.length >= 10 && stars)
 
-    // const handleRatingClick = (selectedRating) => {
-    //     setStars(selectedRating)
-    // }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,6 +52,21 @@ function CreateReviewFormModal({ spotId }) {
                     />
                 </label>
                 <label>
+                    <select
+                        name='rating'
+                        value={stars}
+                        onChange={(e) => setStars(e.target.value)}
+                    >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option value=''>Stars</option>
+
+                    </select>
+                </label>
+                {/* <label>
                     {[1, 2, 3, 4, 5].map((star) => (
                         <button
                             key={star}
@@ -64,7 +77,7 @@ function CreateReviewFormModal({ spotId }) {
                         >
                         </button>
                     ))}
-                </label>
+                </label> */}
                 <button type='submit' disabled={submitDisabled}>Submit Your Review</button>
             </form>
         </div>
