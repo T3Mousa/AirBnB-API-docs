@@ -4,13 +4,13 @@ import { useModal } from '../../context/Modal';
 import './DeleteReviewFormModal.css'
 import { deleteSpotReview } from '../../store/reviews';
 
-function DeleteReviewFormModal({ review }) {
+function DeleteReviewFormModal({ spot, review }) {
     const dispatch = useDispatch()
     const { closeModal } = useModal()
 
     const confirmDelete = (e) => {
         e.preventDefault();
-        return dispatch(deleteSpotReview(review.id))
+        return dispatch(deleteSpotReview(review.id, spot.id))
             .then(closeModal)
     };
 

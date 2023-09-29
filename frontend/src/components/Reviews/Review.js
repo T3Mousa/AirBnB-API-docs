@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import OpenModalButton from '../OpenModalButton';
 import DeleteReviewFormModal from '../DeleteReviewFormModal';
 
-function Review({ review, user }) {
+function Review({ spot, review, user }) {
     // const dispatch = useDispatch()
     const reviewDate = new Date(review.createdAt)
     const reviewMonth = reviewDate.toLocaleString('default', { month: 'long' })
@@ -44,7 +44,7 @@ function Review({ review, user }) {
                     <OpenModalButton
                         buttonText='Delete'
                         onButtonClick={closeMenu}
-                        modalComponent={<DeleteReviewFormModal review={review} />}
+                        modalComponent={<DeleteReviewFormModal spot={spot} review={review} />}
                     />}
             </div>
 

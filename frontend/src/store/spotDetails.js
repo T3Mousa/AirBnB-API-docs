@@ -28,7 +28,7 @@ const initialState = {}
 const spotDetailsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT_DETAILS:
-            let newState = { ...action.spot }
+            const newState = action.spot
             return newState;
         default:
             return state;

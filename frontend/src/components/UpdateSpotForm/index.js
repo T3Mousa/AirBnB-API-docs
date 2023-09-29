@@ -47,7 +47,7 @@ function UpdateSpotForm() {
             image4Url
         ]
     };
-    console.log(spotInfo)
+    // console.log(spotInfo)
 
     const handleSubmit = async (e) => {
         e.preventDefault();

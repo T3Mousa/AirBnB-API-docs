@@ -26,6 +26,7 @@ function CreateReviewFormModal({ spotId }) {
 
         await dispatch(postReview(spotId, reviewInfo))
             .then((res) => {
+                console.log(res)
                 if (res.message) {
                     setErrors({ message: res.message })
                 } else {
