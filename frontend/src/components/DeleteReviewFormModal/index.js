@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './DeleteReviewFormModal.css'
+import { deleteSpotReview } from '../../store/reviews';
 
 function DeleteReviewFormModal({ review }) {
     const dispatch = useDispatch()
@@ -9,8 +10,8 @@ function DeleteReviewFormModal({ review }) {
 
     const confirmDelete = (e) => {
         e.preventDefault();
-        // return dispatch(deleteSpot(spotId))
-        // .then(closeModal)
+        return dispatch(deleteSpotReview(review.id))
+            .then(closeModal)
     };
 
     const cancelDelete = (e) => {

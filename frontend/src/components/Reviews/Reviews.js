@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import ReviewHeading from '../Reviews/ReviewHeading';
 import Review from '../Reviews/Review';
 
@@ -8,8 +8,7 @@ function Reviews({ spot, reviews }) {
     if (!reviews) return;
     const spotReviewedByUser = (sessionUser && reviews?.some((review) => review.User.id === sessionUser.id))
     const spotOwnedByUser = (sessionUser && spot.ownerId === sessionUser.id)
-    // const spotReviews = reviews.filter((review) => review.User.spotId === spot.id)
-    // console.log(spotReviews)
+
     return (
         <div>
             <ReviewHeading user={sessionUser} reviews={reviews} spot={spot} spotReviewedByUser={spotReviewedByUser} spotOwnedByUser={spotOwnedByUser} />

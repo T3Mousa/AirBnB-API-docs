@@ -13,7 +13,7 @@ function SpotDetails() {
     const reviews = Object.values(useSelector(state => state?.reviews))
     const [isLoaded, setIsLoaded] = useState(false)
     // console.log(spot.SpotImages)
-    console.log(reviews)
+    // console.log(reviews)
 
     useEffect(() => {
         dispatch(getSpotDetails(spotId)).then(() => dispatch(getAllSpotReviews(spotId)))

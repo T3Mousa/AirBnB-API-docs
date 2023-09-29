@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import DeleteReviewFormModal from '../DeleteReviewFormModal';
 
@@ -7,14 +6,8 @@ function Review({ review, user }) {
     // const dispatch = useDispatch()
     const reviewDate = new Date(review.createdAt)
     const reviewMonth = reviewDate.toLocaleString('default', { month: 'long' })
-    console.log(reviewMonth)
     const reviewYear = reviewDate.getFullYear()
-    console.log(reviewYear)
-    // console.log(review.createdAt)
-    // console.log(new Date(review.createdAt))
-    // let month = new Date(review.createdAt).getMonth()
-    // console.log()
-    // const months = [January, February, March, April, May, June, July, August]
+
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef()
 

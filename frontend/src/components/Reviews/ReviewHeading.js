@@ -8,11 +8,7 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef()
-    // console.log(user)
-    // console.log(spot)
-    // console.log(reviews)
-    // console.log(spotReviewedByUser)
-    // console.log(spotOwnedByUser)
+
     const openMenu = () => {
         if (showMenu) return;
         setShowMenu(true);
@@ -56,16 +52,6 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
             }
         </div>
     )
-    // if (!reviews) {
-    //     return (
-    //         <div className='reviewHeading'>
-    //             <h2>
-    //                 <i className="fa-solid fa-star"></i> New
-    //             </h2>
-    //             {user && !spotOwnedByUser && <button className="createReviewButton">Post Your Review</button>}
-    //         </div>
-    //     )
-    // }
 }
 
 export default ReviewHeading;
