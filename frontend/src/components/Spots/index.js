@@ -28,15 +28,15 @@ function Spots() {
                         <div className='spotPreview' key={i}>
                             <NavLink to={`/spots/${spot?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                 <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '200px', width: 'auto' }} />
+                                <div className="locationRating">
+                                    <span>{spot.city}, {spot.state} </span>
+                                    <span><i className="fa-solid fa-star"></i>
+                                        {spot.avgRating && `${spot.avgRating}`}
+                                        {!spot.avgRating && "New"}
+                                    </span>
+                                </div>
+                                <div>${spot.price} night</div>
                             </NavLink>
-                            <div className="locationRating">
-                                <span>{spot.city}, {spot.state} </span>
-                                <span><i className="fa-solid fa-star"></i>
-                                    {spot.avgRating && `${spot.avgRating}`}
-                                    {!spot.avgRating && "New"}
-                                </span>
-                            </div>
-                            <div>${spot.price} night</div>
                         </div>
                     ))
                     }

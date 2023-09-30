@@ -71,9 +71,10 @@ function LoginFormModal() {
                         onChange={e => setPassword(e.target.value)}
                     />
                 </label>
-                {/* {errors && <p className='errors'>{errors.message}</p>} */}
-                <button type='submit' style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Log In</button>
-                <button type='submit' style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }} onClick={(e) => demoSignIn(e)}>Demo User</button>
+                <div className='logInFormButtons'>
+                    <button type='submit' className="logInButton">Log In</button>
+                    <button type='submit' className="demoUserButton" style={{ fontFamily: "Nunito, cursive", fontWeight: "bold", border: "none", backgroundColor: "white", textDecoration: "underline" }} onClick={(e) => demoSignIn(e)}>Demo User</button>
+                </div>
             </form>
         </div>
     )
