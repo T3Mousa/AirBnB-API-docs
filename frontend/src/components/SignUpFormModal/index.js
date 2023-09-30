@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
 import './SignUpForm.css'
@@ -13,6 +14,7 @@ function SignUpFormModal() {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmpassword] = useState('')
     const [errors, setErrors] = useState({})
+    const history = useHistory()
     const { closeModal } = useModal()
 
     const handleSubmit = (e) => {
@@ -38,6 +40,7 @@ function SignUpFormModal() {
                         }
                     } else {
                         closeModal()
+                        history.push('/')
                     }
                 })
         };
