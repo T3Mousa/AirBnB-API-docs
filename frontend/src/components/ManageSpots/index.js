@@ -54,7 +54,7 @@ function ManageSpots() {
         <>
             <h1>Manage Your Spots</h1>
             <button>
-                <Link to='/spots' style={{ textDecoration: 'none', color: 'black' }}>Create a New Spot</Link>
+                <Link to='/spots' style={{ textDecoration: 'none', color: 'black', fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Create a New Spot</Link>
             </button>
             <div className='spotsContainer'>
                 {userSpots?.map((spot) => (
@@ -72,9 +72,10 @@ function ManageSpots() {
                         <div>${spot.price} night</div>
                         <div className="updateDelete">
                             <button>
-                                <Link to={`/spots/${spot.id}/edit`} key={spot.id} style={{ textDecoration: 'none', color: 'black' }}>Update</Link>
+                                <Link to={`/spots/${spot.id}/edit`} key={spot.id} style={{ textDecoration: 'none', color: 'black', fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Update</Link>
                             </button>
                             <OpenModalButton
+                                className="deleteSpotButton"
                                 buttonText='Delete'
                                 onButtonClick={closeMenu}
                                 modalComponent={<DeleteSpotFormModal spotId={spot.id} />}

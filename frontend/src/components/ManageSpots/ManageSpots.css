@@ -21,3 +21,8 @@
     align-content: flex-start;
 
 }
+
+.deleteSpotButton {
+    font-family: "Nunito", cursive;
+    font-weight: bold;
+}

@@ -1,7 +1,5 @@
 /* css for login form */
-.loginForm {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
+
 
 form {
     padding: 20px;
@@ -20,7 +18,6 @@ input {
 button {
     display: block;
     font-size: large;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     margin: 5px
 }
 

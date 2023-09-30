@@ -12,7 +12,7 @@ function OpenModalButton({ modalComponent, buttonText, onButtonClick, onModalClo
 
     return (
         <>
-            <button onClick={onClick}>{buttonText}</button>
+            <button onClick={onClick} style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>{buttonText}</button>
         </>
     )
 }

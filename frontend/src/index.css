@@ -1,1 +1,7 @@
 /* TODO Add site wide styles */
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+body {
+    font-family: "Nunito", cursive;
+    font-weight: bold;
+}

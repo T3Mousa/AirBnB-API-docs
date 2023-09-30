@@ -1,0 +1,31 @@
+.starRating,
+.reviewText,
+.submitReviewButton,
+h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    width: 250px
+}
+
+.submitReviewButton button {
+    background-color: #FF395B;
+    color: white;
+    width: 250px
+}
+
+.star {
+    cursor: pointer;
+    transition: color 100ms;
+    font-size: x-large;
+    margin-right: 7px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+input[type='radio'] {
+    display: none;
+}

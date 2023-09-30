@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/T3Mousa/AirBnB-API-docs/issues"
   },
-  "homepage": "https://github.com/T3Mousa/AirBnB-API-docs#readme"
+  "homepage": "https://github.com/T3Mousa/AirBnB-API-docs#readme",
+  "dependencies": {
+    "react-icons": "^4.11.0"
+  }
 }
