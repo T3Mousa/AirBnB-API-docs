@@ -21,10 +21,12 @@ export const login = (user) => async (dispatch) => {
             password,
         }),
     });
+    const data = await response.json();
     if (response.ok) {
-        const data = await response.json();
         dispatch(setUser(data.user));
-        // return response;
+    } else {
+        console.log(data)
+        return data;
     }
 };
 

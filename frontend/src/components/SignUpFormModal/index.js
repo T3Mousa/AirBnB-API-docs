@@ -97,7 +97,7 @@ function SignUpFormModal() {
                     />
                 </label>
                 {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-                <button type='submit'>Sign Up</button>
+                <button type='submit' style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Sign Up</button>
             </form>
         </div>
     )

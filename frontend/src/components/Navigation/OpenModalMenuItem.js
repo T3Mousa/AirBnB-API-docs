@@ -11,7 +11,7 @@ function OpenModalMenuItem({ modalComponent, itemText, onItemClick, onModalClose
     }
     return (
         <>
-            <div onClick={onClick}>{itemText}</div>
+            <div onClick={onClick} style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>{itemText}</div>
         </>
     )
 }

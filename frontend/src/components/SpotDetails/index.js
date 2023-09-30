@@ -36,7 +36,7 @@ function SpotDetails() {
                 <h3>{spot.city}, {spot.state}, {spot.country}</h3>
             </div>
             <div className='spotImages'>
-                {spot.SpotImages.map((image, i) => <img key={i} src={image.url} alt={`spot ${spotId}`} style={{ height: '450px', width: 'auto' }} />)}
+                {spot.SpotImages.map((image, i) => <img key={i} className={`image${i}`} src={image.url} alt={`spot ${spotId}`} />)}
             </div>
             <div>
                 <div>
