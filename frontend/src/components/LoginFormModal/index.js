@@ -11,6 +11,8 @@ function LoginFormModal() {
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
 
+    const submitDisabled = !(credential.length >= 4 && password.length >= 6)
+
     const demoSignIn = (e) => {
         // e.preventDefault()
         setErrors({});
@@ -72,7 +74,7 @@ function LoginFormModal() {
                     />
                 </label>
                 <div className='logInFormButtons'>
-                    <button type='submit' className="logInButton">Log In</button>
+                    <button type='submit' disabled={submitDisabled} className="logInButton">Log In</button>
                     <button type='submit' className="demoUserButton" style={{ fontFamily: "Nunito, cursive", fontWeight: "bold", border: "none", backgroundColor: "white", textDecoration: "underline" }} onClick={(e) => demoSignIn(e)}>Demo User</button>
                 </div>
             </form>

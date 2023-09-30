@@ -15,3 +15,27 @@
     display: flex;
     justify-content: space-between;
 }
+
+.tooltipContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltipText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(56, 53, 53);
+    color: white;
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    white-space: no-wrap;
+}
+
+.tooltipContainer:hover .tooltipText {
+    opacity: 1;
+    visibility: visible;
+}

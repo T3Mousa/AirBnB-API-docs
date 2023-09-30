@@ -6,7 +6,9 @@ import Review from '../Reviews/Review';
 function Reviews({ spot, reviews }) {
     const sessionUser = useSelector(state => state?.session?.user);
     if (!reviews) return;
-    // console.log(reviews)
+    console.log(reviews)
+    let reversedReviews = reviews.slice().reverse()
+    console.log(reversedReviews)
     // console.log(reviews[0].User.id)
     // console.log(sessionUser.id)
     const spotReviewedByUser = (sessionUser && reviews?.some((rev) => rev?.User?.id === sessionUser?.id))
@@ -17,7 +19,7 @@ function Reviews({ spot, reviews }) {
         <div>
             <ReviewHeading user={sessionUser} reviews={reviews} spot={spot} spotReviewedByUser={spotReviewedByUser} spotOwnedByUser={spotOwnedByUser} />
             <div className='reviews'>
-                {reviews.map((review, i) => <Review key={i} spot={spot} review={review} user={sessionUser} />)}
+                {reversedReviews.map((review, i) => <Review key={i} spot={spot} review={review} user={sessionUser} />)}
             </div>
         </div>
     )
