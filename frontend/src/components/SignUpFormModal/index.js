@@ -17,6 +17,8 @@ function SignUpFormModal() {
     const history = useHistory()
     const { closeModal } = useModal()
 
+    const submitDisabled = !(firstName && lastName && username && email && password && confirmPassword && username.length >= 4 && password.length >= 6)
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password === confirmPassword) {
@@ -101,7 +103,7 @@ function SignUpFormModal() {
                         onChange={e => setConfirmpassword(e.target.value)}
                     />
                 </label>
-                <button type='submit' style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Sign Up</button>
+                <button type='submit' disabled={submitDisabled} style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Sign Up</button>
             </form>
         </div>
     )
