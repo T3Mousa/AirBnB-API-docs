@@ -26,7 +26,7 @@ function Spots() {
                 <div className='spotsContainer'>
                     {spots?.map((spot, i) => (
                         <div className='spotPreview' key={i}>
-                            <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                            <NavLink to={`/spots/${spot?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                 <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '200px', width: 'auto' }} />
                             </NavLink>
                             <div className="locationRating">

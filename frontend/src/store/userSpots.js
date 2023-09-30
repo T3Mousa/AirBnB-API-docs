@@ -1,5 +1,6 @@
 import { csrfFetch } from "./csrf";
 import { getSpotDetails } from "./spotDetails";
+import { getAllSpots } from "./spots";
 
 const GET_USER_SPOTS = "userSpots/GET_USER_SPOTS"
 const REMOVE_SPOT = "userSpots/REMOVE_SPOT"
@@ -27,10 +28,12 @@ const updateSpotImages = (spot, images) => ({
     images
 })
 
-export const getUserSpots = () => async (dispatch) => {
+export const getUserSpots = (user) => async (dispatch) => {
     const response = await csrfFetch('/api/spots/current-user')
 
     const userSpotData = await response.json()
+    console.log(user)
+    console.log(userSpotData)
     const userSpotDataArray = userSpotData.Spots
     console.log(userSpotDataArray)
     dispatch(userSpots(userSpotDataArray))
