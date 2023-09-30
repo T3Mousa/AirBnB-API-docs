@@ -52,10 +52,14 @@ export const signup = (userInfo) => async (dispatch) => {
             password
         })
     })
+    const signUpInfo = await response.json();
     if (response.ok) {
-        const signUpInfo = await response.json();
         dispatch(setUser(signUpInfo.user))
+    } else {
+        console.log(signUpInfo)
+        return signUpInfo
     }
+
 }
 
 
