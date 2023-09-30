@@ -38,6 +38,8 @@ function LoginFormModal() {
                     } else {
                         closeModal()
                     }
+                } else {
+                    closeModal()
                 }
             })
         // .then(closeModal)
