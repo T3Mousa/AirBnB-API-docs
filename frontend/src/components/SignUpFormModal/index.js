@@ -27,12 +27,19 @@ function SignUpFormModal() {
                 password
             })
             )
-                .then(closeModal)
-                .catch(async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-                );
+                .then((res) => {
+                    if (res) {
+                        console.log(res)
+                        if (res.errors) {
+                            console.log(res.errors)
+                            setErrors(res.errors)
+                        } else {
+                            closeModal()
+                        }
+                    } else {
+                        closeModal()
+                    }
+                })
         };
         return setErrors({
             confirmPassword: "Confirm Password field must be the same as the Password field"
@@ -41,62 +48,56 @@ function SignUpFormModal() {
 
     return (
         <div className='signUpForm'>
-            <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
+                <h1>Sign Up</h1>
+                {errors.firstName && <p className='errors'>{errors.firstName}</p>}
+                {errors.lastName && <p className='errors'>{errors.lastName}</p>}
+                {errors.username && <p className='errors'>{errors.username}</p>}
+                {errors.email && <p className='errors'>{errors.email}</p>}
+                {errors.password && <p className='errors'>{errors.password}</p>}
+                {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}
                 <label> First Name
                     <input
                         type='text'
                         value={firstName}
                         onChange={e => setFirstName(e.target.value)}
-                        required
                     />
                 </label>
-                {errors.firstName && <p>{errors.firstName}</p>}
                 <label> Last Name
                     <input
                         type='text'
                         value={lastName}
                         onChange={e => setLastName(e.target.value)}
-                        required
                     />
                 </label>
-                {errors.lastName && <p>{errors.lastName}</p>}
                 <label> Username
                     <input
                         type='text'
                         value={username}
                         onChange={e => setUsername(e.target.value)}
-                        required
                     />
                 </label>
-                {errors.username && <p>{errors.username}</p>}
                 <label> Email
                     <input
                         type='text'
                         value={email}
                         onChange={e => setEmail(e.target.value)}
-                        required
                     />
                 </label>
-                {errors.email && <p>{errors.email}</p>}
                 <label> Password
                     <input
                         type='password'
                         value={password}
                         onChange={e => setPassword(e.target.value)}
-                        required
                     />
                 </label>
-                {errors.password && <p>{errors.password}</p>}
                 <label> Confirm Password
                     <input
                         type='password'
                         value={confirmPassword}
                         onChange={e => setConfirmpassword(e.target.value)}
-                        required
                     />
                 </label>
-                {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
                 <button type='submit' style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Sign Up</button>
             </form>
         </div>

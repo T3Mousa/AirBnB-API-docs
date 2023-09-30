@@ -51,7 +51,7 @@ function SpotDetails() {
                         {spot.avgStarRating ? spot.numReviews : ""}
                         {spot.numReviews === 0 && ""}
                         {spot.numReviews === 1 && " review"}
-                        {spot.numReviews > 1 && " reviews"}
+                        {spot.numReviews >= 2 && " reviews"}
                     </span>
                 </div>
             </div>
