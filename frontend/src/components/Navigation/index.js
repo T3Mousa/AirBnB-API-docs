@@ -18,7 +18,7 @@ function Navigation({ isLoaded }) {
             </div>
             {sessionUser &&
                 <div>
-                    <Link to='/spots' style={{ textDecoration: 'none', color: 'black' }}>Create a New Spot</Link>
+                    <Link to='/spots' style={{ textDecoration: 'none', color: 'navy' }}>Create a New Spot</Link>
                 </div>
             }
             <div>

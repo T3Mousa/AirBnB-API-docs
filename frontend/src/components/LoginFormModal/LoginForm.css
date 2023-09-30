@@ -1,5 +1,9 @@
 /* css for login form */
-
+.logInForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 form {
     padding: 20px;
@@ -10,17 +14,36 @@ h1 {
 }
 
 input {
-    display: block;
+    display: flex;
     height: 10px;
     padding: 5px;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
 }
 
-button {
+.logInFormButtons button {
     display: block;
     font-size: large;
-    margin: 5px
+    margin: 5px;
 }
 
 p.errors {
     color: red;
+}
+
+.logInButton {
+    background-color: #FF395B;
+    color: white;
+    width: 250px;
+    font-family: "Nunito", cursive;
+    font-weight: bold;
+}
+
+.demoUserButton {
+    font-family: "Nunito", cursive;
+    font-weight: bold;
+    border: none;
+    background-color: white;
+    text-decoration: underline;
 }
