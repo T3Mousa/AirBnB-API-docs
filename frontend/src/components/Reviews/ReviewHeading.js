@@ -41,8 +41,8 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
                 {spot.avgStarRating && " · "}
                 {spot.avgStarRating ? spot.numReviews : ""}
                 {spot.numReviews === 0 && ""}
-                {spot.numReviews === 1 && " review"}
-                {spot.numReviews > 1 && " reviews"}
+                {spot.numReviews == 1 && " review"}
+                {spot.numReviews >= 2 && " reviews"}
 
             </h2>
             {user && !spotReviewedByUser && !spotOwnedByUser &&
