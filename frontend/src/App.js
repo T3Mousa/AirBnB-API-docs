@@ -9,6 +9,7 @@ import CreateSpotForm from './components/CreateSpotForm';
 import ManageSpots from './components/ManageSpots';
 import UpdateSpotForm from './components/UpdateSpotForm';
 import Reviews from './components/Reviews/Reviews';
+import './index.css'
 
 function App() {
   const dispatch = useDispatch()

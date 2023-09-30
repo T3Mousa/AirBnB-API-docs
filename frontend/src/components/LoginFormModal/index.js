@@ -12,9 +12,17 @@ function LoginFormModal() {
     const { closeModal } = useModal()
 
     const demoSignIn = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
+        setErrors({});
         setCredential('Demo-lition')
         setPassword('password')
+        return dispatch(sessionActions.login({ credential, password }))
+            .then(closeModal)
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data.errors) setErrors(data.errors);
+            }
+            );
     }
 
     const handleSubmit = (e) => {
@@ -24,6 +32,7 @@ function LoginFormModal() {
             .then(closeModal)
             .catch(async (res) => {
                 const data = await res.json();
+                console.log(data)
                 if (data.errors) setErrors(data.errors);
             }
             );
@@ -38,7 +47,6 @@ function LoginFormModal() {
                         type='text'
                         value={credential}
                         onChange={e => setCredential(e.target.value)}
-                        required
                     />
                 </label>
                 <label> Password
@@ -46,12 +54,11 @@ function LoginFormModal() {
                         type='password'
                         value={password}
                         onChange={e => setPassword(e.target.value)}
-                        required
                     />
                 </label>
                 {errors && <p className='errors'>{errors.message}</p>}
-                <button type='submit'>Log In</button>
-                <button type='submit' onClick={(e) => demoSignIn(e)}>Demo User</button>
+                <button type='submit' style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Log In</button>
+                <button type='submit' style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }} onClick={(e) => demoSignIn(e)}>Demo User</button>
             </form>
         </div>
     )

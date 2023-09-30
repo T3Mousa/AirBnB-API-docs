@@ -10,12 +10,7 @@ input {
     margin-bottom: 5px
 }
 
-.signUpForm {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
 .signUpForm button {
-    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: large;
     padding: 2px;
     margin-top: 10px;
