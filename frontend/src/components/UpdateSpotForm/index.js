@@ -256,7 +256,7 @@ function UpdateSpotForm() {
                 </p>
             </label>
 
-            <button type='submit'>Create Spot</button>
+            <button type='submit'>Update your Spot</button>
         </form >
     )
 }
