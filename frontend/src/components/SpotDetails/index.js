@@ -62,7 +62,7 @@ function SpotDetails() {
                 </div>
             </div>
             <hr className="spotDetailsSectionDivider" />
-            <div>
+            <div className='reviewsSection'>
                 <Reviews spot={spot} reviews={reviews} />
             </div>
         </>

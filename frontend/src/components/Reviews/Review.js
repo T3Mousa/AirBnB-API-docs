@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import OpenModalButton from '../OpenModalButton';
 import DeleteReviewFormModal from '../DeleteReviewFormModal';
+import './Reviews.css'
 
 function Review({ spot, review, user }) {
     // const dispatch = useDispatch()
@@ -35,20 +36,20 @@ function Review({ spot, review, user }) {
     }
 
     return (
-        <div>
-            <div className='singleReview'>
-                <h4>{review?.User?.firstName}</h4>
-                <h4>{reviewMonth} {reviewYear}</h4>
-                <p>{review?.review}</p>
-                {(user && user?.id === review?.User?.id) &&
-                    <OpenModalButton
-                        buttonText='Delete'
-                        onButtonClick={closeMenu}
-                        modalComponent={<DeleteReviewFormModal spot={spot} review={review} />}
-                    />}
-            </div>
-
+        // <div>
+        <div className='singleReview'>
+            <h4>{review?.User?.firstName}</h4>
+            <h5>{reviewMonth} {reviewYear}</h5>
+            <p>{review?.review}</p>
+            {(user && user?.id === review?.User?.id) &&
+                <OpenModalButton
+                    buttonText='Delete'
+                    onButtonClick={closeMenu}
+                    modalComponent={<DeleteReviewFormModal spot={spot} review={review} />}
+                />}
         </div>
+
+        // {/* </div> */ }
     )
 }
 

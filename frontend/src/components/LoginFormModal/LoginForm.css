@@ -13,29 +13,39 @@ form.logInFormModal {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    flex-direction: column;
+    margin: 20px 40px;
 }
 
-h1 {
+.logInFormModal h1 {
     margin-top: auto;
     margin-bottom: 15px;
 }
 
 .credential input,
 .password input {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    height: 20px;
+    background-color: aliceblue;
+    margin: 6px 0;
+    width: 250px;
+}
+
+.credential label,
+.password label {
+    width: 100%;
+}
+
+div.logInFormButtons button {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 15px;
-    background-color: aliceblue;
-    margin-bottom: 12px;
-    width: 95%;
-}
-
-.logInFormButtons button {
-    display: block;
-    font-size: large;
+    /* display: block;
+    font-size: large; */
 
 }
 
@@ -43,32 +53,36 @@ p.errors {
     color: red;
 }
 
-.logInButton:disabled {
+button.logInButton:disabled {
     background-color: white;
     color: gray;
-    width: 250px;
+    width: 255px;
     font-family: "Nunito", cursive;
     font-weight: bold;
-    margin-top: 25px;
-    height: 45px
+    margin-top: 20px;
+    height: 45px;
+    font-size: large;
+
 }
 
-.logInButton {
+button.logInButton {
     background-color: #FF395B;
     color: white;
-    width: 250px;
+    width: 255px;
     font-family: "Nunito", cursive;
     font-weight: bold;
-    margin-top: 25px;
-    height: 45px
+    margin-top: 20px;
+    height: 45px;
+    font-size: large;
 }
 
-.demoUserButton {
+button.demoUserButton {
     font-family: "Nunito", cursive;
     font-weight: bold;
     border: none;
     background-color: white;
     text-decoration: underline;
     width: 100%;
-    padding: 20px;
+    padding: 10px;
+    font-size: large;
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import ReviewHeading from '../Reviews/ReviewHeading';
 import Review from '../Reviews/Review';
+import './Reviews.css'
 
 function Reviews({ spot, reviews }) {
     const sessionUser = useSelector(state => state?.session?.user);

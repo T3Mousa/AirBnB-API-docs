@@ -14,7 +14,21 @@ textarea {
 .submitReviewButton button {
     background-color: #FF395B;
     color: white;
-    width: 250px
+    width: 250px;
+    height: 45px;
+    font-family: "Nunito", cursive;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.submitReviewButton button:disabled {
+    background-color: white;
+    color: gray;
+    width: 250px;
+    height: 45px;
+    font-family: "Nunito", cursive;
+    font-weight: bold;
+    font-size: medium;
 }
 
 .star {

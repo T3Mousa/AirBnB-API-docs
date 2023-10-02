@@ -52,15 +52,17 @@ function ManageSpots() {
 
     return (
         <>
-            <h1>Manage Your Spots</h1>
-            <button>
-                <Link to='/spots' style={{ textDecoration: 'none', color: 'black', fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Create a New Spot</Link>
-            </button>
-            <div className='spotsContainer'>
+            <div className="manageSpotsHeader">
+                <h1>Manage Your Spots</h1>
+                <button>
+                    <Link to='/spots' className="createNewSpotButton">Create a New Spot</Link>
+                </button>
+            </div>
+            <div className='manageSpotsContainer'>
                 {userSpots?.map((spot) => (
                     <div className='spotPreview' >
-                        <NavLink to={`/spots/${spot.id}`} key={spot.id} style={{ textDecoration: 'none', color: 'black' }}>
-                            <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '200px', width: 'auto' }} />
+                        <NavLink to={`/spots/${spot.id}`} key={spot.id} className="spotPrevLink">
+                            <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} />
                         </NavLink>
                         <div className="locationRating">
                             <span>{spot.city}, {spot.state} </span>
@@ -72,7 +74,7 @@ function ManageSpots() {
                         <div>${spot.price} night</div>
                         <div className="updateDelete">
                             <button>
-                                <Link to={`/spots/${spot.id}/edit`} key={spot.id} style={{ textDecoration: 'none', color: 'black', fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Update</Link>
+                                <Link to={`/spots/${spot.id}/edit`} key={spot.id} className="updateManagedSpotButton">Update</Link>
                             </button>
                             <OpenModalButton
                                 className="deleteSpotButton"

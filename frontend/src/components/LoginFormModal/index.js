@@ -55,8 +55,8 @@ function LoginFormModal() {
     };
 
     return (
-        <div className='loginForm'>
-            <form className="loginFormModal" onSubmit={handleSubmit}>
+        <div className='logInForm'>
+            <form className="logInFormModal" onSubmit={handleSubmit}>
                 <h1>Log In</h1>
                 {(errors.credential || errors.password || errors.message) && <p className='errors'> The provided credentials were invalid.</p>}
                 <label className='credential'>
@@ -77,7 +77,7 @@ function LoginFormModal() {
                 </label>
                 <div className='logInFormButtons'>
                     <button type='submit' disabled={submitDisabled} className="logInButton">Log In</button>
-                    <button type='submit' className="demoUserButton" style={{ fontFamily: "Nunito, cursive", fontWeight: "bold", border: "none", backgroundColor: "white", textDecoration: "underline" }} onClick={(e) => demoSignIn(e)}>Demo User</button>
+                    <button type='submit' className="demoUserButton" onClick={(e) => demoSignIn(e)}>Demo User</button>
                 </div>
             </form>
         </div>
