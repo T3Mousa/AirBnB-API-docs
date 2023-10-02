@@ -56,14 +56,14 @@ function ProfileButton({ user }) {
                         {/* <li>{user.username}</li> */}
                         <li>Hello, {user.firstName}</li>
                         <li>{user.email}</li>
-                        <hr className="sectionDivider" />
+                        <hr className="profileMenuSectionDivider" />
                         <div>
                             <Link to='/spots/current-user' style={{ textDecoration: 'none', color: 'black' }}>
                                 Manage Spots
                             </Link>
                         </div>
-                        <hr className="sectionDivider" />
-                        <li>
+                        <hr className="profileMenuSectionDivider" />
+                        <li className="logOut">
                             <button className="logOutButton" onClick={logout}>Log Out</button>
                         </li>
                     </>

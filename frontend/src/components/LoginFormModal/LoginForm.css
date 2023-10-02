@@ -1,35 +1,56 @@
 /* css for login form */
-.logInForm {
+/* .logInForm {
     display: flex;
     justify-content: center;
     align-items: center;
+} */
+
+#modal-content {
+    border-radius: 20px;
 }
 
-form {
-    padding: 20px;
+form.logInFormModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
 }
 
 h1 {
-    margin-left: 20px;
+    margin-top: auto;
+    margin-bottom: 15px;
 }
 
-input {
+.credential input,
+.password input {
     display: flex;
-    height: 10px;
-    padding: 5px;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 15px;
     background-color: aliceblue;
+    margin-bottom: 12px;
+    width: 95%;
 }
 
 .logInFormButtons button {
     display: block;
     font-size: large;
-    margin: 5px;
+
 }
 
 p.errors {
     color: red;
+}
+
+.logInButton:disabled {
+    background-color: white;
+    color: gray;
+    width: 250px;
+    font-family: "Nunito", cursive;
+    font-weight: bold;
+    margin-top: 25px;
+    height: 45px
 }
 
 .logInButton {
@@ -38,6 +59,8 @@ p.errors {
     width: 250px;
     font-family: "Nunito", cursive;
     font-weight: bold;
+    margin-top: 25px;
+    height: 45px
 }
 
 .demoUserButton {
@@ -46,4 +69,6 @@ p.errors {
     border: none;
     background-color: white;
     text-decoration: underline;
+    width: 100%;
+    padding: 20px;
 }

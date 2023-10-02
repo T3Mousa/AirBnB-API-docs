@@ -21,6 +21,9 @@ function SpotDetails() {
 
     }, [dispatch, spotId, isLoaded])
 
+    const handleReserve = () => {
+        alert('Feature Coming Soon...')
+    }
 
     // const previewImageUrl = spot?.SpotImages?.find(image => image.preview)?.url
     // console.log(previewImageUrl)
@@ -55,9 +58,10 @@ function SpotDetails() {
                             {spot.numReviews >= 2 && " reviews"}
                         </span>
                     </div>
-                    <button className='reserveButton'>Reserve</button>
+                    <button className='reserveButton' onClick={handleReserve}>Reserve</button>
                 </div>
             </div>
+            <hr className="spotDetailsSectionDivider" />
             <div>
                 <Reviews spot={spot} reviews={reviews} />
             </div>

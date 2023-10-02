@@ -184,14 +184,12 @@ function CreateSpotForm() {
                     Competitive pricing can help your listing stand out and rank higher in search results.
                 </p>
                 <label>
-                    <span>
-                        $ <input
-                            type="number"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            placeholder="Price per night (USD)"
-                        />
-                    </span>
+                    $ <input
+                        type="number"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        placeholder="Price per night (USD)"
+                    />
                 </label>
                 <span className='errors'>
                     {errors.price && `${errors.price}`}

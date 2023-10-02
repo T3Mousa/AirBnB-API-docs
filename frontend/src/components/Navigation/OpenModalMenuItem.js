@@ -1,5 +1,6 @@
 import React from 'react';
 import { useModal } from '../../context/Modal';
+import './Navigation.css'
 
 function OpenModalMenuItem({ modalComponent, itemText, onItemClick, onModalClose }) {
     const { setModalContent, setOnModalClose } = useModal();

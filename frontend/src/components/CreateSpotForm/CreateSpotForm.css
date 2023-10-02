@@ -70,14 +70,15 @@ div.latLong {
     width: 100%;
 }
 
-.createSpotForm button {
-    margin-left: 22%;
+button.createSpotButton {
+    display: inline-block;
+    margin: 0 auto;
 }
 
 .createSpotButton {
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     font-family: "Nunito", cursive;
     font-weight: bold;
     font-size: medium;
@@ -93,9 +94,11 @@ div.latLong {
     /* transform: scale(1.1); */
 }
 
-.price label>span>input {
+div.price label {
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    gap: 4px;
+    gap: 5px;
 }
 
 .name label>input {

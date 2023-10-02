@@ -205,13 +205,11 @@ function UpdateSpotForm() {
                     Competitive pricing can help your listing stand out and rank higher in search results.
                 </p>
                 <label>
-                    <span>
-                        $ <input
-                            type="number"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                        />
-                    </span>
+                    $ <input
+                        type="number"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    />
                 </label>
                 <span className='errors'>
                     {errors?.price && `${errors?.price}`}
@@ -272,9 +270,9 @@ function UpdateSpotForm() {
                 </label>
             </div>
             <hr className="sectionDivider" />
-
+            {/* <div className="updateButton"> */}
             <button className="updateSpotButton" type='submit'>Update your Spot</button>
-
+            {/* </div> */}
         </form >
     )
 }

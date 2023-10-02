@@ -148,3 +148,9 @@ span.numReviews {
     background-color: #FF395B;
     /* transform: scale(1.1); */
 }
+
+.spotDetailsSectionDivider {
+    border: 1px solid rgba(0, 0, 0, 0.727);
+    width: 95%;
+    margin: 30px;
+}
