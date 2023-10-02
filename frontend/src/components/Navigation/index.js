@@ -9,19 +9,19 @@ function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
 
     return (
-        <div id='nav-bar'>
-            <div>
-                <Link exact='true' to='/' id='home-button'>
-                    <img id='logo' src='/images/flairbnbLOGO.png' alt='flairbnb logo' />
-                    <span id='logo-text'>flairbnb</span>
+        <div className='navBar'>
+            <div className='homeButton'>
+                <Link exact='true' to='/' className="homeButtonLink">
+                    <img className='logo' src='/images/flairbnbLOGO.png' alt='flairbnb logo' />
+                    <span className='logoText'>flairbnb</span>
                 </Link>
             </div>
             {sessionUser &&
-                <div>
-                    <Link to='/spots' style={{ textDecoration: 'none', color: 'navy' }}>Create a New Spot</Link>
+                <div className='createSpotDiv'>
+                    <Link to='/spots' className="createSpotLink">Create a New Spot</Link>
                 </div>
             }
-            <div>
+            <div className='profileMenu'>
                 {isLoaded && (
                     <ProfileButton user={sessionUser} />
                 )}

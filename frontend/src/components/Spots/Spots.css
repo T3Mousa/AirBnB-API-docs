@@ -1,19 +1,43 @@
 .spotsContainer {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 25%);
+    /* grid-template-rows: repeat(5, 1fr); */
     gap: 20px;
-    justify-items: center;
+    margin: 15px 15px;
+    /* justify-items: center; */
 }
 
-.spotPreview {
-    /* display: inline-block;
-    align-self: center; */
-    justify-items: auto
+
+.spotPrevLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* box-sizing: content-box; */
+    text-decoration: none;
+    color: black;
+}
+
+.spotPrevLink span {
+    font-size: medium;
+}
+
+.spotPrevLink img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    margin-bottom: 10px;
+}
+
+.spotPrevLink div {
+    width: 95%;
+    height: 100%;
+    object-fit: cover;
+
 }
 
 .locationRating {
-    display: flex;
-    justify-content: space-between;
+    margin-bottom: 5px;
 }
 
 .tooltipContainer {

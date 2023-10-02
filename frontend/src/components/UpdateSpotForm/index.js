@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editSpot } from "../../store/userSpots";
+import './UpdateSpotForm.css'
 
 function UpdateSpotForm() {
     const { spotId } = useParams()
@@ -65,7 +66,7 @@ function UpdateSpotForm() {
         if (description.length < 30) errorsObj.description = "Description needs a minimum of 30 characters"
         if (!name) errorsObj.name = "Name is required"
         if (!price) errorsObj.price = "Price is required"
-        if (!previewImageUrl) errorsObj.previewImageUrl = "Preview image is required."
+        // if (!previewImageUrl) errorsObj.previewImageUrl = "Preview image is required."
         if (previewImageUrl && (!previewImageUrl.endsWith('.png') && !previewImageUrl.endsWith('.jpg') && !previewImageUrl.endsWith('.jpeg'))) errorsObj.previewImageUrl = "Image URL must end in .png, .jpg, or .jpeg"
         if (image1Url && (!image1Url.endsWith('.png') && !image1Url.endsWith('.jpg') && !image1Url.endsWith('.jpeg'))) errorsObj.image1Url = "Image URL must end in .png, .jpg, or .jpeg"
         if (image2Url && (!image2Url.endsWith('.png') && !image2Url.endsWith('.jpg') && !image2Url.endsWith('.jpeg'))) errorsObj.image2Url = "Image URL must end in .png, .jpg, or .jpeg"
@@ -99,13 +100,15 @@ function UpdateSpotForm() {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>Update your Spot</h1>
-            <h3>Where's your spot located?</h3>
-            <p>Guests will only get your exact address once they booked a reservation.</p>
-            <label>Country <p className='errors'>
+        <form className="updateSpotForm" onSubmit={handleSubmit}>
+            <div className="heading">
+                <h2>Update your Spot</h2>
+                <h3>Where's your spot located?</h3>
+                <p>Guests will only get your exact address once they booked a reservation.</p>
+            </div>
+            <label>Country <span className='errors'>
                 {errors?.country && `${errors?.country}`}
-            </p>
+            </span>
                 <input
                     type="text"
                     value={country}
@@ -113,30 +116,30 @@ function UpdateSpotForm() {
                 />
             </label>
 
-            <label>Street Address <p className='errors'>
+            {/* <div className="address"> */}
+            <label>Street Address <span className='errors'>
                 {errors?.address && `${errors?.address}`}
-            </p>
+            </span>
                 <input
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                 />
             </label>
-
-            <div>
-                <label>City <p className='errors'>
+            {/* </div> */}
+            <div className="cityState">
+                <label className="city">City<span className='errors'>
                     {errors?.city && `${errors?.city}`}
-                </p>
+                </span>
                     <input
                         type="text"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                     />
                 </label>
-
-                <label>State <p className='errors'>
+                <label className="state">State<span className='errors'>
                     {errors?.state && `${errors?.state}`}
-                </p>
+                </span>
                     <input
                         type="text"
                         value={state}
@@ -145,7 +148,7 @@ function UpdateSpotForm() {
                 </label>
 
             </div>
-            <div>
+            <div className="latLong">
                 <label>Latitude
                     <input
                         type="number"
@@ -161,102 +164,117 @@ function UpdateSpotForm() {
                     />
                 </label>
             </div>
-            <label>
+
+            <hr className="sectionDivider" />
+            <div className="description">
                 <h3>Describe your place to guests</h3>
                 <p>
                     Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.
                 </p>
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </label>
-            <p className='errors'>
-                {errors?.description && "Description needs a minimum of 30 characters"}
-            </p>
-            <label>
+                <label>
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </label>
+                <span className='errors'>
+                    {errors?.description && "Description needs a minimum of 30 characters"}
+                </span>
+            </div>
+            <hr className="sectionDivider" />
+            <div className="name">
                 <h3>Create a title for your spot</h3>
                 <p>
                     Catch guests' attention with a spot title that highlights what makes your place special.
                 </p>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </label>
-            <p className='errors'>
-                {errors?.name && `${errors?.name}`}
-            </p>
-            <label>
+                <label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </label>
+                <span className='errors'>
+                    {errors?.name && `${errors?.name}`}
+                </span>
+            </div>
+            <hr className="sectionDivider" />
+            <div className="price">
                 <h3>Set a base price for your spot</h3>
                 <p>
                     Competitive pricing can help your listing stand out and rank higher in search results.
                 </p>
-                <span>
-                    $ <input
-                        type="number"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                    />
+                <label>
+                    <span>
+                        $ <input
+                            type="number"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
+                    </span>
+                </label>
+                <span className='errors'>
+                    {errors?.price && `${errors?.price}`}
                 </span>
-            </label>
-            <p className='errors'>
-                {errors?.price && `${errors?.price}`}
-            </p>
-            <label>
+            </div>
+            <hr className="sectionDivider" />
+            <div className="images">
                 <h3>Liven up your spot with photos</h3>
                 <p>
-                    Submit a link to at least one photo to publish your spot.
+                    Submit links to additional photos if desired.
                 </p>
-                <input
-                    type='url'
-                    value={previewImageUrl}
-                    onChange={(e) => setPreviewImageUrl(e.target.value)}
-                    placeholder={previewImageUrl ? spot?.previewImageUrl : "Preview Image URL"}
-                />
-                <p className='errors'>
-                    {errors?.previewImageUrl && `${errors?.previewImageUrl}`}
-                </p>
-                <input
-                    type='url'
-                    value={image1Url}
-                    onChange={(e) => setImage1Url(e.target.value)}
-                    placeholder={image1Url ? spot?.image1Url : "Image Url"}
-                />
-                <p className='errors'>
-                    {errors?.image1Url && `${errors?.image1Url}`}
-                </p>
-                <input
-                    type='url'
-                    value={image2Url}
-                    onChange={(e) => setImage2Url(e.target.value)}
-                    placeholder={image2Url ? spot?.image2Url : "Image Url"}
-                />
-                <p className='errors'>
-                    {errors?.image2Url && `${errors?.image2Url}`}
-                </p>
-                <input
-                    type='url'
-                    value={image3Url}
-                    onChange={(e) => setImage3Url(e.target.value)}
-                    placeholder={image3Url ? spot?.image3Url : "Image Url"}
-                />
-                <p className='errors'>
-                    {errors?.image3Url && `${errors?.image3Url}`}
-                </p>
-                <input
-                    type='url'
-                    value={image4Url}
-                    onChange={(e) => setImage4Url(e.target.value)}
-                    placeholder={image4Url ? spot?.image4Url : "Image Url"}
-                />
-                <p className='errors'>
-                    {errors?.image4Url && `${errors?.image4Url}`}
-                </p>
-            </label>
+                <label>
+                    <input
+                        type='url'
+                        value={previewImageUrl}
+                        onChange={(e) => setPreviewImageUrl(e.target.value)}
+                        placeholder={"Image URL"}
+                    />
+                    <span className='errors'>
+                        {errors?.previewImageUrl && `${errors?.previewImageUrl}`}
+                    </span>
+                    <input
+                        type='url'
+                        value={image1Url}
+                        onChange={(e) => setImage1Url(e.target.value)}
+                        placeholder={"Image URL"}
+                    />
+                    <span className='errors'>
+                        {errors?.image1Url && `${errors?.image1Url}`}
+                    </span>
+                    <input
+                        type='url'
+                        value={image2Url}
+                        onChange={(e) => setImage2Url(e.target.value)}
+                        placeholder={"Image URL"}
+                    />
+                    <span className='errors'>
+                        {errors?.image2Url && `${errors?.image2Url}`}
+                    </span>
+                    <input
+                        type='url'
+                        value={image3Url}
+                        onChange={(e) => setImage3Url(e.target.value)}
+                        placeholder={"Image URL"}
+                    />
+                    <span className='errors'>
+                        {errors?.image3Url && `${errors?.image3Url}`}
+                    </span>
+                    <input
+                        type='url'
+                        value={image4Url}
+                        onChange={(e) => setImage4Url(e.target.value)}
+                        placeholder={"Image URL"}
+                    />
+                    <span className='errors'>
+                        {errors?.image4Url && `${errors?.image4Url}`}
+                    </span>
+                </label>
+            </div>
+            <hr className="sectionDivider" />
 
-            <button type='submit'>Update your Spot</button>
+            <button className="updateSpotButton" type='submit'>Update your Spot</button>
+
         </form >
     )
 }
