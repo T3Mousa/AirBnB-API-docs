@@ -31,12 +31,6 @@ div.userProfileMenu {
     align-items: flex-start;
 }
 
-li.greeting,
-li.userEmail,
-li.manageSpotButtonLink {
-    /* text-align: left; */
-}
-
 .logOutButton {
     display: flex;
     justify-content: center;
