@@ -80,15 +80,14 @@ function CreateReviewFormModal({ spotId }) {
                         )
                     })
                     }
-                    Stars</div>
-                <div className='submitReviewButton'>
-                    <button
-                        type='submit'
-                        disabled={submitDisabled}
-                    >
-                        Submit Your Review
-                    </button>
-                </div>
+                    <span>Stars</span></div>
+                <button
+                    className='submitReviewButton'
+                    type='submit'
+                    disabled={submitDisabled}
+                >
+                    Submit Your Review
+                </button>
             </form>
         </div>
     )

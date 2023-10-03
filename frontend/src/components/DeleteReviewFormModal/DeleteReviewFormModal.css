@@ -33,19 +33,23 @@ div.deleteReviewForm {
 button.deleteReviewButton {
     background-color: #ff395adf;
     color: white;
+    font-family: "Nunito", cursive;
 }
 
 button.cancelDeleteReviewButton {
     background-color: rgba(128, 128, 128, 0.873);
     color: white;
+    font-family: "Nunito", cursive;
 }
 
 button.deleteReviewButton:hover {
     background-color: #FF395B;
     color: white;
+    font-family: "Nunito", cursive;
 }
 
 button.cancelDeleteReviewButton:hover {
     background-color: gray;
     color: white;
+    font-family: "Nunito", cursive;
 }

@@ -15,7 +15,9 @@
 .updateSpotForm input {
     width: 97%;
     height: auto;
+    background-color: aliceblue;
 }
+
 
 .errors {
     margin: 0;
@@ -61,7 +63,8 @@ div.latLong {
 
 .updateSpotForm .description textarea {
     width: 99%;
-    height: 150px
+    height: 150px;
+    background-color: aliceblue;
 }
 
 

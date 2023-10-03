@@ -14,7 +14,7 @@
 
 .createSpotForm input {
     width: 97%;
-    height: auto;
+    /* height: auto; */
 }
 
 .errors {
@@ -40,9 +40,10 @@
     width: 100%;
 }
 
-.images label>input {
-    width: 97%;
-    height: auto;
+div.images input {
+    /* width: 97%; */
+    margin-bottom: 10px;
+    height: 20px;
 }
 
 div.cityState {
@@ -103,4 +104,13 @@ div.price label {
 
 .name label>input {
     width: 97%
+}
+
+form.createSpotForm input,
+form.createSpotForm textarea {
+    background-color: aliceblue;
+}
+
+form.createSpotForm input {
+    height: 20px
 }
