@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import CreateReviewFormModal from '../CreateReviewFormModal';
+import './Reviews.css'
 import { getAllSpotReviews } from '../../store/reviews';
 
 function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUser }) {
@@ -47,6 +48,7 @@ function ReviewHeading({ user, reviews, spot, spotReviewedByUser, spotOwnedByUse
             </h2>
             {user && !spotReviewedByUser && !spotOwnedByUser &&
                 <OpenModalButton
+                    className="postReviewButton"
                     buttonText='Post Your Review'
                     onButtonClick={closeMenu}
                     modalComponent={<CreateReviewFormModal spotId={spot.id} />}

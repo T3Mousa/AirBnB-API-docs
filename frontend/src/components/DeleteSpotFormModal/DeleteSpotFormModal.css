@@ -1,3 +1,51 @@
-.deleteModalButtons {
-    display: flex
+div.deleteSpotForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 30px;
+}
+
+.deleteSpotForm h1 {
+    margin-bottom: 10px;
+}
+
+.deleteSpotForm h3 {
+    margin-top: auto;
+}
+
+.deleteSpotModalButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%
+}
+
+.deleteSpotModalButtons>button {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px 0;
+    font-size: medium;
+    font-weight: bold;
+}
+
+button.deleteSpotButton {
+    background-color: #ff395adf;
+    color: white;
+}
+
+button.cancelDeleteSpotButton {
+    background-color: rgba(128, 128, 128, 0.873);
+    color: white;
+}
+
+button.deleteSpotButton:hover {
+    background-color: #FF395B;
+    color: white;
+}
+
+button.cancelDeleteSpotButton:hover {
+    background-color: gray;
+    color: white;
 }

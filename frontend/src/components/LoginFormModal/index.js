@@ -55,27 +55,29 @@ function LoginFormModal() {
     };
 
     return (
-        <div className='loginForm'>
-            <form onSubmit={handleSubmit}>
+        <div className='logInForm'>
+            <form className="logInFormModal" onSubmit={handleSubmit}>
                 <h1>Log In</h1>
                 {(errors.credential || errors.password || errors.message) && <p className='errors'> The provided credentials were invalid.</p>}
-                <label> Username or Email
+                <label className='credential'>
                     <input
                         type='text'
                         value={credential}
                         onChange={e => setCredential(e.target.value)}
+                        placeholder='Username or Email'
                     />
                 </label>
-                <label> Password
+                <label className='password'>
                     <input
                         type='password'
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        placeholder='Password'
                     />
                 </label>
                 <div className='logInFormButtons'>
                     <button type='submit' disabled={submitDisabled} className="logInButton">Log In</button>
-                    <button type='submit' className="demoUserButton" style={{ fontFamily: "Nunito, cursive", fontWeight: "bold", border: "none", backgroundColor: "white", textDecoration: "underline" }} onClick={(e) => demoSignIn(e)}>Demo User</button>
+                    <button type='submit' className="demoUserButton" onClick={(e) => demoSignIn(e)}>Demo User</button>
                 </div>
             </form>
         </div>

@@ -23,11 +23,11 @@ function DeleteSpotFormModal({ spotId }) {
         <div className="deleteSpotForm">
             <h1>Confirm Delete</h1>
             <h3>Are you sure you want to remove this spot from the listings?</h3>
-            <div className='deleteModalButtons'>
-                <button className='deleteButton' onClick={confirmDelete} style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>
+            <div className='deleteSpotModalButtons'>
+                <button className='deleteSpotButton' onClick={confirmDelete} style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>
                     Yes (Delete Spot)
                 </button>
-                <button className='cancelButton' onClick={cancelDelete} style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>
+                <button className='cancelDeleteSpotButton' onClick={cancelDelete} style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>
                     No (Keep Spot)
                 </button>
             </div>

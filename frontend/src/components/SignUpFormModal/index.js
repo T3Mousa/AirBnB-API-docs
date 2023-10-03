@@ -53,7 +53,7 @@ function SignUpFormModal() {
 
     return (
         <div className='signUpForm'>
-            <form onSubmit={handleSubmit}>
+            <form className="signUpFormModal" onSubmit={handleSubmit}>
                 <h1>Sign Up</h1>
                 {errors.firstName && <p className='errors'>{errors.firstName}</p>}
                 {errors.lastName && <p className='errors'>{errors.lastName}</p>}
@@ -61,49 +61,55 @@ function SignUpFormModal() {
                 {errors.email && <p className='errors'>{errors.email}</p>}
                 {errors.password && <p className='errors'>{errors.password}</p>}
                 {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}
-                <label> First Name
+                <label className='firstName'>
                     <input
                         type='text'
                         value={firstName}
                         onChange={e => setFirstName(e.target.value)}
+                        placeholder='First Name'
                     />
                 </label>
-                <label> Last Name
+                <label className='lastName'>
                     <input
                         type='text'
                         value={lastName}
                         onChange={e => setLastName(e.target.value)}
+                        placeholder='Last Name'
                     />
                 </label>
-                <label> Username
+                <label className='username'>
                     <input
                         type='text'
                         value={username}
                         onChange={e => setUsername(e.target.value)}
+                        placeholder='Username'
                     />
                 </label>
-                <label> Email
+                <label className='email'>
                     <input
                         type='text'
                         value={email}
                         onChange={e => setEmail(e.target.value)}
+                        placeholder='Email'
                     />
                 </label>
-                <label> Password
+                <label className='passWord'>
                     <input
                         type='password'
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        placeholder='Password'
                     />
                 </label>
-                <label> Confirm Password
+                <label className='confirmPassword'>
                     <input
                         type='password'
                         value={confirmPassword}
                         onChange={e => setConfirmpassword(e.target.value)}
+                        placeholder='Confirm Password'
                     />
                 </label>
-                <button type='submit' disabled={submitDisabled} style={{ fontFamily: "Nunito, cursive", fontWeight: "bold" }}>Sign Up</button>
+                <button type='submit' disabled={submitDisabled} className='signUpButton'>Sign Up</button>
             </form>
         </div>
     )

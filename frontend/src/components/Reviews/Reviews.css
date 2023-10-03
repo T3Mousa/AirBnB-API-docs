@@ -1,0 +1,51 @@
+.reviewHeading {
+    margin: auto 18px 0 18px;
+    padding: 0 30px 15px 30px;
+}
+
+.reviews {
+    margin: auto 18px 25px 18px;
+    padding: 0 30px 15px 30px;
+}
+
+.noReview {
+    margin: auto 18px 25px 18px;
+    padding: 0 30px 15px 30px;
+}
+
+.reviewHeading button {
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.reviewHeading button:hover {
+    background-color: darkgray;
+    color: white;
+    font-weight: bold;
+    font-size: medium;
+}
+
+div.singleReview h4 {
+    margin-bottom: 0;
+}
+
+div.singleReview h5 {
+    margin: 8px 0;
+    color: gray;
+}
+
+div.singleReview p {
+    margin-top: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+div.singleReview button {
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    font-size: medium;
+    margin-bottom: 20px;
+}

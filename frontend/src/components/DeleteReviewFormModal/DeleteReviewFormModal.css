@@ -1,3 +1,55 @@
-.deleteModalButtons {
-    display: flex
+div.deleteReviewForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 30px;
+}
+
+.deleteReviewForm h1 {
+    margin-bottom: 10px;
+}
+
+.deleteReviewForm h3 {
+    margin-top: auto;
+}
+
+.deleteReviewModalButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%
+}
+
+.deleteReviewModalButtons>button {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px 0;
+    font-size: medium;
+    font-weight: bold;
+}
+
+button.deleteReviewButton {
+    background-color: #ff395adf;
+    color: white;
+    font-family: "Nunito", cursive;
+}
+
+button.cancelDeleteReviewButton {
+    background-color: rgba(128, 128, 128, 0.873);
+    color: white;
+    font-family: "Nunito", cursive;
+}
+
+button.deleteReviewButton:hover {
+    background-color: #FF395B;
+    color: white;
+    font-family: "Nunito", cursive;
+}
+
+button.cancelDeleteReviewButton:hover {
+    background-color: gray;
+    color: white;
+    font-family: "Nunito", cursive;
 }

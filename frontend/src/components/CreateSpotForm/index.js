@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addNewSpot } from "../../store/spots";
+import './CreateSpotForm.css'
 
 function CreateSpotForm() {
     const dispatch = useDispatch()
@@ -80,13 +81,15 @@ function CreateSpotForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>Create a New Spot</h1>
-            <h3>Where's your spot located?</h3>
-            <p>Guests will only get your exact address once they booked a reservation.</p>
-            <label>Country <p className='errors'>
-                {errors.country && `${errors.country}`}
-            </p>
+        <form className="createSpotForm" onSubmit={handleSubmit}>
+            {/* <div className="createSpotForm"> */}
+            <div className="heading">
+                <h2>Create a New Spot</h2>
+                <h3>Where's your spot located?</h3>
+                <p>Guests will only get your exact address once they booked a reservation.</p>
+            </div>
+            {/* <div className="country"> */}
+            <label>Country <span className='errors'>{errors.country && `${errors.country}`}</span>
                 <input
                     type="text"
                     value={country}
@@ -94,10 +97,9 @@ function CreateSpotForm() {
                     placeholder="Country"
                 />
             </label>
-
-            <label>Street Address <p className='errors'>
-                {errors.address && `${errors.address}`}
-            </p>
+            {/* </div> */}
+            {/* <div className="address"> */}
+            <label>Street Address <span className='errors'>{errors.address && `${errors.address}`}</span>
                 <input
                     type="text"
                     value={address}
@@ -105,11 +107,9 @@ function CreateSpotForm() {
                     placeholder="Address"
                 />
             </label>
-
-            <div>
-                <label>City <p className='errors'>
-                    {errors.city && `${errors.city}`}
-                </p>
+            {/* </div> */}
+            <div className="cityState">
+                <label className="city">City <span className='errors'>{errors.city && `${errors.city}`}</span>
                     <input
                         type="text"
                         value={city}
@@ -118,9 +118,7 @@ function CreateSpotForm() {
                     />
                 </label>
 
-                <label>State <p className='errors'>
-                    {errors.state && `${errors.state}`}
-                </p>
+                <label className="state">State <span className='errors'>{errors.state && `${errors.state}`}</span>
                     <input
                         type="text"
                         value={state}
@@ -128,12 +126,9 @@ function CreateSpotForm() {
                         placeholder="STATE"
                     />
                 </label>
-
             </div>
-            <div>
-                <label>Latitude  <p className='errors'>
-                    {errors.lat && `${errors.lat}`}
-                </p>
+            <div className="latLong">
+                <label>Latitude  <span className='errors'>{errors.lat && `${errors.lat}`}</span>
                     <input
                         type="number"
                         defaultValue={90}
@@ -141,9 +136,7 @@ function CreateSpotForm() {
                         placeholder="Latitude"
                     />
                 </label>
-                <label>Longitude  <p className='errors'>
-                    {errors.lng && `${errors.lng}`}
-                </p>
+                <label>Longitude  <span className='errors'>{errors.lng && `${errors.lng}`}</span>
                     <input
                         type="number"
                         defaultValue={180}
@@ -152,106 +145,114 @@ function CreateSpotForm() {
                     />
                 </label>
             </div>
-            <label>
+            <hr className="sectionDivider" />
+            <div className="description">
                 <h3>Describe your place to guests</h3>
                 <p>
                     Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.
                 </p>
-                <textarea
-                    className="descriptionBox"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Please write at least 30 characters"
-                />
-            </label>
-            <p className='errors'>
-                {errors.description && `${errors.description}`}
-            </p>
-            <label>
+                <label>
+                    <textarea
+                        className="descriptionBox"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Please write at least 30 characters"
+                    />
+                </label>
+                <span className='errors'>{errors.description && `${errors.description}`}</span>
+            </div>
+            <hr className="sectionDivider" />
+            <div className="name">
                 <h3>Create a title for your spot</h3>
                 <p>
                     Catch guests' attention with a spot title that highlights what makes your place special.
                 </p>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Name of your spot"
-                />
-            </label>
-            <p className='errors'>
-                {errors.name && `${errors.name}`}
-            </p>
-            <label>
+                <label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Name of your spot"
+                    />
+                    <span className='errors'>{errors.name && `${errors.name}`}</span>
+                </label>
+            </div>
+            <hr className="sectionDivider" />
+            <div className="price">
                 <h3>Set a base price for your spot</h3>
                 <p>
                     Competitive pricing can help your listing stand out and rank higher in search results.
                 </p>
-                <span>
+                <label>
                     $ <input
                         type="number"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         placeholder="Price per night (USD)"
                     />
+                </label>
+                <span className='errors'>
+                    {errors.price && `${errors.price}`}
                 </span>
-            </label>
-            <p className='errors'>
-                {errors.price && `${errors.price}`}
-            </p>
-            <label>
+            </div>
+            <hr className="sectionDivider" />
+            <div className="images">
                 <h3>Liven up your spot with photos</h3>
                 <p>
                     Submit a link to at least one photo to publish your spot.
                 </p>
-                <input
-                    type='text'
-                    value={previewImageUrl}
-                    onChange={(e) => setPreviewImageUrl(e.target.value)}
-                    placeholder="Preview Image Url"
-                />
-                <p className='errors'>
-                    {errors.previewImageUrl && `${errors.previewImageUrl}`}
-                </p>
-                <input
-                    type='text'
-                    value={image1Url}
-                    onChange={(e) => setImage1Url(e.target.value)}
-                    placeholder="Image Url"
-                />
-                <p className='errors'>
-                    {errors.image1Url && `${errors.image1Url}`}
-                </p>
-                <input
-                    type='text'
-                    value={image2Url}
-                    onChange={(e) => setImage2Url(e.target.value)}
-                    placeholder="Image Url"
-                />
-                <p className='errors'>
-                    {errors.image2Url && `${errors.image2Url}`}
-                </p>
-                <input
-                    type='text'
-                    value={image3Url}
-                    onChange={(e) => setImage3Url(e.target.value)}
-                    placeholder="Image Url"
-                />
-                <p className='errors'>
-                    {errors.image3Url && `${errors.image3Url}`}
-                </p>
-                <input
-                    type='text'
-                    value={image4Url}
-                    onChange={(e) => setImage4Url(e.target.value)}
-                    placeholder="Image Url"
-                />
-                <p className='errors'>
-                    {errors.image4Url && `${errors.image4Url}`}
-                </p>
-            </label>
+                <label>
+                    <input
+                        type='text'
+                        value={previewImageUrl}
+                        onChange={(e) => setPreviewImageUrl(e.target.value)}
+                        placeholder="Preview Image Url"
+                    />
+                    <span className='errors'>
+                        {errors.previewImageUrl && `${errors.previewImageUrl}`}
+                    </span>
+                    <input
+                        type='text'
+                        value={image1Url}
+                        onChange={(e) => setImage1Url(e.target.value)}
+                        placeholder="Image Url"
+                    />
+                    <span className='errors'>
+                        {errors.image1Url && `${errors.image1Url}`}
+                    </span>
+                    <input
+                        type='text'
+                        value={image2Url}
+                        onChange={(e) => setImage2Url(e.target.value)}
+                        placeholder="Image Url"
+                    />
+                    <span className='errors'>
+                        {errors.image2Url && `${errors.image2Url}`}
+                    </span>
+                    <input
+                        type='text'
+                        value={image3Url}
+                        onChange={(e) => setImage3Url(e.target.value)}
+                        placeholder="Image Url"
+                    />
+                    <span className='errors'>
+                        {errors.image3Url && `${errors.image3Url}`}
+                    </span>
+                    <input
+                        type='text'
+                        value={image4Url}
+                        onChange={(e) => setImage4Url(e.target.value)}
+                        placeholder="Image Url"
+                    />
+                    <span className='errors'>
+                        {errors.image4Url && `${errors.image4Url}`}
+                    </span>
+                </label>
+            </div>
+            <hr className="sectionDivider" />
 
-            <button type='submit'>Create Spot</button>
+            <button className="createSpotButton" type='submit'>Create Spot</button>
+            {/* </div > */}
         </form >
     )
 }

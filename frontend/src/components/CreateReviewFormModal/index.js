@@ -41,7 +41,7 @@ function CreateReviewFormModal({ spotId }) {
 
     return (
         <div className='createReviewForm'>
-            <form onSubmit={handleSubmit}>
+            <form className="createReviewFormModal" onSubmit={handleSubmit}>
                 <h1>How was your stay?</h1>
                 <p className='errors'>
                     {errors.message ? `${errors.message}` : ""}
@@ -80,15 +80,14 @@ function CreateReviewFormModal({ spotId }) {
                         )
                     })
                     }
-                    Stars</div>
-                <div className='submitReviewButton'>
-                    <button
-                        type='submit'
-                        disabled={submitDisabled}
-                    >
-                        Submit Your Review
-                    </button>
-                </div>
+                    <span>Stars</span></div>
+                <button
+                    className='submitReviewButton'
+                    type='submit'
+                    disabled={submitDisabled}
+                >
+                    Submit Your Review
+                </button>
             </form>
         </div>
     )

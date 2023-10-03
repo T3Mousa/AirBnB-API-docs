@@ -1,14 +1,31 @@
-.spotsContainer {
+div.manageSpotsContainer {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 23.9%);
+    /* grid-template-rows: repeat(5, 1fr); */
     gap: 20px;
-    justify-items: center;
+    margin: 15px 30px;
+    /* padding: 25px */
 }
 
-.spotPreview {
-    /* display: inline-block;
-    align-self: center; */
-    display: inline-block;
+.spotPrevLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* box-sizing: content-box; */
+    text-decoration: none;
+    color: black;
+}
+
+.spotPrevLink span {
+    font-size: medium;
+}
+
+a.spotPrevLink img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-bottom: 1px;
 }
 
 .locationRating {
@@ -25,4 +42,53 @@
 .deleteSpotButton {
     font-family: "Nunito", cursive;
     font-weight: bold;
+}
+
+.manageSpotsHeader {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 30px
+}
+
+.manageSpotsHeader button {
+    background-color: gray;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.manageSpotsHeader button:hover {
+    background-color: darkgray;
+    font-weight: bold;
+    font-size: medium;
+}
+
+a.createNewSpotButton {
+    text-decoration: none;
+    color: white;
+    font-family: "Nunito", cursive;
+}
+
+.updateDelete>button {
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    font-size: medium;
+    margin-top: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+
+}
+
+a.updateManagedSpotButton {
+    text-decoration: none;
+    color: white;
+    font-family: "Nunito", cursive;
+}
+
+.updateDelete button:hover {
+    background-color: darkgray;
+    font-weight: bold;
+    font-size: medium;
 }

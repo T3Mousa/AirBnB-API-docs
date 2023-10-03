@@ -26,21 +26,21 @@ function Spots() {
             {isLoaded &&
                 <div className='spotsContainer'>
                     {spots?.map((spot, i) => (
-                        <div className='spotPreview' key={i}>
-                            <Tooltip text={spot.name}>
-                                <NavLink to={`/spots/${spot?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                    <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} style={{ height: '200px', width: 'auto' }} />
-                                    <div className="locationRating">
-                                        <span>{spot.city}, {spot.state} </span>
-                                        <span><i className="fa-solid fa-star"></i>
-                                            {spot.avgRating && `${spot.avgRating}`}
-                                            {!spot.avgRating && "New"}
-                                        </span>
-                                    </div>
-                                    <div>${spot.price} night</div>
-                                </NavLink>
-                            </Tooltip>
-                        </div>
+                        // <div className='spotPreview' >
+                        <Tooltip text={spot.name}>
+                            <NavLink to={`/spots/${spot?.id}`} key={i} className="spotPrevLink">
+                                <img src={spot.previewImage ? spot.previewImage : "/images/placeholder.jpeg"} alt={`spot ${spot.id} preview`} />
+                                <div className="locationRating">
+                                    <span>{spot.city}, {spot.state} </span>
+                                    <span><i className="fa-solid fa-star"></i>
+                                        {spot.avgRating && ` ${spot.avgRating}`}
+                                        {!spot.avgRating && " New"}
+                                    </span>
+                                </div>
+                                <div className="price">${spot.price} night</div>
+                            </NavLink>
+                        </Tooltip>
+                        // </div>
                     ))
                     }
                 </div >
