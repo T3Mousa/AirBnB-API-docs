@@ -53,16 +53,18 @@ function ProfileButton({ user }) {
             <div className={ulClassName} ref={ulRef}>
                 {user ? (
                     <>
-                        {/* <li>{user.username}</li> */}
-                        <li>Hello, {user.firstName}</li>
-                        <li>{user.email}</li>
-                        <hr className="profileMenuSectionDivider" />
-                        <div>
-                            <Link to='/spots/current-user' style={{ textDecoration: 'none', color: 'black' }}>
-                                Manage Spots
-                            </Link>
+                        <div className="userProfileMenu">
+                            {/* <li>{user.username}</li> */}
+                            <li className="greeting">Hello, {user.firstName}</li>
+                            <li className="userEmail">{user.email}</li>
+                            <hr className="profileMenuSectionDivider" />
+                            <li className="manageSpotButtonLink">
+                                <Link to='/spots/current-user' style={{ textDecoration: 'none', color: 'black' }}>
+                                    Manage Spots
+                                </Link>
+                            </li>
+                            <hr className="profileMenuSectionDivider" />
                         </div>
-                        <hr className="profileMenuSectionDivider" />
                         <li className="logOut">
                             <button className="logOutButton" onClick={logout}>Log Out</button>
                         </li>

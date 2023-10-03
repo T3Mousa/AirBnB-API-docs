@@ -8,8 +8,8 @@ div.profileDropdown {
     padding: 8px 12px;
     border: 2px solid black;
     border-radius: 3px;
-    width: 125px
-        /* justify-content: center;
+    /* width: 100%; */
+    /* justify-content: center;
     align-items: center; */
 }
 
@@ -22,6 +22,19 @@ li.logOut {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+div.userProfileMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+li.greeting,
+li.userEmail,
+li.manageSpotButtonLink {
+    /* text-align: left; */
 }
 
 .logOutButton {
